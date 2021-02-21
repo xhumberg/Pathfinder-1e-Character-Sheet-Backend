@@ -29,5 +29,9 @@ public class Stat {
 	public void setBaseValue(int value) {
 		this.baseValue = value;
 	}
+	
+	public String getName() {
+		return name;
+	}
 
 }

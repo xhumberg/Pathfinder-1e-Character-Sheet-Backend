@@ -28,6 +28,14 @@ public class PathfinderCharacter {
 		abilities.add(new Ability("Charisma"));
 	}
 	
+	public void setAbility(String abilityName, int baseValue) {
+		for (Ability ability : abilities) {
+			if (ability.getName().equals(abilityName)) {
+				ability.setBaseValue(baseValue);
+			}
+		}
+	}
+	
 	public CharacterJson convertToJson() {
 		return new CharacterJson(name, imageUrl, AbilityListMapper.map(abilities));
 	}
