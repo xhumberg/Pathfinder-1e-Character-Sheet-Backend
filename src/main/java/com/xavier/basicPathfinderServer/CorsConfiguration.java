@@ -17,6 +17,7 @@ public class CorsConfiguration {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
+                //TODO: Be careful. This should definitely be more policed if possible
             }
         };
     }
