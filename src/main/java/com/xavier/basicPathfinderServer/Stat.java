@@ -21,7 +21,7 @@ public class Stat {
 	public int getValue() {
 		int totalValue = baseValue;
 		for (Adjustment adjustment : adjustments) {
-			baseValue += adjustment.getValue(name);
+			totalValue += adjustment.getValue(name);
 		}
 		return totalValue;
 	}
@@ -32,6 +32,10 @@ public class Stat {
 	
 	public String getName() {
 		return name;
+	}
+
+	public void addAdjustment(Adjustment adjustment) {
+		adjustments.add(adjustment);
 	}
 
 }
