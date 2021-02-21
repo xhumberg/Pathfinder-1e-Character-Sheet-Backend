@@ -7,7 +7,7 @@ public class Ability extends Stat {
 	}
 	
 	public int getMod() {
-		return (int) Math.floor((getValue()-10)/2);
+		return (int) Math.floor((getValue())/2)-5;
 	}
 
 }
