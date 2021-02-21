@@ -11,6 +11,7 @@ public class CorsConfiguration implements WebMvcConfigurer{
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/*")
-		.allowedOrigins("http://localhost:3000", "https://basicpathfinderfrontend.web.app");
+		.allowedOrigins("*")
+		.allowedMethods("GET");
 	}
 }
