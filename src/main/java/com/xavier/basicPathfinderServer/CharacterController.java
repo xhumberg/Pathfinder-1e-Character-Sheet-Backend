@@ -21,6 +21,7 @@ public class CharacterController {
 	
 	@PutMapping("/character/prosopa/toggle/{adjustmentName}") 
 	public void toggleAdjustment(@PathVariable String adjustmentName) {
+		System.out.println("Time to toggle " + adjustmentName);
 		character.toggleAdjustment(adjustmentName);
 	}
 	
