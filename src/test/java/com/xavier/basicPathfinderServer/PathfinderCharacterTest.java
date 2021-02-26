@@ -11,9 +11,9 @@ class PathfinderCharacterTest {
 		PathfinderCharacter character = new PathfinderCharacter("Grog", null);
 		
 		Adjustment rage = new Adjustment("Rage");
-		rage.addEffect("Strength", 4);
-		rage.addEffect("Constitution", 4);
-		rage.addEffect("Charisma", -2);
+		rage.addEffect("Strength", "Morale", 4);
+		rage.addEffect("Constitution", "Morale", 4);
+		rage.addEffect("Charisma", "Penalty", -2);
 		
 		character.addAdjustment(rage);
 		
@@ -25,6 +25,28 @@ class PathfinderCharacterTest {
 		assertEquals(14, character.getStatValue("Strength"));
 		assertEquals(14, character.getStatValue("Constitution"));
 		assertEquals(8, character.getStatValue("Charisma"));
+	}
+
+	@Test
+	void beltAndBullsStrengthTest() {
+		PathfinderCharacter character = new PathfinderCharacter("Grog", null);
+		
+		Adjustment bullsStrength = new Adjustment("Bull's Strength");
+		bullsStrength.addEffect("Strength", "Enhancement", 4);
+		character.addAdjustment(bullsStrength);
+		
+		Adjustment beltOfStrength2 = new Adjustment("Belt of Strength +2");
+		beltOfStrength2.addEffect("Strength", "Enhancement", 2);
+		beltOfStrength2.toggleAdjustment();
+		character.addAdjustment(beltOfStrength2);
+		
+		assertEquals(12, character.getStatValue("Strength"));
+		
+		character.toggleAdjustment("Bull's Strength");
+		assertEquals(14, character.getStatValue("Strength"));
+		
+		character.toggleAdjustment("Bull's Strength");
+		assertEquals(12, character.getStatValue("Strength"));
 	}
 
 }

@@ -36,7 +36,7 @@ public class PathfinderCharacter {
 	
 	private void addAbilitiesToStats() {
 		for(Ability ability : abilities) {
-			allStats.put(ability.name, ability);
+			allStats.put(ability.getName(), ability);
 		}
 	}
 	

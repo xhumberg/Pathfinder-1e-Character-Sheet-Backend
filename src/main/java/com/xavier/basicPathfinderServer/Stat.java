@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Stat {
-	public final String name;
-	public int baseValue;
+	private final String name;
+	private int baseValue;
 	private Set<Adjustment> adjustments;
 	
 	public Stat(String name) {
@@ -20,10 +20,43 @@ public class Stat {
 
 	public int getValue() {
 		int totalValue = baseValue;
-		for (Adjustment adjustment : adjustments) {
-			totalValue += adjustment.getValue(name);
+		Set<String> bonusTypes = getAllBonusTypes();
+		for (String bonusType : bonusTypes) {
+			if (bonusType.equals("Circumstance") || bonusType.equals("Dodge") || bonusType.equals("Penalty")) {
+				totalValue = totalValue + getAllBonusesOfType(bonusType);
+			} else {
+				totalValue = totalValue + getHighestBonusOfType(bonusType);
+			}
 		}
 		return totalValue;
+	}
+	
+	private int getHighestBonusOfType(String bonusType) {
+		int highestBonus = 0;
+		for (Adjustment adjustment : adjustments) {
+			if (adjustment.hasBonusOfType(bonusType)) {
+				highestBonus = Math.max(highestBonus, adjustment.getValue(bonusType, name));
+			}
+		}
+		return highestBonus;
+	}
+	
+	private int getAllBonusesOfType(String bonusType) {
+		int allBonus = 0;
+		for (Adjustment adjustment : adjustments) {
+			if (adjustment.hasBonusOfType(bonusType)) {
+				allBonus = allBonus + adjustment.getValue(bonusType, name);
+			}
+		}
+		return allBonus;
+	}
+	
+	protected Set<String> getAllBonusTypes() {
+		Set<String> allBonusTypes = new HashSet<>();
+		for (Adjustment adjustment : adjustments) {
+			allBonusTypes.addAll(adjustment.getBonusTypes());
+		}
+		return allBonusTypes;
 	}
 	
 	public void setBaseValue(int value) {
