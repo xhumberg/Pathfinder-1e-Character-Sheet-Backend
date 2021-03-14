@@ -81,17 +81,19 @@ public class PathfinderCharacter {
 	}
 	
 	public int getAbilityValue(String abilityName) {
-
 		return ((Ability)allStats.get(abilityName)).getFullValue();
 	}
 
 	public int getAbilityMod(String abilityName) {
-
 		return ((Ability)allStats.get(abilityName)).getMod();
 	}
 	
-	private Stat getStat(String statName) {
+	Stat getStat(String statName) {
 		return allStats.get(statName);
+	}
+	
+	void addStat(String statName) {
+		allStats.put(statName, new Stat(statName));
 	}
 
 	public void giveWeapon(Weapon weapon, String attackStat, String damageStat, WeaponType type) {
@@ -142,6 +144,32 @@ public class PathfinderCharacter {
 		Spellcasting spellcastingStats = spellcastingByClass.get(className);
 		if (spellcastingStats != null) {
 			return spellcastingStats.getSpellsPerDay(level);
+		}
+		return -1;
+	}
+
+	public void giveSpellKnown(String className, Spell spell) {
+		Spellcasting spellcasting = spellcastingByClass.get(className);
+		if (spellcasting != null) {
+			spellcasting.addSpellKnown(spell);
+		}
+	}
+
+	public void prepSpell(String className, String spellName, int level) {
+		Spellcasting spellcasting = spellcastingByClass.get(className);
+		if (spellcasting != null) {
+			spellcasting.prepSpell(spellName, level);
+		}
+	}
+
+	public Ability getAbility(String castingStat) {
+		return (Ability)allStats.get(castingStat);
+	}
+
+	public Integer getSpellDC(String className, String spellName, int level) {
+		Spellcasting spellcasting = spellcastingByClass.get(className);
+		if (spellcasting != null) {
+			return spellcasting.getSpellDC(spellName, level);
 		}
 		return -1;
 	}

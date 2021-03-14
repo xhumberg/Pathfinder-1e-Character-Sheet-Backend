@@ -121,5 +121,31 @@ class PathfinderCharacterTest {
 		prosopa.setAbility("Intelligence", 14);
 		assertEquals(2, prosopa.getSpellsPerDay("Wizard", 2));
 	}
+	
+	@Test
+	void aTaleOfTwoSpells() {
+		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", null);
+		prosopa.setAbility("Intelligence", 20);
+		
+		Spell babble = new Spell(3, "Babble", "Enchantment", "Compulsion, mind-affecting", "1 Standard Action", "V, S", "close", "One creature; see text", "1 round/level", "Will negates", "yes", "This spell causes the target to break into a fit of bizarre...");
+		Spell summonMonster3 = new Spell(3, "Summon Monster III", "Conjuration", "Summoning", "1 round", "V, S, F/DF (a tiny bag and a small candle)", "close", "One summoned creature", "1 round/level", "none", "no", "Summons an extraplanar creature (typically...)");
+	
+		prosopa.giveSpellcasting("Wizard", CastingType.PREPARED, "Intelligence");
+		prosopa.setSpellsPerDay("Wizard", 3, 2);
+		prosopa.giveSpellKnown("Wizard", babble);
+		prosopa.giveSpellKnown("Wizard", summonMonster3);
+		
+		prosopa.prepSpell("Wizard", "Babble", 3);
+		prosopa.prepSpell("Wizard", "Summon Monster III", 3);
+		
+		assertEquals(18, prosopa.getSpellDC("Wizard", "Babble", 3));
+		assertEquals(-1, prosopa.getSpellDC("Wizard", "Summon Monster III", 3)); 
+		
+		Adjustment spellFocusEnchantment = new Adjustment("Spell Focus Enchantment", true);
+		spellFocusEnchantment.addEffect("Enchantment", "Spell Focus", 1);
+		prosopa.addAdjustment(spellFocusEnchantment);
+		
+		assertEquals(19, prosopa.getSpellDC("Wizard", "Babble", 3));
+	}
 
 }
