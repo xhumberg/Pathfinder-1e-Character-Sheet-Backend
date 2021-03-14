@@ -42,4 +42,13 @@ public class Weapon {
 		return new Weapon("Seven Branched Sword", "d10", "S", "+1 Furious", 1, 1, 20, 3, "This unusual sword has a straight 2-foot-long blade with six shorter L-shaped blades protruding from it, three on each side in a staggered pattern. The shorter blades can be used to snag opponents’ clothing or armor, or can target weapons in order to disarm them. To snag armor or clothing, the attacker makes a trip attempt. If successful, the victim doesn’t fall prone, but instead is snagged and stumbles forward, leaving the victim flat-footed for the remainder of the round.",
 				"Two-Handed", "Exotic", "disarm, monk", 7, "Blades, Heavy; Monk");
 	}
+
+	public enum WeaponType {
+		MELEE,
+		RANGED
+	}
+
+	public String getTitle() {
+		return name; //TODO: modifiers matter
+	}
 }

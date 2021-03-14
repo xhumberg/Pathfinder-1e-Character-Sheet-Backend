@@ -7,7 +7,16 @@ public class Ability extends Stat {
 	}
 	
 	public int getMod() {
-		return (int) Math.floor((getValue())/2)-5;
+		return (int) Math.floor((getFullValue())/2)-5;
+	}
+	
+	@Override
+	public int getValue() {
+		return getMod();
+	}
+
+	public int getFullValue() {
+		return super.getValue();
 	}
 
 }

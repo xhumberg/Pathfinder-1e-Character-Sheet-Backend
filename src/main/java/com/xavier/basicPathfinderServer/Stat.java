@@ -32,7 +32,7 @@ public class Stat {
 	}
 	
 	private int getHighestBonusOfType(String bonusType) {
-		int highestBonus = 0;
+		int highestBonus = Integer.MIN_VALUE;
 		for (Adjustment adjustment : adjustments) {
 			if (adjustment.hasBonusOfType(bonusType)) {
 				highestBonus = Math.max(highestBonus, adjustment.getValue(bonusType, name));
@@ -51,6 +51,11 @@ public class Stat {
 		return allBonus;
 	}
 	
+	@Override
+	public String toString() {
+		return "[name=" + name + ", baseValue=" + baseValue + ", adjustments=" + adjustments + "]";
+	}
+
 	protected Set<String> getAllBonusTypes() {
 		Set<String> allBonusTypes = new HashSet<>();
 		for (Adjustment adjustment : adjustments) {

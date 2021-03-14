@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class StatTest {
+class StatAndAdjustmentTest {
 
 	@Test
 	void singleTypeTest() {
@@ -108,5 +108,46 @@ class StatTest {
 		assertEquals(2, test.getAllBonusTypes().size());
 		assertTrue(test.getAllBonusTypes().contains("A"));
 		assertTrue(test.getAllBonusTypes().contains("B"));
+	}
+	
+	@Test
+	public void statInAStatTest() {
+		Stat outerStat = new Stat("Outer", 1);
+		
+		Stat innerStat = new Stat("Inner", 2);
+		
+		Adjustment insert = new Adjustment("Insert");
+		insert.addEffect("Outer", "Enhancement", innerStat);
+		outerStat.addAdjustment(insert);
+		insert.toggleAdjustment();
+		
+		assertEquals(3, outerStat.getValue());
+	}
+	
+	@Test
+	public void adjustmentInStatAdjustment() {
+		Stat testAttack = new Stat("Attack");
+		
+		Stat BAB = new Stat("BAB");
+		Adjustment fighterLevel3 = new Adjustment("Fighter 3");
+		fighterLevel3.addEffect("BAB", "Fighter", 3);
+		fighterLevel3.toggleAdjustment();
+		BAB.addAdjustment(fighterLevel3);
+		
+		Adjustment BABtoAttack = new Adjustment("BAB to Attack");
+		BABtoAttack.addEffect("Attack", "BAB", BAB);
+		BABtoAttack.toggleAdjustment();
+		testAttack.addAdjustment(BABtoAttack);
+		
+		assertEquals(3, testAttack.getValue());
+		
+		Stat str = new Ability("Strength");
+		str.setBaseValue(14);
+		Adjustment StrToAttack = new Adjustment("Strength to attack");
+		StrToAttack.addEffect("Attack", "Strength", str);
+		StrToAttack.toggleAdjustment();
+		testAttack.addAdjustment(StrToAttack);
+		
+		assertEquals(5, testAttack.getValue());
 	}
 }
