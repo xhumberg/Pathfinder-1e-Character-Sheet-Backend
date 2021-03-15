@@ -10,12 +10,7 @@ class PathfinderCharacterTest {
 	void rageTest() {
 		PathfinderCharacter character = new PathfinderCharacter("Grog", null);
 		
-		Adjustment rage = new Adjustment("Rage");
-		rage.addEffect("Strength", "Morale", 4);
-		rage.addEffect("Constitution", "Morale", 4);
-		rage.addEffect("Charisma", "Penalty", -2);
-		
-		character.addAdjustment(rage);
+		buildAndAddAdjustment(character, "Rage", false, "Strength#Morale#4", "Constitution#Morale#4", "Charisma#Penalty#-2");
 		
 		assertEquals(10, character.getAbilityValue("Strength"));
 		assertEquals(10, character.getAbilityValue("Constitution"));
@@ -31,15 +26,8 @@ class PathfinderCharacterTest {
 	void beltAndBullsStrengthTest() {
 		PathfinderCharacter character = new PathfinderCharacter("Grog", null);
 		
-		Adjustment bullsStrength = new Adjustment("Bull's Strength");
-		bullsStrength.addEffect("Strength", "Enhancement", 4);
-		character.addAdjustment(bullsStrength);
-		
-		Adjustment beltOfStrength2 = new Adjustment("Belt of Strength +2");
-		beltOfStrength2.addEffect("Strength", "Enhancement", 2);
-		beltOfStrength2.toggleAdjustment();
-		character.addAdjustment(beltOfStrength2);
-		
+		buildAndAddAdjustment(character, "Belt of Strength +2", true, "Strength#Enhancement#2");
+		buildAndAddAdjustment(character, "Bull's Strength", false, "Strength#Enhancement#4");
 		assertEquals(12, character.getAbilityValue("Strength"));
 		
 		character.toggleAdjustment("Bull's Strength");
@@ -53,38 +41,25 @@ class PathfinderCharacterTest {
 	void giveAManAHammer() {
 		PathfinderCharacter bob = new PathfinderCharacter("Bob the Builder", null);
 		
-		/*===Ability first===*/
+		//Just ability
 		bob.setAbility("Strength", 14);
-		
 		Weapon warhammer = new Weapon("Warhammer", "d8", "B", "", 0, 0, 20, 3, "HAMMER!", "hammers", "martial", "", 5, "hammers");
 		bob.giveWeapon(warhammer, "Strength", "Strength", Weapon.WeaponType.MELEE);
-		
 		assertEquals(2, bob.getMeleeAttack("Warhammer"));
 		
-		
-		/*===Add an all attack permanent adjustment===*/
-		Adjustment bab = new Adjustment("Fighter 3", true);
-		bab.addEffect("All Attack", "BAB", 3);
-		bob.addAdjustment(bab);
-		
+		//Permanent adjustment
+		buildAndAddAdjustment(bob, "Fighter 3", true, "All Attack#BAB#3");
 		assertEquals(5, bob.getMeleeAttack("Warhammer"));
 		
-		/*===Add an all attack toggle adjustment===*/
-		Adjustment heroism = new Adjustment("Heroism");
-		heroism.addEffect("All Attack", "Morale", 2);
-		bob.addAdjustment(heroism);
-		
-		bob.toggleAdjustment("Heroism");
+		//Toggle adjustment
+		buildAndAddAdjustment(bob, "Heroism", true, "All Attack#Morale#2");
 		assertEquals(7, bob.getMeleeAttack("Warhammer"));
 		
 		bob.toggleAdjustment("Heroism");
 		assertEquals(5, bob.getMeleeAttack("Warhammer"));
 		
-		/*===Lastly, a melee only attack adjustment===*/
-		Adjustment powerAttack = new Adjustment("Power Attack", true);
-		powerAttack.addEffect("Melee Attack", "Penalty", -1);
-		bob.addAdjustment(powerAttack);
-		
+		//Melee only adjustment
+		buildAndAddAdjustment(bob, "Power Attack", true, "Melee Attack#Penalty#-1");
 		assertEquals(4, bob.getMeleeAttack("Warhammer"));
 	}
 	
@@ -120,6 +95,10 @@ class PathfinderCharacterTest {
 		
 		prosopa.setAbility("Intelligence", 14);
 		assertEquals(2, prosopa.getSpellsPerDay("Wizard", 2));
+		
+		buildAndAddAdjustment(prosopa, "Super Headband", true, "Intelligence#Enhancement#8");
+		
+		assertEquals(3, prosopa.getSpellsPerDay("Wizard", 2));
 	}
 	
 	@Test
@@ -141,11 +120,67 @@ class PathfinderCharacterTest {
 		assertEquals(18, prosopa.getSpellDC("Wizard", "Babble", 3));
 		assertEquals(-1, prosopa.getSpellDC("Wizard", "Summon Monster III", 3)); 
 		
-		Adjustment spellFocusEnchantment = new Adjustment("Spell Focus Enchantment", true);
-		spellFocusEnchantment.addEffect("Enchantment", "Spell Focus", 1);
-		prosopa.addAdjustment(spellFocusEnchantment);
+		buildAndAddAdjustment(prosopa, "Spell Focus (Enchantment)", true, "Enchantment#Spell Focus#1");	
 		
 		assertEquals(19, prosopa.getSpellDC("Wizard", "Babble", 3));
+	}
+	
+	@Test
+	void saveYourself() {
+		PathfinderCharacter almond = new PathfinderCharacter("Almond", null);
+		almond.setAbility("Constitution", 16);
+		almond.setAbility("Wisdom", 8);
+		almond.setAbility("Dexterity", 12);
+
+		assertEquals(-1, almond.getStatValue("Will"));
+		assertEquals(3, almond.getStatValue("Fortitude"));
+		assertEquals(1, almond.getStatValue("Reflex"));
+
+		buildAndAddAdjustment(almond, "Heroism", true, "All Saves#Morale#2");
+		
+		assertEquals(1, almond.getStatValue("Will"));
+		assertEquals(5, almond.getStatValue("Fortitude"));
+		assertEquals(3, almond.getStatValue("Reflex"));
+		
+		buildAndAddAdjustment(almond, "Lightning Reflexes", true, "Reflex#Lightning Reflexes#2");
+		
+		assertEquals(1, almond.getStatValue("Will"));
+		assertEquals(5, almond.getStatValue("Fortitude"));
+		assertEquals(5, almond.getStatValue("Reflex"));
+	}
+	
+	@Test
+	void defendYourself() {
+		//NOTE: Abilities must apply to each AC individually, as some things are denied in FF and Touch while others may not be
+		PathfinderCharacter almond = new PathfinderCharacter("Almond", null);
+		almond.setAbility("Dexterity", 14);
+		
+		assertEquals(12, almond.getStatValue("AC"));
+		assertEquals(10, almond.getStatValue("Flat-Footed"));
+		assertEquals(12, almond.getStatValue("Touch"));
+		
+		buildAndAddAdjustment(almond, "Armor", true, "AC#Armor#4", "Flat-Footed#Armor#4");
+		
+		assertEquals(16, almond.getStatValue("AC"));
+		assertEquals(14, almond.getStatValue("Flat-Footed"));
+		assertEquals(12, almond.getStatValue("Touch"));
+		
+		buildAndAddAdjustment(almond, "Ring of Protection +2", true, "All AC#Deflection#2");
+		
+		assertEquals(18, almond.getStatValue("AC"));
+		assertEquals(16, almond.getStatValue("Flat-Footed"));
+		assertEquals(14, almond.getStatValue("Touch"));
+	}
+	
+	private Adjustment buildAndAddAdjustment(PathfinderCharacter character, String adjName, boolean enabled, String... effectStrings) {
+		Adjustment adj = new Adjustment(adjName, enabled);
+		for (String effectString : effectStrings) {
+			String[] strings = effectString.split("#");
+			int value = Integer.parseInt(strings[2]);
+			adj.addEffect(strings[0], strings[1], value);
+		}
+		character.addAdjustment(adj);
+		return adj;
 	}
 
 }

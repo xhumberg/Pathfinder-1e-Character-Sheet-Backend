@@ -23,7 +23,6 @@ public class PathfinderCharacter {
 		this.imageUrl = imageUrl;
 		allStats = new HashMap<>();
 		initAbilities();
-		addAbilitiesToStats();
 		initOtherNeededStats();
 		adjustments = new HashMap<>();
 		weaponAttack = new HashMap<>();
@@ -38,6 +37,7 @@ public class PathfinderCharacter {
 		abilities.add(new Ability("Intelligence"));
 		abilities.add(new Ability("Wisdom"));
 		abilities.add(new Ability("Charisma"));
+		addAbilitiesToStats();
 	}
 	
 	private void addAbilitiesToStats() {
@@ -47,9 +47,51 @@ public class PathfinderCharacter {
 	}
 	
 	private void initOtherNeededStats() {
-		allStats.put("All Attack", new Stat("All Attack"));
-		allStats.put("Melee Attack", new Stat("Melee Attack"));
-		allStats.put("Ranged Attack", new Stat("Ranged Attack"));
+		initAttackMods();
+		initSaves();
+		initAC();
+	}
+
+	private void initAttackMods() {
+		initNewStat("All Attack");
+		initNewStat("Melee Attack");
+		initNewStat("Ranged attack");
+	}
+
+	private void initSaves() {
+		Stat allSaves = initNewStat("All Saves");
+		initStatWithStats("Will", getAbility("Wisdom"), allSaves);
+		initStatWithStats("Fortitude", getAbility("Constitution"), allSaves);
+		initStatWithStats("Reflex", getAbility("Dexterity"), allSaves);
+	}
+	
+	private void initAC() {
+		Stat allAC = initNewStat("All AC");
+		initStatWithStats("AC", getAbility("Dexterity"), allAC);
+		initStatWithStats("Flat-Footed", allAC);
+		initStatWithStats("Touch", getAbility("Dexterity"), allAC);
+		setStatBase("AC", 10);
+		setStatBase("Flat-Footed", 10);
+		setStatBase("Touch", 10);
+	}
+
+	private Stat initStatWithStats(String statName, Stat... otherStatsToAdd) {
+		Stat stat = initNewStat(statName);
+		for (Stat otherStat : otherStatsToAdd) {
+			stat.addStat(otherStat);
+		}
+		return stat;
+	}
+
+	private Stat initNewStat(String statName) {
+		Stat newStat = new Stat(statName);
+		allStats.put(statName, newStat);
+		return newStat;
+	}
+	
+	private void setStatBase(String statName, int newBase) {
+		Stat stat = allStats.get(statName);
+		stat.setBaseValue(newBase);
 	}
 	
 	public void setAbility(String abilityName, int baseValue) {
@@ -162,8 +204,8 @@ public class PathfinderCharacter {
 		}
 	}
 
-	public Ability getAbility(String castingStat) {
-		return (Ability)allStats.get(castingStat);
+	public Ability getAbility(String abilityName) {
+		return (Ability)allStats.get(abilityName);
 	}
 
 	public Integer getSpellDC(String className, String spellName, int level) {
