@@ -48,18 +48,18 @@ class PathfinderCharacterTest {
 		assertEquals(2, bob.getMeleeAttack("Warhammer"));
 		
 		//Permanent adjustment
-		buildAndAddAdjustment(bob, "Fighter 3", true, "All Attack#BAB#3");
+		buildAndAddAdjustment(bob, "Fighter 3", true, "All Attacks#BAB#3");
 		assertEquals(5, bob.getMeleeAttack("Warhammer"));
 		
 		//Toggle adjustment
-		buildAndAddAdjustment(bob, "Heroism", true, "All Attack#Morale#2");
+		buildAndAddAdjustment(bob, "Heroism", true, "All Attacks#Morale#2");
 		assertEquals(7, bob.getMeleeAttack("Warhammer"));
 		
 		bob.toggleAdjustment("Heroism");
 		assertEquals(5, bob.getMeleeAttack("Warhammer"));
 		
 		//Melee only adjustment
-		buildAndAddAdjustment(bob, "Power Attack", true, "Melee Attack#Penalty#-1");
+		buildAndAddAdjustment(bob, "Power Attack", true, "Melee Attacks#Penalty#-1");
 		assertEquals(4, bob.getMeleeAttack("Warhammer"));
 	}
 	
@@ -170,6 +170,123 @@ class PathfinderCharacterTest {
 		assertEquals(18, almond.getStatValue("AC"));
 		assertEquals(16, almond.getStatValue("Flat-Footed"));
 		assertEquals(14, almond.getStatValue("Touch"));
+	}
+	
+	@Test
+	void skillsTest() {
+		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", null);
+		prosopa.setAbility("Strength", 7);
+		prosopa.setAbility("Dexterity", 18);
+		prosopa.setAbility("Constitution", 14);
+		prosopa.setAbility("Intelligence", 23);
+		prosopa.setAbility("Wisdom", 11);
+		prosopa.setAbility("Charisma", 5);
+		
+		assertEquals(4, prosopa.getStatValue("Acrobatics"));
+		assertEquals(6, prosopa.getStatValue("Appraise"));
+		assertEquals(-3, prosopa.getStatValue("Bluff"));
+		assertEquals(-2, prosopa.getStatValue("Climb"));
+		assertEquals(6, prosopa.getStatValue("Craft A"));
+		assertEquals(6, prosopa.getStatValue("Craft B"));
+		assertEquals(-3, prosopa.getStatValue("Diplomacy"));
+		assertEquals(4, prosopa.getStatValue("Disable Device"));
+		assertEquals(-3, prosopa.getStatValue("Disguise"));
+		assertEquals(4, prosopa.getStatValue("Escape Artist"));
+		assertEquals(4, prosopa.getStatValue("Fly"));
+		assertEquals(-3, prosopa.getStatValue("Handle Animal"));
+		assertEquals(0, prosopa.getStatValue("Heal"));
+		assertEquals(-3, prosopa.getStatValue("Intimidate"));
+		assertEquals(6, prosopa.getStatValue("Knowledge (Arcana)"));
+		assertEquals(6, prosopa.getStatValue("Knowledge (Dungeoneering)"));
+		assertEquals(6, prosopa.getStatValue("Knowledge (Engineering)"));
+		assertEquals(6, prosopa.getStatValue("Knowledge (Geography)"));
+		assertEquals(6, prosopa.getStatValue("Knowledge (History)"));
+		assertEquals(6, prosopa.getStatValue("Knowledge (Local)"));
+		assertEquals(6, prosopa.getStatValue("Knowledge (Nature)"));
+		assertEquals(6, prosopa.getStatValue("Knowledge (Nobility)"));
+		assertEquals(6, prosopa.getStatValue("Knowledge (Planes)"));
+		assertEquals(6, prosopa.getStatValue("Knowledge (Religion)"));
+		assertEquals(6, prosopa.getStatValue("Linguistics"));
+		assertEquals(0, prosopa.getStatValue("Perception"));
+		assertEquals(-3, prosopa.getStatValue("Perform"));
+		assertEquals(0, prosopa.getStatValue("Profession"));
+		assertEquals(4, prosopa.getStatValue("Ride"));
+		assertEquals(0, prosopa.getStatValue("Sense Motive"));
+		assertEquals(4, prosopa.getStatValue("Sleight of Hand"));
+		assertEquals(6, prosopa.getStatValue("Spellcraft"));
+		assertEquals(4, prosopa.getStatValue("Stealth"));
+		assertEquals(0, prosopa.getStatValue("Survival"));
+		assertEquals(-2, prosopa.getStatValue("Swim"));
+		assertEquals(-3, prosopa.getStatValue("UMD"));
+		
+		prosopa.setSkillRanks(1, "Acrobatics");
+		assertEquals(5, prosopa.getStatValue("Acrobatics"));
+		
+		prosopa.setClassSkill("Spellcraft");
+		assertEquals(6, prosopa.getStatValue("Spellcraft"));
+		
+		prosopa.setSkillRanks(1, "Spellcraft");
+		assertEquals(10, prosopa.getStatValue("Spellcraft"));
+	}
+	
+	@Test
+	public void healthTest() {
+		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", null);
+		prosopa.setAbility("Constitution", 14);
+		prosopa.addHitDice(1, 6);
+		assertEquals(8, prosopa.getMaxHealth());
+		
+		prosopa.addHitDice(1, 6);
+		assertEquals(14, prosopa.getMaxHealth());
+		
+		prosopa.addHitDice(1, 12);
+		assertEquals(23, prosopa.getMaxHealth());
+		
+		prosopa.setFavoredClassBonusHP(3);
+		assertEquals(26, prosopa.getMaxHealth());
+		
+		//Take damage
+		assertEquals(26, prosopa.getCurrentHealth());
+		
+		prosopa.takeDamage(10);
+		assertEquals(16, prosopa.getCurrentHealth());
+		
+		prosopa.heal(7);
+		assertEquals(23, prosopa.getCurrentHealth());
+		
+		prosopa.heal(999);
+		assertEquals(26, prosopa.getCurrentHealth());
+		
+		prosopa.takeDamage(999);
+		assertEquals(-973, prosopa.getCurrentHealth());
+		
+		prosopa.fullHeal();
+		assertEquals(26, prosopa.getCurrentHealth());
+	}
+	
+	@Test
+	public void skillRanks() {
+		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", null);
+		prosopa.setAbility("Intelligence", 20);
+		prosopa.addTotalSkillRanks(2, 2);
+		
+		assertEquals(14, prosopa.getRemainingSkillRanks());
+		assertEquals(14, prosopa.getMaxRanks());
+		
+		prosopa.setSkillRanks(5, "Acrobatics");
+		
+		assertEquals(14, prosopa.getMaxRanks());
+		assertEquals(9, prosopa.getRemainingSkillRanks());
+		
+		prosopa.setSkillRanks(6, "Acrobatics");
+		assertEquals(8, prosopa.getRemainingSkillRanks());
+		
+		prosopa.setSkillRanks(0, "Acrobatics");
+		assertEquals(14, prosopa.getRemainingSkillRanks());
+		
+		prosopa.setSkillRanks(2, "Acrobatics");
+		prosopa.setSkillRanks(2, "Spellcraft");
+		assertEquals(10, prosopa.getRemainingSkillRanks());
 	}
 	
 	private Adjustment buildAndAddAdjustment(PathfinderCharacter character, String adjName, boolean enabled, String... effectStrings) {

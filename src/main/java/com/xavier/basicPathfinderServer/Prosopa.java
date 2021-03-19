@@ -10,11 +10,27 @@ public class Prosopa {
 		prosopa.setAbility("Wisdom", 11);
 		prosopa.setAbility("Charisma", 5);
 		
-		Adjustment bullsStrength = new Adjustment("Bull's Strength");
-		bullsStrength.addEffect("Strength", "Enhancement", 4);
+		addHeroism(prosopa);
+		prosopa.addHitDice(7, 6);
+		prosopa.setFavoredClassBonusHP(5);
+		prosopa.addTotalSkillRanks(7, 2);
 		
-		prosopa.addAdjustment(bullsStrength);
+		addHeadbandOfInt(prosopa);
 		
 		return prosopa;
+	}
+
+	private static void addHeroism(PathfinderCharacter prosopa) {
+		Adjustment heroism = new Adjustment("Heroism");
+		heroism.addEffect("All Saves", "Morale", 2);
+		heroism.addEffect("All Skills", "Morale", 2);
+		heroism.addEffect("All Attacks", "Morale", 2);
+		prosopa.addAdjustment(heroism);
+	}
+	
+	private static void addHeadbandOfInt(PathfinderCharacter prosopa) {
+		Adjustment headbandOfInt = new Adjustment("Headband of Vast Ingelligence +2", true);
+		headbandOfInt.addEffect("Intelligence", "Enhancement", 2);
+		prosopa.addAdjustment(headbandOfInt);
 	}
 }

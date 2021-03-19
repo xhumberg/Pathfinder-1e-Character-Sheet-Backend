@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Stat {
 	private final String name;
-	private int baseValue;
+	protected int baseValue;
 	private Set<Adjustment> adjustments;
 	
 	public Stat(String name) {
