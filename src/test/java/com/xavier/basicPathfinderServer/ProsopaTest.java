@@ -10,8 +10,9 @@ class ProsopaTest {
 	void test() {
 		PathfinderCharacter prosopa = Prosopa.get();
 		
-		assertEquals(49, prosopa.getMaxHealth());
-		assertEquals(56, prosopa.getMaxRanks());
+		assertEquals("Prosopa", prosopa.getName());
+		assertEquals("CG", prosopa.getAlignment());
+		assertEquals("Xavier", prosopa.getPlayer());
 	}
 
 }

@@ -20,6 +20,8 @@ public class PathfinderCharacter {
 	public final HashMap<String, Spellcasting> spellcastingByClass;
 	public HP hp;
 	public SkillRanks skillRanks;
+	private String alignment;
+	private String player;
 	
 	public PathfinderCharacter(String name, String imageUrl) {
 		this.name = name;
@@ -338,5 +340,25 @@ public class PathfinderCharacter {
 
 	public Integer getMaxRanks() {
 		return skillRanks.getMaxRanks();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setAlignment(String alignment) {
+		this.alignment = alignment;
+	}
+	
+	public String getAlignment() {
+		return alignment;
+	}
+	
+	public void setPlayer(String player) {
+		this.player = player;
+	}
+
+	public String getPlayer() {
+		return player;
 	}
 }
