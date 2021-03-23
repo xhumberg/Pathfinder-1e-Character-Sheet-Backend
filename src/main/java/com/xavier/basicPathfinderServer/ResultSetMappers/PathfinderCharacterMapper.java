@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
 
-public class PathfinderCharacterMapper implements ResultSetMapper<PathfinderCharacter> {
+public class PathfinderCharacterMapper implements ResultSetMapper<Object> {
 
 	@Override
 	public PathfinderCharacter map(ResultSet resultSet) {

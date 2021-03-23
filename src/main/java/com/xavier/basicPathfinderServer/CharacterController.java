@@ -1,13 +1,6 @@
 package com.xavier.basicPathfinderServer;
 
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +14,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 import com.xavier.basicPathfinderServer.ResultSetMappers.AccessibleCharactersMapper;
-import com.xavier.basicPathfinderServer.ResultSetMappers.PathfinderCharacterMapper;
+import com.xavier.basicPathfinderServer.databaseLayer.CharacterFromDatabaseLoader;
+import com.xavier.basicPathfinderServer.databaseLayer.DatabaseAccess;
 
 @RestController
 public class CharacterController {
@@ -30,7 +24,6 @@ public class CharacterController {
 	Gson gson;
 	
 	private final String GET_CHARACTERS_FOR_USER_QUERY = "SELECT CharacterName, PathfinderCharacter.CharacterID FROM UserIDToEmail INNER JOIN UserAccess ON UserIDToEmail.UserID = UserAccess.UserID INNER JOIN PathfinderCharacter ON UserAccess.CharacterID = PathfinderCharacter.CharacterID WHERE UserIDToEmail.UserEmail = (?) OR UserAccess.UserID = -1;";
-	private final static String GET_CHARACTER_QUERY = "SELECT * FROM PathfinderCharacter WHERE CharacterID = ?";
 	
 	@Autowired
 	public CharacterController() {
@@ -58,18 +51,7 @@ public class CharacterController {
 		GoogleAuthenticationResponseJson authenticatedGoogleToken = authenticateToken(token);
 		System.out.println(authenticatedGoogleToken.getEmail() + " wants to load character " + id);
 		
-		return loadCharacter(id);
-	}
-
-	protected static PathfinderCharacter loadCharacter(String id) {
-		DatabaseAccess<PathfinderCharacter> db = new DatabaseAccess<>();
-		PathfinderCharacter response = db.executeSelectQuery(new PathfinderCharacterMapper(), GET_CHARACTER_QUERY, Integer.parseInt(id));
-		db.close();
-		
-		if (response != null) {
-			return response;
-		}
-		return new PathfinderCharacter("Error: Couldn't load character", "https://www.aautomate.com/images/easyblog_shared/November_2018/11-12-18/human_error_stop_400.png");
+		return CharacterFromDatabaseLoader.loadCharacter(id);
 	}
 
 	@GetMapping("character/load")

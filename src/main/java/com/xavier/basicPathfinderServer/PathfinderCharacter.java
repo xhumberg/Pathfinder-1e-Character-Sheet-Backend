@@ -3,6 +3,7 @@ package com.xavier.basicPathfinderServer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import com.xavier.basicPathfinderServer.Weapon.WeaponType;
 import com.xavier.basicPathfinderServer.json.CharacterJson;
@@ -14,6 +15,7 @@ public class PathfinderCharacter {
 	public String imageUrl;
 	public List<Ability> abilities;
 	public final HashMap<String, Adjustment> adjustments;
+	public List<Adjustment> allowedAdjustments;
 	public final HashMap<String, Adjustment> items;
 	public final HashMap<String, Stat> allStats;
 	public final HashMap<Weapon.WeaponType, HashMap<Weapon, Stat>> weaponAttack;
@@ -30,6 +32,7 @@ public class PathfinderCharacter {
 		initAbilities();
 		initOtherNeededStats();
 		adjustments = new HashMap<>();
+		allowedAdjustments = new ArrayList<>();
 		items = new HashMap<>();
 		weaponAttack = new HashMap<>();
 		spellcastingByClass = new HashMap<>();
@@ -360,5 +363,22 @@ public class PathfinderCharacter {
 
 	public String getPlayer() {
 		return player;
+	}
+	
+	public void setAllowedAdjustments(List<Adjustment> adjustments) {
+		allowedAdjustments = adjustments;
+		for (Adjustment adjustment : adjustments) {
+			addAdjustment(adjustment);
+		}
+	}
+
+	public List<Adjustment> getAllowedAdjustments() {
+		return allowedAdjustments;
+	}
+
+	public void toggleAdjustments(List<String> enabledAdjustments) {
+		for (String adjustment : enabledAdjustments) {
+			toggleAdjustment(adjustment);
+		}
 	}
 }

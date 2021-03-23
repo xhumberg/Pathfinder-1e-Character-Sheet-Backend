@@ -1,4 +1,4 @@
-package com.xavier.basicPathfinderServer;
+package com.xavier.basicPathfinderServer.databaseLayer;
 
 import java.net.URI;
 import java.net.URISyntaxException;

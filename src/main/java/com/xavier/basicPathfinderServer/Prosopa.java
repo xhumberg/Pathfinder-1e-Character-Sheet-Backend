@@ -1,7 +1,5 @@
 package com.xavier.basicPathfinderServer;
 
-import java.awt.geom.FlatteningPathIterator;
-
 public class Prosopa {
 	public static PathfinderCharacter get() {
 		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", "https://media.discordapp.net/attachments/526680690218106891/731649744937418792/107571564_607483240193629_5533577863028070138_n.png");

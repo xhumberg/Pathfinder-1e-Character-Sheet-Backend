@@ -68,4 +68,8 @@ public class Adjustment {
 	public String toString() {
 		return "Adjustment [name=" + name + ", enabled=" + enabled + ", valuesToAdjust=" + valuesToAdjust + "]";
 	}
+	
+	public String getName() {
+		return name;
+	}
 }
