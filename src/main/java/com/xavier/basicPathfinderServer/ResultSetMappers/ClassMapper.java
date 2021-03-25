@@ -29,7 +29,7 @@ public class ClassMapper implements ResultSetMapper<Object> {
 				Map<Integer, Integer> baseSpellsPerDay = SpellsPerDayParser.parse(spellsPerDayString);
 				
 				CharacterClass characterClass = new CharacterClass(level, bab, fort, ref, will, name, spellcasting, type, ability, baseSpellsPerDay);
-				System.out.println(baseSpellsPerDay);
+				classes.add(characterClass);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
