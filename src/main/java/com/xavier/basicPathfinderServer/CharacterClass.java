@@ -4,6 +4,7 @@ import java.util.Map;
 
 public class CharacterClass {
 
+	private int id;
 	private int level;
 	private int bab;
 	private int fort;
@@ -15,8 +16,9 @@ public class CharacterClass {
 	private String spellcastingAbility;
 	private Map<Integer, Integer> baseSpellsPerDay;
 
-	public CharacterClass(int level, int bab, int fort, int ref, int will, String name, boolean hasSpellcasting,
+	public CharacterClass(int id, int level, int bab, int fort, int ref, int will, String name, boolean hasSpellcasting,
 			CastingType spellcastingType, String spellcastingAbility, Map<Integer, Integer> baseSpellsPerDay) {
+		this.id = id;
 		this.level = level;
 		this.bab = bab;
 		this.fort = fort;
@@ -27,6 +29,50 @@ public class CharacterClass {
 		this.spellcastingType = spellcastingType;
 		this.spellcastingAbility = spellcastingAbility;
 		this.baseSpellsPerDay = baseSpellsPerDay;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public int getBab() {
+		return bab;
+	}
+
+	public int getFort() {
+		return fort;
+	}
+
+	public int getRef() {
+		return ref;
+	}
+
+	public int getWill() {
+		return will;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public boolean hasSpellcasting() {
+		return hasSpellcasting;
+	}
+
+	public CastingType getSpellcastingType() {
+		return spellcastingType;
+	}
+
+	public String getSpellcastingAbility() {
+		return spellcastingAbility;
+	}
+
+	public Map<Integer, Integer> getBaseSpellsPerDay() {
+		return baseSpellsPerDay;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 }

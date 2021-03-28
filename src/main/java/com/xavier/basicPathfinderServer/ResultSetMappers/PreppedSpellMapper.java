@@ -6,29 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xavier.basicPathfinderServer.Spell;
+import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.PreppedSpellInterim;
 
 public class PreppedSpellMapper implements ResultSetMapper<Object> {
 
 	@Override
-	public List<Spell> map(ResultSet resultSet) {
-		List<Spell> spells = new ArrayList<>();
+	public List<PreppedSpellInterim> map(ResultSet resultSet) {
+		List<PreppedSpellInterim> spells = new ArrayList<>();
 		try {
 			while (resultSet.next()) {
-				int level = Integer.parseInt(resultSet.getString("levelPreppedAt"));
-				String name = resultSet.getString("SpellName");
-				String school = resultSet.getString("SpellSchool");
-				String tags = resultSet.getString("SpellTags");
-				String castingTime = resultSet.getString("SpellCastingTime");
-				String components = resultSet.getString("SpellComponents");
-				String range = resultSet.getString("SpellRange");
-				String target = resultSet.getString("SpellTarget");
-				String duration = resultSet.getString("SpellDuration");
-				String savingThrow = resultSet.getString("SpellSavingThrow");
-				String spellResistance = resultSet.getString("SpellSpellResistance");
-				String description = resultSet.getString("SpellDescription");
-				
-				System.out.println(level + " - " + name);
-				Spell spell = new Spell(level, name, school, tags, castingTime, components, range, target, duration, savingThrow, spellResistance, description);
+				int classId = Integer.parseInt(resultSet.getString("ClassID"));
+				int level = Integer.parseInt(resultSet.getString("SpellLevel"));
+				String spellName = resultSet.getString("SpellName");
+				PreppedSpellInterim spell = new PreppedSpellInterim(classId, level, spellName);
 				spells.add(spell);
 			}
 		} catch (SQLException e) {

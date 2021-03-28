@@ -82,4 +82,8 @@ public class Stat {
 		this.addAdjustment(abilityAdj);
 	}
 
+	public int getBase() {
+		return baseValue;
+	}
+
 }

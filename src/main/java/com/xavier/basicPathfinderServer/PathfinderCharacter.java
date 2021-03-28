@@ -3,6 +3,7 @@ package com.xavier.basicPathfinderServer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.xavier.basicPathfinderServer.Weapon.WeaponType;
@@ -16,10 +17,12 @@ public class PathfinderCharacter {
 	public List<Ability> abilities;
 	public final HashMap<String, Adjustment> adjustments;
 	public List<Adjustment> allowedAdjustments;
+	public final List<CharacterClass> classes;
 	public final HashMap<String, Adjustment> items;
 	public final HashMap<String, Stat> allStats;
 	public final HashMap<Weapon.WeaponType, HashMap<Weapon, Stat>> weaponAttack;
-	public final HashMap<String, Spellcasting> spellcastingByClass;
+	public final HashMap<Integer, Spellcasting> spellcastingByClass;
+	public final HashMap<String, Spell> knownSpells;
 	public HP hp;
 	public SkillRanks skillRanks;
 	private String alignment;
@@ -33,7 +36,9 @@ public class PathfinderCharacter {
 		initOtherNeededStats();
 		adjustments = new HashMap<>();
 		allowedAdjustments = new ArrayList<>();
+		classes = new ArrayList<>();
 		items = new HashMap<>();
+		knownSpells = new HashMap<>();
 		weaponAttack = new HashMap<>();
 		spellcastingByClass = new HashMap<>();
 		hp = new HP(getAbility("Constitution"));
@@ -62,9 +67,11 @@ public class PathfinderCharacter {
 		initSaves();
 		initAC();
 		initSkills();
+		initNewStat("Level");
 	}
 
 	private void initAttackMods() {
+		initNewStat("BAB");
 		initNewStat("All Attacks");
 		initNewStat("Melee Attacks");
 		initNewStat("Ranged attacks");
@@ -197,6 +204,10 @@ public class PathfinderCharacter {
 	public int getStatValue(String statName) {
 		return allStats.get(statName).getValue();
 	}
+
+	private int getBaseStatValue(String statName) {
+		return allStats.get(statName).getBase();
+	}
 	
 	public int getAbilityValue(String abilityName) {
 		return ((Ability)allStats.get(abilityName)).getFullValue();
@@ -224,6 +235,7 @@ public class PathfinderCharacter {
 		Adjustment weaponAttackAdjustment = new Adjustment(attackStat, true);
 		weaponAttackAdjustment.addEffect(weapon.getTitle(), attackStat, getStat(attackStat));
 		weaponAttackAdjustment.addEffect(weapon.getTitle(), "All Attacks", getStat("All Attacks"));
+		weaponAttackAdjustment.addEffect(weapon.getTitle() , "BAB", getStat("BAB"));
 		if (type == Weapon.WeaponType.MELEE) {
 			weaponAttackAdjustment.addEffect(weapon.getTitle(), "Melee Specific", getStat("Melee Attacks"));
 		} else {
@@ -246,35 +258,35 @@ public class PathfinderCharacter {
 		return -100;
 	}
 
-	public void giveSpellcasting(String className, CastingType type, String castingStat) {
-		Spellcasting newSpellcasting = new Spellcasting(className, type, castingStat, this);
-		spellcastingByClass.put(className, newSpellcasting);
+	public void giveSpellcasting(int classId, CastingType type, String castingStat) {
+		Spellcasting newSpellcasting = new Spellcasting(classId, type, castingStat, this);
+		spellcastingByClass.put(classId, newSpellcasting);
 	}
 
-	public void setSpellsPerDay(String className, int level, int basePerDay) {
-		Spellcasting spellcastingStats = spellcastingByClass.get(className);
+	public void setSpellsPerDay(int classId, int level, int basePerDay) {
+		Spellcasting spellcastingStats = spellcastingByClass.get(classId);
 		if (spellcastingStats != null) {
 			spellcastingStats.setSpellsPerDay(level, basePerDay);
 		}
 	}
 
-	public int getSpellsPerDay(String className, int level) {
-		Spellcasting spellcastingStats = spellcastingByClass.get(className);
+	public int getSpellsPerDay(int classId, int level) {
+		Spellcasting spellcastingStats = spellcastingByClass.get(classId);
 		if (spellcastingStats != null) {
 			return spellcastingStats.getSpellsPerDay(level);
 		}
 		return -1;
 	}
 
-	public void giveSpellKnown(String className, Spell spell) {
-		Spellcasting spellcasting = spellcastingByClass.get(className);
+	public void giveSpellKnown(int classId, Spell spell) {
+		Spellcasting spellcasting = spellcastingByClass.get(classId);
 		if (spellcasting != null) {
 			spellcasting.addSpellKnown(spell);
 		}
 	}
 
-	public void prepSpell(String className, String spellName, int level) {
-		Spellcasting spellcasting = spellcastingByClass.get(className);
+	public void prepSpell(int classId, String spellName, int level) {
+		Spellcasting spellcasting = spellcastingByClass.get(classId);
 		if (spellcasting != null) {
 			spellcasting.prepSpell(spellName, level);
 		}
@@ -284,8 +296,8 @@ public class PathfinderCharacter {
 		return (Ability)allStats.get(abilityName);
 	}
 
-	public Integer getSpellDC(String className, String spellName, int level) {
-		Spellcasting spellcasting = spellcastingByClass.get(className);
+	public Integer getSpellDC(int classId, String spellName, int level) {
+		Spellcasting spellcasting = spellcastingByClass.get(classId);
 		if (spellcasting != null) {
 			return spellcasting.getSpellDC(spellName, level);
 		}
@@ -380,5 +392,33 @@ public class PathfinderCharacter {
 		for (String adjustment : enabledAdjustments) {
 			toggleAdjustment(adjustment);
 		}
+	}
+
+	public void addClasses(List<CharacterClass> classes) {
+		for (CharacterClass characterClass : classes) {
+			addClass(characterClass);
+		}
+	}
+	
+	public void addClass(CharacterClass characterClass) {
+		classes.add(characterClass);
+		addToStat("Level", characterClass.getLevel());
+		addToStat("BAB", characterClass.getBab());
+		addToStat("Fortitude", characterClass.getFort());
+		addToStat("Reflex", characterClass.getRef());
+		addToStat("Will", characterClass.getWill());
+		if (characterClass.hasSpellcasting()) {
+			giveSpellcasting(characterClass.getId(), characterClass.getSpellcastingType(), characterClass.getSpellcastingAbility());
+			for (int spellLevel : characterClass.getBaseSpellsPerDay().keySet()) {
+				int baseSpells = characterClass.getBaseSpellsPerDay().get(spellLevel);
+				setSpellsPerDay(characterClass.getId(), spellLevel, baseSpells);
+			}
+		}
+	}
+	
+	private void addToStat(String statName, int amount) {
+		int statBase = getBaseStatValue(statName);
+		statBase += amount;
+		setStatBase(statName, statBase);
 	}
 }

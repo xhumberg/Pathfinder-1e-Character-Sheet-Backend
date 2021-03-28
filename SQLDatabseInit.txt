@@ -1,0 +1,458 @@
+CREATE TABLE UserIDToEmail
+(
+	UserID int,
+	UserEmail varchar(255)
+);
+
+INSERT INTO UserIDToEmail
+VALUES (0, 'xavierhumberg@gmail.com'), (1, 'test@xpfs.xyz'), (-1, 'all');
+
+CREATE TABLE UserAccess
+(
+	UserID int,
+	CharacterID int
+);
+
+INSERT INTO UserAccess
+VALUES (-1, 0), (-1, 1), (0, 2);
+
+CREATE TABLE PathfinderCharacter
+(
+	CharacterID int,
+	CharacterName varchar(255),
+	CharacterImageURL varchar(255),
+	Strength int,
+	Dexterity int,
+	Constitution int,
+	Intelligence int,
+	Wisdom int,
+	Charisma int
+);
+
+INSERT INTO PathfinderCharacter
+VALUES (0, 'Prosopa Dramatis', 'https://media.discordapp.net/attachments/526680690218106891/731649744937418792/107571564_607483240193629_5533577863028070138_n.png', 7, 16, 14, 21, 11, 5)
+	  ,(1, 'Coco the Mermaid', 'https://media.discordapp.net/attachments/526680690218106891/787088464713220096/130739401_2147415525390293_7206321013511074323_n.png', 16, 16, 14, 10, 7, 18)
+	  ,(2, 'Jordan Fenrir Wolfe', 'https://i.pinimg.com/originals/80/26/43/80264379fd64b1931b0930e22bab1ab5.jpg', 14, 20, 14, 10, 7, 14)
+	  ;
+	  
+CREATE TABLE Items
+(
+	ItemID int,
+	ItemName varchar(255),
+	ItemCost int,
+	ItemSlot varchar(63),
+	ItemDescription varchar(1500),
+	Adjustments varchar(1500)
+);
+
+INSERT INTO Items 
+VALUES  
+		 (0, 'Headband of Vast Intelligence +2', 4000, 'Headband', 'This intricate gold headband is decorated with several small blue and deep purple gemstones.\r\nThe headband grants the wearer an enhancement bonus to Intelligence of +2. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. A headband of vast intelligence +2 has one skill associated with it. After being worn for 24 hours, the headband grants a number of skill ranks in that skill equal to the wearer’s total Hit Dice. These ranks do not stack with the ranks a creature already possesses. This skill is chosen when the headband is created. If no skill is listed, the headband is assumed to grant skill ranks in a randomly determined Knowledge skill.', 'Intelligence##Enhancement##+2') 
+		,(1, 'Harrow Deck (Common)', 10, 'None', 'Used by gamblers and seers alike, this deck of cards comes in several varieties. Simple harrow decks are made from low-quality paper and typically have only an icon and a number to signify the suit and alignment. These simple decks are mostly used for games of chance, as the actual image and significance of the cards are irrelevant for such games. Common harrow decks are made from higher-quality paper and feature illustrations—harrow readers typically use these decks. Fine harrow decks are made from a variety of materials, such as high-quality paper, woods, bone, ivory, or metal.', '')
+		,(2, 'Ring of Protection +1', 2000, 'Ring', 'This ring offers continual magical protection in the form of a deflection bonus of +1 to AC.', 'All AC##Deflection##+1')
+		,(3, 'Potion of Mage Armor', 50, 'Potion', 'Drinking this potion casts Mage Armor at caster level 1', '')
+		,(4, 'Wand of Magic Missile', 750, 'Wand', 'Wand of first level Magic Missile', '')
+		,(5, 'Amulet of Natural Armor +1', 1000, 'Neck', 'This amulet, usually containing some type of magically preserved monster hide or other natural armor—such as bone, horn, carapace, or beast scales—toughens the wearer’s body and flesh, giving him an enhancement bonus to his natural armor of +1.', 'AC##Enhancement to Natural Armor##1;Flat-Footed##Enhancement to Natural Armor##1')
+		,(6, '+1 Mithral Buckler', 2015, 'Shield', 'Buckler made of mithril!', 'AC##Shield##2; Flat-Footed##Shield##2')
+		,(7, 'Persistent Metamagic Rod, Lesser', 9000, 'Rod', 'The wielder can cast up to three spells per day as though using the Persistent Spell feat.', '')
+		,(8, 'Wand of Mage Armor', 750, 'Wand', 'Wand of first level Mage Armor', '')
+		,(9, 'Wand of Infernal Healing', 750, 'Wand', 'Wand of first level Infernal Healing', '')
+		,(10, 'Cloak of Resistance +1', 1000, 'Shoulders', 'This garment offers magic protection in the form of a +1 resistance bonus on all saving throws (Fortitude, Reflex, and Will).', 'All Saves##Enhancement##1')
+		,(11, 'Scroll of Touch of the Sea', 25, 'Scroll', 'Scroll of first level Touch of the Sea', '')
+		;
+		
+CREATE TABLE Equipment
+(
+	CharacterID int,
+	ItemID int,
+	TrackedResourceID int
+);
+
+INSERT INTO Equipment
+VALUES 
+		(0, 0, -1)
+       ,(0, 1, -1)
+	   ,(0, 2, -1)
+	   ,(0, 3, -1)
+	   ,(0, 4, 2)
+	   ,(0, 5, -1)
+	   ,(0, 6, -1)
+	   ,(0, 7, 1)
+	   ,(0, 8, 3)
+	   ,(0, 9, 4)
+	   ,(0, 10, -1)
+	   ,(0, 11, -1)
+	   ,(0, 11, -1)
+	   ,(1, 2, -1)
+	   ;
+	   
+CREATE TABLE Feats
+(
+	FeatID int,
+	FeatName varchar(255),
+	FeatDescription varchar(1500),
+	FeatEffect varchar(1500)
+);
+
+INSERT INTO Feats
+VALUES
+	 (0, 'Spell Focus (Conjuration)', 'Choose a school of magic. Any spells you cast of that school are more difficult to resist.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select.', 'Conjuration##Spell Focus##1')
+	,(1, 'Harrowed', 'You get a +1 bonus on all Will saves made to resist enchantment effects. Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card’s suit. For example, if you drew a card from the suit of Dexterity, you could apply this +2 bonus on an Initiative check, a Reflex save, a Dexterity-based skill check, or a ranged attack roll. You may assign this +2 bonus after you make the roll, but you must do so before you know whether the roll was a success or not.', '[T:1##Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card’s suit. You may assign this +2 bonus after you make the roll, but you must do so before you know whether the roll was a success or not.][Special Save:+1 Will against enchantment effects]')
+    ,(2, 'Spell Focus (Evocation)', 'Choose a school of magic. Any spells you cast of that school are more difficult to resist.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select.', 'Evocation##Spell Focus##1')
+    ,(3, 'Extra Arcane Reservoir', 'You gain three more points in your arcane reservoir, and the maximum number of points in your arcane reservoir increases by that amount. (Apply by modifying the Arcane Reservoir uses per day)', '')
+    ;
+	
+CREATE TABLE TakenFeats
+(
+	CharacterID int,
+	FeatID int
+);
+
+INSERT INTO TakenFeats
+VALUES
+	 (0, 0)
+	,(0, 1)
+	,(0, 2)
+	,(0, 3)
+	;
+
+CREATE TABLE ClassFeatures
+(
+	FeatureID int,
+	FeatureName varchar(255),
+	FeatureDescription varchar(1500),
+	FatureEffect varchar(1500),
+	TrackedResourceID int
+);
+
+INSERT INTO ClassFeatures
+VALUES
+	 (0, 'Arcane Reservoir (modified)', 'The exploiter wizard gains the arcanist''s arcane reservoir class feature. The exploiter wizard can use his wizard level as his arcanist level for determining how many arcanist reservoir points he gains at each level.', '[T:8]', 0)
+	;
+
+CREATE TABLE Classes
+(
+	ClassID int,
+	ClassLevel int,
+	ClassBAB int,
+	ClassFort int,
+	ClassRef int,
+	ClassWill int,
+	ClassName varchar(255),
+	Spellcasting boolean,
+	SpellcastingType varchar(255),
+	SpellcastingAbility varChar(255),
+	SpellsPerDay varchar(255)
+);
+
+INSERT INTO Classes
+VALUES
+	 (0, 7, 3, 2, 2, 5, 'Exploiter Wizard 5/Harrower 2', true, 'PREPARED', 'Intelligence', '0-4 1-4 2-3 3-2 4-1')
+	; 
+
+CREATE TABLE ClassesToClassFeatures
+(
+	ClassID int,
+	FeatureID int
+);
+
+INSERT INTO ClassesToClassFeatures
+VALUES
+	 (0, 0)
+	;
+	
+CREATE TABLE CharacterClasses
+(
+	CharacterID int,
+	ClassID int
+);
+
+INSERT INTO CharacterClasses
+VALUES
+	 (0, 0)
+	;
+	
+CREATE TABLE CharacterClassFeatures
+(
+	CharacterID int,
+	FeatureID int
+);
+
+INSERT INTO CharacterClassFeatures
+VALUES
+	 (0, 0)
+	;
+	
+CREATE TABLE TrackedResources
+(
+	ResourceID int,
+	ResourceName varchar(255),
+	ResourceDescription varchar(1500),
+	ResourceRemaining int,
+	ResourceMax int
+);
+
+INSERT INTO TrackedResources
+VALUES
+	 (0, 'Arcane Reservoir', 'Using an exploit may use this.', 8, 8)
+	,(1, 'Lesser Persistent Metamagic Rod', '3 times per day, you may cast a 3rd or lower level spell as if it had the Persistent Spell metamagic feat', 3, 3)
+	,(2, 'Wand of Magic Missile', 'Casts 1st level magic missile', 48, 50)
+	,(3, 'Wand of Mage Armor', 'Casts 1st level Mage Armor', 49, 50)
+	,(4, 'Wand of Infernal Healing', 'Casts 1st level Infernal Healing', 49, 50)
+	,(5, 'Dummy', 'You shouldn''t see this', 9, 120)
+	;
+	
+CREATE TABLE CharactersTrackedResources
+(
+	CharacterID int,
+	TrackedResourceID int
+);
+
+INSERT INTO CharactersTrackedResources
+VALUES
+	 (0, 0)
+	;
+	
+CREATE TABLE Spells
+(
+	SpellID int,
+	SpellLevel varchar(500),
+	SpellName varchar(255),
+	SpellSchool varChar(255),
+	SpellTags varChar(255),
+	SpellCastingTime varChar(255),
+	SpellComponents varChar(255),
+	SpellRange varChar(255),
+	SpellTarget varChar(255),
+	SpellDuration varChar(255),
+	SpellSavingThrow varChar(255),
+	SpellSpellResistance varChar(255),
+	SpellDescription varChar(2000)
+);
+
+INSERT INTO Spells
+VALUES
+	 (0, 'arcanist 1, bloodrager 1, occultist 1, psychic 1, sorcerer 1, spiritualist 1, summoner 1, summoner (unchained) 1, witch 1, wizard 1', 'Mage Armor', 'Conjuration', 'Creation, Force', '1 standard action', 'V, S, F (a piece of cured leather)', 'touch', 'creature touched', '1 hour/level (D)', 'Will negates (harmless)', 'no', 'An invisible but tangible field of force surrounds the subject of a mage armor spell, providing a +4 armor bonus to AC.\r\n\r\nUnlike mundane armor, mage armor entails no armor check penalty, arcane spell failure chance, or speed reduction. Since mage armor is made of force, incorporeal creatures can''t bypass it the way they do normal armor.')
+	,(1, 'arcanist 1, bard 1, bloodrager 1, inquisitor 1, medium 1, psychic 1, skald 1, sorcerer 1, witch 1, wizard 1', 'Ear-Piercing Scream', 'Evocation', 'Sonic', '1 standard action', 'V, S', 'close (25 ft. + 5 ft./2 levels)', 'one creature', 'instantaneous; see text', 'Fortitude partial (see text)', 'yes', 'You unleash a powerful scream, inaudible to all but a single target. The target is dazed for 1 round and takes 1d6 points of sonic damage per two caster levels (maximum 5d6). A successful save negates the daze effect and halves the damage.')
+	,(2, 'arcanist 1, bard 1, magus 1, mesmerist 1, occultist 1, psychic 1, redmantisassassin 1, skald 1, sorcerer 1, wizard 1', 'Vanish', 'Illusion', 'glamer', '1 standard action', 'V, S', 'touch', 'creature touched', '1 round/level (up to 5 rounds) (D)', 'Will negates (harmless)', 'yes (harmless)', 'This spell functions like invisibility, except the effect only lasts for 1 round per caster level (maximum of 5 rounds). Like invisibility, the spell immediately ends if the subject attacks any creature.')
+	,(3, 'arcanist 1, bard 1, magus 1, medium 1, mesmerist 1, occultist 1, psychic 1, redmantisassassin 1, skald 1, sorcerer 1, wizard 1', 'Silent Image', 'Illusion', 'figment', '1 standard action', 'V, S, F (a bit of fleece)', 'long (400 ft. + 40 ft./level)', 'visual figment that cannot extend beyond four 10-ft. cubes + one 10-ft. cube/level (S)', 'concentration', 'Will disbelief (if interacted with)', 'no', 'This spell creates the visual illusion of an object, creature, or force, as visualized by you. The illusion does not create sound, smell, texture, or temperature. You can move the image within the limits of the size of the effect.')
+	,(4, 'arcanist 1, cleric 1, druid 1, hunter 1, oracle 1, redmantisassassin 1, sorcerer 1, warpriest 1, wizard 1', 'Burning Disarm', 'Transmutation', 'fire', '1 standard action', 'V, S', 'close (25 ft. + 5 ft./2 levels)', 'held metal item of one creature or 15 lbs. of unattended metal', 'instantaneous', 'Reflex negates (object, see text)', 'yes (object)', 'This spell causes a metal object to instantly become red hot. A creature holding the item may attempt a Reflex save to drop it and take no damage (even if it is not their turn), otherwise the hot metal deals 1d4 points of fire damage per caster level (maximum 5d4). Circumstances that prevent the creature from dropping the item (such as a locked gauntlet) mean the creature gets no saving throw. The heat does not harm the item, and it does not get hot enough or last long enough to ignite flammable objects. The item cools to its previous temperature almost instantly. If cast underwater, burning disarm deals half damage and boils the surrounding water.')
+	,(5, 'adept 2, arcanist 2, bard 2, bloodrager 2, magus 2, medium 2, mesmerist 2, occultist 2, psychic 2, redmantisassassin 2, skald 2, sorcerer 2, wizard 2', 'Mirror Image', 'Illusion', 'figment', '1 standard action', 'V, S', 'personal', 'you', '1 min./level', 'none', 'no', 'This spell creates a number of illusory doubles of you that inhabit your square. These doubles make it difficult for enemies to precisely locate and attack you.\r\n\r\nWhen mirror image is cast, 1d4 images plus one image per three caster levels (maximum eight images total) are created. These images remain in your space and move with you, mimicking your movements, sounds, and actions exactly. Whenever you are attacked or are the target of a spell that requires an attack roll, there is a possibility that the attack targets one of your images instead. If the attack is a hit, roll randomly to see whether the selected target is real or a figment. If it is a figment, the figment is destroyed. If the attack misses by 5 or less, one of your figments is destroyed by the near miss. Area spells affect you normally and do not destroy any of your figments. Spells and effects that do not require an attack roll affect you normally and do not destroy any of your figments. Spells that require a touch attack are harmlessly discharged if used to destroy a figment.\r\n\r\nAn attacker must be able to see the figments to be fooled. If you are invisible or the attacker is blind, the spell has no effect (although the normal miss chances still apply).')
+	,(6, 'antipaladin 1, arcanist 2, cleric 2, inquisitor 2, oracle 2, sorcerer 2, spiritualist 2, warpriest 2, witch 2, wizard 2', 'Boneshaker', 'Necromancy', '', '1 standard action', 'V, S, F (a human-shaped fetish made of bone)', 'medium (100 ft. + 10 ft./level)', 'one living creature or undead creature with a skeleton', 'instantaneous', 'Fortitude negates or partial (see text)', 'yes', 'By using a bone fetish like a marionette, you take control of a target creature’s skeleton. This has a variety of effects depending on whether the target is living or undead.\r\n\r\nA living creature has its skeleton rattle within its flesh, causing it grievous harm. The target takes 3d6 points of damage, plus 1d6 additional points of damage per 2 caster levels you have.In addition, you can move the target 5 feet. This movement doesn’t provoke attacks of opportunity. A successful saving throw halves the damage and negates the movement.\r\n\r\nAn undead creature takes no damage. Instead, you manipulate the undead, forcing it to take an immediate action to either move up to its speed (provoking attacks of opportunity as normal) or make a single attack against a creature of your choice in its reach. Either of these is the most basic version of the action the creature can take (it doesn’t activate any special abilities that it could apply to the movement or attack, such as grab). A successful saving throw negates this effect. A mindless undead creature doesn’t receive a save against this effect.')
+	,(7, 'alchemist 2, arcanist 2, bloodrager 2, investigator 2, medium 2, mesmerist 2, occultist 2, psychic 2, shaman 2, sorcerer 2, spiritualist 2, witch 2, wizard 2', 'False Life', 'Necromancy', '', '1 standard action', 'V, S, M (a drop of blood)', 'personal', 'you', '1 hour/level or until discharged; see text', 'none', 'no', 'You harness the power of unlife to grant yourself a limited ability to avoid death. While this spell is in effect, you gain temporary hit points equal to 1d10 + 1 per caster level (maximum +10).')
+	,(8, 'arcanist 2, sorcerer 2, wizard 2', 'Burning Arc (Keleshite)', 'Evocation', 'fire', '1 standard action', 'V, S', 'close (25 ft. + 5 ft./2 levels)', 'one primary target plus one additional target/3 levels (each of which must be within 15 ft. of the primary target)', 'instantaneous', 'Reflex half', 'yes', 'Keleshites brag that they stole this spell from genie-kind thousands of years ago while other civilizations struggled without fire.\r\n\r\nThis spell causes an arc of flame to leap from your fingers, burning a number of enemies nearby. It deals 1d6 points of fire damage per caster level (maximum 10d6). For every additional target the discharge arcs to, reduce the number of damage dice by half (rounded down). Therefore, at 9th level, your burning arc deals 9d6 points of fire damage to the primary target, then 4d6 points of fire damage to a secondary target, then 2d6 points of fire damage to an additional target.\r\n\r\nEach target can attempt a Reflex saving throw for half damage. The Reflex DC to halve the damage of the secondary bolts is 2 lower than the DC to halve the damage of the primary bolt. You may choose secondary targets as you like, but they must all be within 15 feet of the primary target, and no target can be struck more than once. You can choose to affect fewer secondary targets than the maximum.')
+	,(9, 'alchemist 3, arcanist 3, bard 3, bloodrager 3, investigator 3, magus 3, medium 2, occultist 3, psychic 3, redmantisassassin 3, skald 3, sorcerer 3, spiritualist 3, summoner 2, summoner (unchained) 3, wizard 3', 'Haste', 'Transmutation', '', '1 standard action', 'V, S, M (a shaving of licorice root)', 'close (25 ft. + 5 ft./2 levels)', 'Targets one creature/level, no two of which can be more than 30 ft. apart', '1 round/level', 'Fortitude negates (harmless)', 'yes (harmless)', 'The transmuted creatures move and act more quickly than normal. This extra speed has several effects.\r\n\r\nWhen making a full attack action, a hasted creature may make one extra attack with one natural or manufactured weapon. The attack is made using the creature''s full base attack bonus, plus any modifiers appropriate to the situation. (This effect is not cumulative with similar effects, such as that provided by a speed weapon, nor does it actually grant an extra action, so you can''t use it to cast a second spell or otherwise take an extra action in the round.)\r\n\r\nA hasted creature gains a +1 bonus on attack rolls and a +1 dodge bonus to AC and Reflex saves. Any condition that makes you lose your Dexterity bonus to Armor Class (if any) also makes you lose dodge bonuses.\r\n\r\nAll of the hasted creature''s modes of movement (including land movement, burrow, climb, fly, and swim) increase by 30 feet, to a maximum of twice the subject''s normal speed using that form of movement. This increase counts as an enhancement bonus, and it affects the creature''s jumping distance as normal for increased speed. Multiple haste effects don''t stack. Haste dispels and counters slow.')
+	,(10, 'arcanist 3, sorcerer 3, summoner 3, summoner (unchained) 3, wizard 3', 'Spiked Pit', 'Conjuration', 'creation', '1 standard action', 'V, S, F (miniature shovel costing 10 gp)', 'medium (100 ft. + 10 ft./level)', '10-ft.-by-10-ft. hole, 10 ft. deep/2 levels', '1 round + 1 round/level', 'Reflex negates', 'no', 'This spell functions as create pit, except that the pit is lined with wickedly sharp spikes along its bottom and walls and has a maximum depth of 50 feet. Creatures who fall into the pit take falling damage as normal, plus 2d6 points of piercing damage from the spikes. Any creature or object coming into contact with the spikes along the walls, such as a creature trying to climb out, or rope or other typical aids to climbing, takes 1d6 points of piercing damage each round they are in contact with the walls. For those willing to accept the damage incurred while climbing, the pit’s walls have a Climb DC of 20.')
+	,(11, 'arcanist 3, bard 2, cleric 3, oracle 3, skald 2, sorcerer 3, warpriest 3, witch 3, wizard 3', 'Charitable Impulse', 'Enchantment', 'compulsion, mind-affecting', '1 standard action', 'V, S, F/DF (a miniature collection plate)', 'close (25 ft. + 5 ft./2 levels)', 'one humanoid creature', '1 round/level', 'Will negates', 'yes', 'This spell makes a creature more charitable, compelling it to aid others rather than use violence. An affected creature practices nonviolent combat behaviors according to the following list of priorities, beginning with the first priority. The subject continues to perform a priority until he can no longer fulfill its demands (at which point he moves to the next priority) or until the spell ends, whichever comes first.\r\n\r\n1st Priority: Heal injured creatures within 30 feet, beginning with the closest creatures and using whatever methods the subject has at hand (including potions, spells, and so on).\r\n\r\n2nd Priority: The subject gives his weapon away to the nearest creature within 30 feet who will accept it. If no creature accepts the weapon, the subject drops the weapon on the ground.\r\n\r\n3rd Priority: Cast beneficial spells and/or use beneficial magic items (including potions, wands, and so on) on creatures within 30 feet, starting with the closest creatures.\r\n\r\n4th Priority: The subject gives away his non-worn possessions—the contents of a backpack or similar item count as one item each, as does the container itself—to creatures within 30 feet. If no creature accepts the items, the subject drops the items on the ground.\r\n\r\n5th Priority: The subject gives away his remaining possessions (including his armor, boots, cloak, and so on) to creatures within 30 feet. If no creature accepts the items, the subject drops them on the ground.\r\n\r\nIf the subject fulfills all five priorities, the spell effect ends. The subject cannot attack or take attacks of opportunity, but can defend himself as normal. If the subject is attacked, the spell’s effect immediately ends.')
+	,(12, 'arcanist 4, sorcerer 4, summoner 4, summoner (unchained) 4, wizard 4', 'Acid Pit', 'Conjuration', 'creation, acid', '1 standard action', 'V, S, M (drop of acid), F (Fine shovel worth 10 gp)', 'medium (100 ft. + 10 ft./level)', '10-ft.-by-10-ft. hole, 10 ft. deep/2 levels', '1 round + 1 round/level', 'Reflex negates, see text', 'no', 'This spell functions as create pit, except that it places a 5-foot-deep pool of acid at the bottom of the pit. The pit has a maximum depth of 100 feet. Creatures who fall into the pit take falling damage as normal (the acid counts as a yielding surface), plus 2d6 points of acid damage per round spent in contact with the acid. In addition, exposed items carried by a creature in the pit may be harmed. Refer to Table 9–2: Items Affected by Magical Attacks (Core Rulebook 216). Items are affected one at a time in the order listed on the table, and must make Fortitude saves after 3 consecutive rounds in the acid or gain the broken condition. Objects with the broken condition (regardless of how they became broken) must make a Fortitude saving throw each round spent within the acid or be destroyed. The walls of the pit are quite slippery and have a Climb DC of 30.')
+	,(13, 'arcanist 4, bloodrager 4, psychic 4, sorcerer 4, spiritualist 4, wizard 4', 'Telekinetic Charge', 'Evocation', 'force', '1 standard action', 'V, S', 'close (25 ft. + 5 ft./2 levels)', 'one willing creature', 'instantaneous', 'Will negates (harmless)', 'yes (harmless)', 'You telekinetically launch an ally across the battlefield to anywhere within this spell’s range. While moving, your ally is flying just above the ground unless you wish otherwise. Movement from this spell provokes attacks of opportunity as normal, although you can lift your ally over objects or out of enemy reach, as long as your ally remains within this spell’s range. If your ally lands adjacent to an opponent, he can spend an immediate action to make a melee attack against that opponent with a +2 bonus on the attack roll.')
+	;
+	
+CREATE TABLE SpellsPrepped
+(
+	CharacterID int,
+	SpellID int,
+	SpellLevel int,
+	ClassID int
+);
+
+INSERT INTO SpellsPrepped
+VALUES
+	 (0, 0, 1, 0)
+	,(0, 1, 1, 0)
+	,(0, 2, 1, 0)
+	,(0, 2, 1, 0)
+	,(0, 3, 1, 0)
+	,(0, 4, 1, 0)
+	,(0, 5, 2, 0)
+	,(0, 6, 2, 0)
+	,(0, 7, 2, 0)
+	,(0, 8, 2, 0)
+	,(0, 8, 2, 0)
+	,(0, 9, 3, 0)
+	,(0, 9, 3, 0)
+	,(0, 10, 3, 0)
+	,(0, 11, 3, 0)
+	,(0, 12, 4, 0)
+	,(0, 13, 4, 0)
+	;
+	
+CREATE TABLE SpellsCast
+(
+	CharacterID int,
+	SpellID int,
+	SpellLevel int,
+	ClassID int
+);
+
+INSERT INTO SpellsCast
+VALUES
+	 (0, 0, 1, 0)
+	,(0, 9, 3, 0)
+	;
+	
+CREATE TABLE SpellsKnown
+(
+	CharacterID int,
+	SpellID int,
+	ClassID int
+);
+
+INSERT INTO SpellsKnown
+VALUES
+	 (0, 0, 0)
+	,(0, 1, 0)
+	,(0, 2, 0)
+	,(0, 3, 0)
+	,(0, 4, 0)
+	,(0, 5, 0)
+	,(0, 6, 0)
+	,(0, 7, 0)
+	,(0, 8, 0)
+	,(0, 9, 0)
+	,(0, 10, 0)
+	,(0, 11, 0)
+	,(0, 12, 0)
+	,(0, 13, 0)
+	;
+	
+CREATE TABLE CharacterWealth
+(
+	CharacterID int,
+	EarnedGold int,
+	SpentGold int
+);
+
+INSERT INTO CharacterWealth
+VALUES
+	(0, 33220, 0)
+	;
+	
+CREATE TABLE StandardAdjustments
+(
+	AdjustmentID int,
+	AdjustmentName varchar(255),
+	AdjustmentEffect varchar(1500)
+);
+
+INSERT INTO StandardAdjustments
+VALUES
+	 (0, 'Heroism', 'All Skills##Morale##2; All Saves##Morale##2; All Attacks##Morale##2')
+	,(1, 'Haste', 'AC##Dodge##1; Touch##Dodge##1; Reflex##Dodge##1; All Attacks##Haste##1')
+	,(2, 'Mage Armor', 'AC##Armor##4; Flat-Footed##Armor##4')
+	;
+	
+CREATE TABLE EnabledAdjustments
+(
+	CharacterID int,
+	AdjustmentID int
+);
+
+INSERT INTO EnabledAdjustments
+VALUES
+	 (0, 0)
+	,(0, 2)
+	;
+	
+CREATE TABLE AllowedAdjustments
+(
+	CharacterID int,
+	AdjustmentID int
+);
+
+INSERT INTO AllowedAdjustments
+VALUES
+	 (0, 0)
+	,(0, 1)
+	,(0, 2)
+	;
+	
+CREATE TABLE SkillRanks
+(
+	CharacterID int,
+	SkillName varchar(255),
+	SkillRanks int
+);
+
+INSERT INTO SkillRanks
+VALUES
+	 (0, 'Bluff', 7)
+	,(0, 'Diplomacy', 7)
+	,(0, 'Knowledge (Arcana)', 7)
+	,(0, 'Knowledge (Dungeoneering)', 2)
+	,(0, 'Knowledge (Engineering)', 2)
+	,(0, 'Knowledge (Geography)', 2)
+	,(0, 'Knowledge (History)', 2)
+	,(0, 'Knowledge (Local)', 7)
+	,(0, 'Knowledge (Nature)', 2)
+	,(0, 'Knowledge (Nobility)', 2)
+	,(0, 'Knowledge (Planes)', 4)
+	,(0, 'Knowledge (Religion)', 7)
+	,(0, 'Perform', 5)
+	,(0, 'Spellcraft', 7)	
+	;
+	
+CREATE TABLE ClassSkills (
+	CharacterID int,
+	SkillName varchar(255)
+);
+
+INSERT INTO ClassSkills
+VALUES
+	 (0, 'Appraise')
+	,(0, 'Craft A')
+	,(0, 'Craft B')
+	,(0, 'Fly')
+	,(0, 'Knowledge (Arcana)')
+	,(0, 'Knowledge (Dungeoneering)')
+	,(0, 'Knowledge (Engineering)')
+	,(0, 'Knowledge (Geography)')
+	,(0, 'Knowledge (History)')
+	,(0, 'Knowledge (Local)')
+	,(0, 'Knowledge (Nature)')
+	,(0, 'Knowledge (Nobility)')
+	,(0, 'Knowledge (Planes)')
+	,(0, 'Knowledge (Religion)')
+	,(0, 'Linguistics')
+	,(0, 'Profession')
+	,(0, 'Spellcraft')
+	,(0, 'Bluff')
+	,(0, 'Diplomacy')
+	,(0, 'Perform')
+	,(0, 'UMD')
+	;
+---------
+
+SELECT CharacterName FROM UserIDToEmail
+INNER JOIN UserAccess ON UserIDToEmail.UserID = UserAccess.UserID
+INNER JOIN PathfinderCharacter ON UserAccess.CharacterID = PathfinderCharacter.CharacterID
+WHERE UserIDToEmail.UserEmail = 'xavierhumberg@gmail.com' OR UserAccess.UserID = -1;
+
+SELECT ItemName, ItemCost, ItemDescription, Adjustments FROM PathfinderCharacter
+INNER JOIN Equipment ON PathfinderCharacter.CharacterID = Equipment.CharacterID
+INNER JOIN Items ON Items.ItemID = Equipment.ItemID
+WHERE PathfinderCharacter.CharacterID = 0;
+
+select CharacterName, ItemName, ItemSlot, ResourceName, ResourceRemaining, ResourceMax from Equipment
+inner join PathfinderCharacter on PathfinderCharacter.CharacterID = Equipment.CharacterID
+inner join Items on Items.ItemID = Equipment.ItemID
+inner join TrackedResources on TrackedResources.ResourceID = Equipment.TrackedResourceID
+
+select CharacterName, ResourceName, ResourceDescription, ResourceRemaining, ResourceMax from CharactersTrackedResources
+inner join PathfinderCharacter on PathfinderCharacter.CharacterID = CharactersTrackedResources.CharacterID
+inner join TrackedResources on TrackedResources.ResourceID = CharactersTrackedResources.TrackedResourceID
+
+select SpellName, SpellsPrepped.SpellLevel from Spells
+inner join SpellsPrepped on Spells.SpellID = SpellsPrepped.SpellID
+where CharacterID = 0;
+
+select StandardAdjustments.AdjustmentID, AdjustmentName, AdjustmentEffect from EnabledAdjustments
+inner join StandardAdjustments on StandardAdjustments.AdjustmentID = EnabledAdjustments.AdjustmentID
+where EnabledAdjustments.CharacterID = 0
+
+------------
+
+
+SELECT * FROM CharacterHeader;
+
+SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE';

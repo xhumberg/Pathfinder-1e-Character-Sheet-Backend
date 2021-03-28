@@ -5,17 +5,17 @@ import java.util.LinkedList;
 
 public class Spellcasting {
 
-	private String className;
 	private CastingType type;
+	private int classId;
 	private String castingStat;
 	private PathfinderCharacter character;
 	private HashMap<Integer, Integer> spellsPerDay;
 	private LinkedList<Spell> spellsKnown;
 	private HashMap<Integer, LinkedList<Spell>> spellsPrepped;
 	
-	public Spellcasting(String className, CastingType type, String castingStat,
+	public Spellcasting(int classId, CastingType type, String castingStat,
 			PathfinderCharacter character) {
-		this.className = className;
+		this.classId = classId;
 		this.type = type;
 		this.castingStat = castingStat;
 		this.character = character;
@@ -32,7 +32,7 @@ public class Spellcasting {
 		int baseSpellsForLevel = spellsPerDay.get(level);
 		int castingMod = character.getAbilityMod(castingStat);
 		int bonusSpellsPerDay = 0;
-		while (castingMod >= level) {
+		while (level != 0 && castingMod >= level) {
 			bonusSpellsPerDay++;
 			castingMod -= 4;
 		}

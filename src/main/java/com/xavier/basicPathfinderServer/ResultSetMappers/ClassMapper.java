@@ -16,6 +16,7 @@ public class ClassMapper implements ResultSetMapper<Object> {
 		List<CharacterClass> classes = new ArrayList<>();
 		try {
 			while (resultSet.next()) {
+				int id = Integer.parseInt(resultSet.getString("ClassID"));
 				int level = Integer.parseInt(resultSet.getString("ClassLevel"));
 				int bab = Integer.parseInt(resultSet.getString("ClassBAB"));
 				int fort = Integer.parseInt(resultSet.getString("ClassFort"));
@@ -28,7 +29,7 @@ public class ClassMapper implements ResultSetMapper<Object> {
 				String spellsPerDayString = resultSet.getString("SpellsPerDay");
 				Map<Integer, Integer> baseSpellsPerDay = SpellsPerDayParser.parse(spellsPerDayString);
 				
-				CharacterClass characterClass = new CharacterClass(level, bab, fort, ref, will, name, spellcasting, type, ability, baseSpellsPerDay);
+				CharacterClass characterClass = new CharacterClass(id, level, bab, fort, ref, will, name, spellcasting, type, ability, baseSpellsPerDay);
 				classes.add(characterClass);
 			}
 		} catch (SQLException e) {
