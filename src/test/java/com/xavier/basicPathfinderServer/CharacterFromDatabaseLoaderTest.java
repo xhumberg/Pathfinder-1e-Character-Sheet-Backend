@@ -17,17 +17,22 @@ class CharacterFromDatabaseLoaderTest {
 		assertEquals("Prosopa Dramatis", prosopa.getName());
 		assertTrue(adjustmentsContainsHeroism(prosopa));
 		
+		assertEquals(23, prosopa.getAbilityValue("Intelligence"));
+		
 		assertEquals(7, prosopa.getStatValue("Level"));
 		assertEquals(3, prosopa.getStatValue("BAB"));
-		assertEquals(6, prosopa.getStatValue("Fortitude")); //Heroism is on
-		assertEquals(7, prosopa.getStatValue("Reflex"));
-		assertEquals(7, prosopa.getStatValue("Will"));
+		assertEquals(7, prosopa.getStatValue("Fortitude")); //Heroism is on
+		assertEquals(8, prosopa.getStatValue("Reflex"));
+		assertEquals(8, prosopa.getStatValue("Will"));
 
 		assertEquals(4, prosopa.getSpellsPerDay(0, 0));
 		assertEquals(6, prosopa.getSpellsPerDay(0, 1));
-		assertEquals(4, prosopa.getSpellsPerDay(0, 2)); //This number will go up with the new headband
+		assertEquals(5, prosopa.getSpellsPerDay(0, 2));
 		assertEquals(3, prosopa.getSpellsPerDay(0, 3));
 		assertEquals(2, prosopa.getSpellsPerDay(0, 4));
+		
+		Item magicMissile = prosopa.getAllItemsWithName("Wand of Magic Missile").get(0);
+		assertEquals(48, magicMissile.getTrackedResourceRemaining());
 	}
 
 	private boolean adjustmentsContainsHeroism(PathfinderCharacter prosopa) {

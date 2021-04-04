@@ -5,16 +5,18 @@ import java.util.Map;
 
 import com.xavier.basicPathfinderServer.Adjustment;
 import com.xavier.basicPathfinderServer.CharacterClass;
+import com.xavier.basicPathfinderServer.Item;
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
 import com.xavier.basicPathfinderServer.Spell;
 import com.xavier.basicPathfinderServer.ResultSetMappers.AllowedAdjustmentsMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.ClassMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.ClassSkillMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.EnabledAdjustmentsMapper;
+import com.xavier.basicPathfinderServer.ResultSetMappers.ItemMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.KnownSpellMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.PathfinderCharacterMapper;
-import com.xavier.basicPathfinderServer.ResultSetMappers.SpellInterimMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.SkillRanksMapper;
+import com.xavier.basicPathfinderServer.ResultSetMappers.SpellInterimMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.SpellNameLevelAndClassInterim;
 
 public class CharacterFromDatabaseLoader {
@@ -28,6 +30,7 @@ public class CharacterFromDatabaseLoader {
 	private final static String GET_KNOWN_SPELLS = "select * from SpellsKnown inner join Spells on SpellsKnown.SpellID = Spells.SpellID where CharacterID = ?";
 	private final static String GET_PREPPED_SPELLS_QUERY = "select ClassID, SpellsPrepped.SpellLevel, SpellName from SpellsPrepped inner join Spells on SpellsPrepped.SpellID = Spells.SpellID where CharacterID = ?";
 	private final static String GET_SPELLS_CAST = "select SpellName, SpellsCast.SpellLevel, ClassID from SpellsCast inner join Spells on Spells.SpellID = SpellsCast.SpellID where SpellsCast.CharacterID = ?";
+	private final static String GET_EQUIPMENT = "select * from Equipment inner join Items on Items.ItemID = Equipment.ItemID left join TrackedResources on TrackedResources.ResourceID = Equipment.TrackedResourceID where CharacterID = ?";
 	
 	@SuppressWarnings("unchecked")
 	public static PathfinderCharacter loadCharacter(String idString) {
@@ -70,7 +73,14 @@ public class CharacterFromDatabaseLoader {
 				character.castSpell(castSpell.getClassId(), castSpell.getSpellName(), castSpell.getLevel());
 			}
 			
-			
+			List<Item> items = (List<Item>)db.executeSelectQuery(new ItemMapper(), GET_EQUIPMENT, id);
+			for (Item item : items) {
+				if (item.isEquipped()) {
+					character.equip(item);
+				} else {
+					character.giveItem(item);
+				}
+			}
 			
 			db.close();
 			return character;

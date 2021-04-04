@@ -2,6 +2,10 @@ package com.xavier.basicPathfinderServer;
 
 public class AdjustmentStringConverter {
 	public static Adjustment convert(String name, String adjustmentString) {
+		adjustmentString = adjustmentString.replaceAll("\\[T:\\d+\\]", "");
+		if (adjustmentString.trim().equals("")) {
+			return null;
+		}
 		String[] adjustmentStrings = adjustmentString.split(";");
 		Adjustment newAdjustment = new Adjustment(name);
 		for (String currentAdjustmentString : adjustmentStrings) {
