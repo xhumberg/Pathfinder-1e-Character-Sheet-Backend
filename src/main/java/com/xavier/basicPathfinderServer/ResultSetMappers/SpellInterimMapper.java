@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xavier.basicPathfinderServer.Spell;
-import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.PreppedSpellInterim;
+import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.SpellNameLevelAndClassInterim;
 
-public class PreppedSpellMapper implements ResultSetMapper<Object> {
+public class SpellInterimMapper implements ResultSetMapper<Object> {
 
 	@Override
-	public List<PreppedSpellInterim> map(ResultSet resultSet) {
-		List<PreppedSpellInterim> spells = new ArrayList<>();
+	public List<SpellNameLevelAndClassInterim> map(ResultSet resultSet) {
+		List<SpellNameLevelAndClassInterim> spells = new ArrayList<>();
 		try {
 			while (resultSet.next()) {
 				int classId = Integer.parseInt(resultSet.getString("ClassID"));
 				int level = Integer.parseInt(resultSet.getString("SpellLevel"));
 				String spellName = resultSet.getString("SpellName");
-				PreppedSpellInterim spell = new PreppedSpellInterim(classId, level, spellName);
+				SpellNameLevelAndClassInterim spell = new SpellNameLevelAndClassInterim(classId, level, spellName);
 				spells.add(spell);
 			}
 		} catch (SQLException e) {

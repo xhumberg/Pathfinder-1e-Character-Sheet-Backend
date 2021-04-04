@@ -12,6 +12,7 @@ public class Spellcasting {
 	private HashMap<Integer, Integer> spellsPerDay;
 	private LinkedList<Spell> spellsKnown;
 	private HashMap<Integer, LinkedList<Spell>> spellsPrepped;
+	private HashMap<Integer, LinkedList<Spell>> spellsCast;
 	
 	public Spellcasting(int classId, CastingType type, String castingStat,
 			PathfinderCharacter character) {
@@ -22,6 +23,7 @@ public class Spellcasting {
 		spellsPerDay = new HashMap<>();
 		spellsKnown = new LinkedList<>();
 		spellsPrepped = new HashMap<>();
+		spellsCast = new HashMap<>();
 	}
 
 	public void setSpellsPerDay(int level, int basePerDay) {
@@ -54,6 +56,26 @@ public class Spellcasting {
 			}
 			spellsOfLevel.add(spell);
 		}
+	}
+	
+	//Note: The spell MUST be prepped
+	public void castSpell(String spellName, int level) {
+		Spell targetSpell = null;
+		LinkedList<Spell> spellsOfLevel = spellsPrepped.get(level);
+		for (Spell spell : spellsOfLevel) {
+			if (spell.name.equals(spellName)) {
+				targetSpell = spell;
+				break;
+			}
+		}
+		spellsOfLevel.remove(targetSpell);
+		
+		LinkedList<Spell> castSpellsOfLevel = spellsCast.get(level);
+		if (castSpellsOfLevel == null) {
+			spellsCast.put(level, new LinkedList<Spell>());
+			castSpellsOfLevel = spellsCast.get(level);
+		}
+		castSpellsOfLevel.add(targetSpell);
 	}
 
 	private void addSpellDCToSpell(int level, Spell spell) {

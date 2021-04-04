@@ -1,12 +1,12 @@
 package com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects;
 
-public class PreppedSpellInterim {
+public class SpellNameLevelAndClassInterim {
 
 	int classId;
 	int level;
 	String spellName;
 	
-	public PreppedSpellInterim(int classId, int level, String spellName) {
+	public SpellNameLevelAndClassInterim(int classId, int level, String spellName) {
 		this.classId = classId;
 		this.level = level;
 		this.spellName = spellName;

@@ -291,6 +291,13 @@ public class PathfinderCharacter {
 			spellcasting.prepSpell(spellName, level);
 		}
 	}
+	
+	public void castSpell(int classId, String spellName, int level) {
+		Spellcasting spellcasting = spellcastingByClass.get(classId);
+		if (spellcasting != null) {
+			spellcasting.castSpell(spellName, level);
+		}
+	}
 
 	public Ability getAbility(String abilityName) {
 		return (Ability)allStats.get(abilityName);

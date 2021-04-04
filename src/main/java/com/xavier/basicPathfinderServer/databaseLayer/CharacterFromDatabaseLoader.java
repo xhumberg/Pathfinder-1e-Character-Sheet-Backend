@@ -13,9 +13,9 @@ import com.xavier.basicPathfinderServer.ResultSetMappers.ClassSkillMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.EnabledAdjustmentsMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.KnownSpellMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.PathfinderCharacterMapper;
-import com.xavier.basicPathfinderServer.ResultSetMappers.PreppedSpellMapper;
+import com.xavier.basicPathfinderServer.ResultSetMappers.SpellInterimMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.SkillRanksMapper;
-import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.PreppedSpellInterim;
+import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.SpellNameLevelAndClassInterim;
 
 public class CharacterFromDatabaseLoader {
 
@@ -27,7 +27,7 @@ public class CharacterFromDatabaseLoader {
 	private final static String GET_CLASS_SKILLS = "select * from ClassSkills where CharacterID = ?";
 	private final static String GET_KNOWN_SPELLS = "select * from SpellsKnown inner join Spells on SpellsKnown.SpellID = Spells.SpellID where CharacterID = ?";
 	private final static String GET_PREPPED_SPELLS_QUERY = "select ClassID, SpellsPrepped.SpellLevel, SpellName from SpellsPrepped inner join Spells on SpellsPrepped.SpellID = Spells.SpellID where CharacterID = ?";
-
+	private final static String GET_SPELLS_CAST = "select SpellName, SpellsCast.SpellLevel, ClassID from SpellsCast inner join Spells on Spells.SpellID = SpellsCast.SpellID where SpellsCast.CharacterID = ?";
 	
 	@SuppressWarnings("unchecked")
 	public static PathfinderCharacter loadCharacter(String idString) {
@@ -60,9 +60,15 @@ public class CharacterFromDatabaseLoader {
 				character.giveSpellKnown(knownSpell.getClassId(), knownSpell);
 			}
 			
-			List<PreppedSpellInterim> preppedSpells = (List<PreppedSpellInterim>)db.executeSelectQuery(new PreppedSpellMapper(), GET_PREPPED_SPELLS_QUERY, id);
-			for (PreppedSpellInterim preppedSpell : preppedSpells) {
+			List<SpellNameLevelAndClassInterim> preppedSpells = (List<SpellNameLevelAndClassInterim>)db.executeSelectQuery(new SpellInterimMapper(), GET_PREPPED_SPELLS_QUERY, id);
+			for (SpellNameLevelAndClassInterim preppedSpell : preppedSpells) {
 				character.prepSpell(preppedSpell.getClassId(), preppedSpell.getSpellName(), preppedSpell.getLevel());
+			}
+			
+			List<SpellNameLevelAndClassInterim> castSpells = (List<SpellNameLevelAndClassInterim>)db.executeSelectQuery(new SpellInterimMapper(), GET_SPELLS_CAST, id);
+			for (SpellNameLevelAndClassInterim castSpell : castSpells) {
+				System.out.println(castSpell.getSpellName() + " has been cast.");
+				character.castSpell(castSpell.getClassId(), castSpell.getSpellName(), castSpell.getLevel());
 			}
 			
 			db.close();
