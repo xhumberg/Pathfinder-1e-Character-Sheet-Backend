@@ -16,7 +16,7 @@ CREATE TABLE UserAccess
 INSERT INTO UserAccess
 VALUES (-1, 0), (-1, 1), (0, 2);
 
-CREATE TABLE PathfinderCharacter
+CREATE TABLE PathfinderCharacter /*Done*/
 (
 	CharacterID int,
 	CharacterName varchar(255),
@@ -130,7 +130,7 @@ VALUES
 	 (0, 'Arcane Reservoir (modified)', 'The exploiter wizard gains the arcanist''s arcane reservoir class feature. The exploiter wizard can use his wizard level as his arcanist level for determining how many arcanist reservoir points he gains at each level.', '[T:8]', 0)
 	;
 
-CREATE TABLE Classes
+CREATE TABLE Classes /*Done*/
 (
 	ClassID int,
 	ClassLevel int,
@@ -161,7 +161,7 @@ VALUES
 	 (0, 0)
 	;
 	
-CREATE TABLE CharacterClasses
+CREATE TABLE CharacterClasses /*Done*/
 (
 	CharacterID int,
 	ClassID int
@@ -175,12 +175,13 @@ VALUES
 CREATE TABLE CharacterClassFeatures
 (
 	CharacterID int,
-	FeatureID int
+	FeatureID int,
+	TrackedResourceID int
 );
 
 INSERT INTO CharacterClassFeatures
 VALUES
-	 (0, 0)
+	 (0, 0, 0)
 	;
 	
 CREATE TABLE TrackedResources
@@ -213,7 +214,7 @@ VALUES
 	 (0, 0)
 	;
 	
-CREATE TABLE Spells
+CREATE TABLE Spells /*Done*/
 (
 	SpellID int,
 	SpellLevel varchar(500),
@@ -248,7 +249,7 @@ VALUES
 	,(13, 'arcanist 4, bloodrager 4, psychic 4, sorcerer 4, spiritualist 4, wizard 4', 'Telekinetic Charge', 'Evocation', 'force', '1 standard action', 'V, S', 'close (25 ft. + 5 ft./2 levels)', 'one willing creature', 'instantaneous', 'Will negates (harmless)', 'yes (harmless)', 'You telekinetically launch an ally across the battlefield to anywhere within this spell’s range. While moving, your ally is flying just above the ground unless you wish otherwise. Movement from this spell provokes attacks of opportunity as normal, although you can lift your ally over objects or out of enemy reach, as long as your ally remains within this spell’s range. If your ally lands adjacent to an opponent, he can spend an immediate action to make a melee attack against that opponent with a +2 bonus on the attack roll.')
 	;
 	
-CREATE TABLE SpellsPrepped
+CREATE TABLE SpellsPrepped /*Done*/
 (
 	CharacterID int,
 	SpellID int,
@@ -277,7 +278,7 @@ VALUES
 	,(0, 13, 4, 0)
 	;
 	
-CREATE TABLE SpellsCast
+CREATE TABLE SpellsCast /*Done*/
 (
 	CharacterID int,
 	SpellID int,
@@ -291,7 +292,7 @@ VALUES
 	,(0, 9, 3, 0)
 	;
 	
-CREATE TABLE SpellsKnown
+CREATE TABLE SpellsKnown /*Done*/
 (
 	CharacterID int,
 	SpellID int,
@@ -328,7 +329,7 @@ VALUES
 	(0, 33220, 0)
 	;
 	
-CREATE TABLE StandardAdjustments
+CREATE TABLE StandardAdjustments /*Done*/
 (
 	AdjustmentID int,
 	AdjustmentName varchar(255),
@@ -342,7 +343,7 @@ VALUES
 	,(2, 'Mage Armor', 'AC##Armor##4; Flat-Footed##Armor##4')
 	;
 	
-CREATE TABLE EnabledAdjustments
+CREATE TABLE EnabledAdjustments /*Done*/
 (
 	CharacterID int,
 	AdjustmentID int
@@ -354,7 +355,7 @@ VALUES
 	,(0, 2)
 	;
 	
-CREATE TABLE AllowedAdjustments
+CREATE TABLE AllowedAdjustments /*Done*/
 (
 	CharacterID int,
 	AdjustmentID int
@@ -367,7 +368,7 @@ VALUES
 	,(0, 2)
 	;
 	
-CREATE TABLE SkillRanks
+CREATE TABLE SkillRanks /*Done*/
 (
 	CharacterID int,
 	SkillName varchar(255),
@@ -392,7 +393,7 @@ VALUES
 	,(0, 'Spellcraft', 7)	
 	;
 	
-CREATE TABLE ClassSkills (
+CREATE TABLE ClassSkills ( /*Done*/
 	CharacterID int,
 	SkillName varchar(255)
 );

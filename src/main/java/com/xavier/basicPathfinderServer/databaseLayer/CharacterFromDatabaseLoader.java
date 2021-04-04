@@ -67,9 +67,10 @@ public class CharacterFromDatabaseLoader {
 			
 			List<SpellNameLevelAndClassInterim> castSpells = (List<SpellNameLevelAndClassInterim>)db.executeSelectQuery(new SpellInterimMapper(), GET_SPELLS_CAST, id);
 			for (SpellNameLevelAndClassInterim castSpell : castSpells) {
-				System.out.println(castSpell.getSpellName() + " has been cast.");
 				character.castSpell(castSpell.getClassId(), castSpell.getSpellName(), castSpell.getLevel());
 			}
+			
+			
 			
 			db.close();
 			return character;

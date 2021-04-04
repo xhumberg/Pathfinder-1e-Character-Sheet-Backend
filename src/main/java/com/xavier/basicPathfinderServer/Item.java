@@ -1,0 +1,108 @@
+package com.xavier.basicPathfinderServer;
+
+public class Item {
+
+	private String name;
+	private int cost;
+	private String slot;
+	private String description;
+	private Adjustment adjustment;
+	private TrackedResource trackedResource;
+	private boolean equipped;
+	
+	public Item(String name, int cost, String slot, String description, Adjustment adjustment, TrackedResource trackedResource) {
+		this.name = name;
+		this.cost = cost;
+		this.slot = slot;
+		this.description = description;
+		this.adjustment = adjustment;
+		this.trackedResource = trackedResource;
+		
+		equipped = false;
+	}
+
+	public boolean hasAdjustment() {
+		return adjustment != null;
+	}
+	
+	public Adjustment getAdjustment() {
+		return adjustment;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((adjustment == null) ? 0 : adjustment.hashCode());
+		result = prime * result + cost;
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((slot == null) ? 0 : slot.hashCode());
+		result = prime * result + ((trackedResource == null) ? 0 : trackedResource.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		
+		if (getClass() != obj.getClass())
+			return false;
+		
+		Item other = (Item) obj;
+		
+		if (adjustment == null) {
+			if (other.adjustment != null)
+				return false;
+		} else if (!adjustment.equals(other.adjustment))
+			return false;
+		
+		if (cost != other.cost)
+			return false;
+		
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		
+		if (slot == null) {
+			if (other.slot != null)
+				return false;
+		} else if (!slot.equals(other.slot))
+			return false;
+		
+		if (trackedResource == null) {
+			if (other.trackedResource != null)
+				return false;
+		} else if (!trackedResource.equals(other.trackedResource))
+			return false;
+		
+		return true;
+	}
+
+	public void setEquipped(boolean b) {
+		equipped = b;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Integer getTrackedResourceRemaining() {
+		if (trackedResource == null) {
+			return -1;
+		}
+		return trackedResource.getRemaining();
+	}
+
+}

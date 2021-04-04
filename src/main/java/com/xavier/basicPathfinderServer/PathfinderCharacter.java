@@ -2,9 +2,8 @@ package com.xavier.basicPathfinderServer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import com.xavier.basicPathfinderServer.Weapon.WeaponType;
 import com.xavier.basicPathfinderServer.json.CharacterJson;
@@ -18,7 +17,6 @@ public class PathfinderCharacter {
 	public final HashMap<String, Adjustment> adjustments;
 	public List<Adjustment> allowedAdjustments;
 	public final List<CharacterClass> classes;
-	public final HashMap<String, Adjustment> items;
 	public final HashMap<String, Stat> allStats;
 	public final HashMap<Weapon.WeaponType, HashMap<Weapon, Stat>> weaponAttack;
 	public final HashMap<Integer, Spellcasting> spellcastingByClass;
@@ -27,6 +25,7 @@ public class PathfinderCharacter {
 	public SkillRanks skillRanks;
 	private String alignment;
 	private String player;
+	private final List<Item> items;
 	
 	public PathfinderCharacter(String name, String imageUrl) {
 		this.name = name;
@@ -37,12 +36,12 @@ public class PathfinderCharacter {
 		adjustments = new HashMap<>();
 		allowedAdjustments = new ArrayList<>();
 		classes = new ArrayList<>();
-		items = new HashMap<>();
 		knownSpells = new HashMap<>();
 		weaponAttack = new HashMap<>();
 		spellcastingByClass = new HashMap<>();
 		hp = new HP(getAbility("Constitution"));
 		skillRanks = new SkillRanks(getAbility("Intelligence"));
+		items = new LinkedList<>();
 	}
 
 	private void initAbilities() {
@@ -186,11 +185,6 @@ public class PathfinderCharacter {
 
 	public void addAdjustment(Adjustment adjustment) {
 		adjustments.put(adjustment.name, adjustment);
-		addAdjustmentToApplicableStats(adjustment);
-	}
-	
-	public void addItem(Adjustment adjustment) {
-		items.put(adjustment.name, adjustment);
 		addAdjustmentToApplicableStats(adjustment);
 	}
 
@@ -427,5 +421,31 @@ public class PathfinderCharacter {
 		int statBase = getBaseStatValue(statName);
 		statBase += amount;
 		setStatBase(statName, statBase);
+	}
+
+	public void equip(Item item) {
+		if (item.hasAdjustment()) {
+			addAdjustment(item.getAdjustment());
+		}
+		items.add(item);
+		item.setEquipped(true);
+	}
+
+	public List<Item> getItems() {
+		return new LinkedList<Item>(items);
+	}
+
+	public void giveItem(Item item) {
+		items.add(item);
+	}
+
+	public List<Item> getAllItemsWithName(String string) {
+		List<Item> foundItems = new ArrayList<>();
+		for (Item item : items) {
+			if (item.getName().equals(string)) {
+				foundItems.add(item);
+			}
+		}
+		return foundItems;
 	}
 }

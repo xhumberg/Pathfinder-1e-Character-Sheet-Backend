@@ -1,6 +1,9 @@
 package com.xavier.basicPathfinderServer;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -287,6 +290,54 @@ class PathfinderCharacterTest {
 		prosopa.setSkillRanks(2, "Acrobatics");
 		prosopa.setSkillRanks(2, "Spellcraft");
 		assertEquals(10, prosopa.getRemainingSkillRanks());
+	}
+	
+	@Test
+	public void headbandsAndRods() {
+		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", null);
+		prosopa.setAbility("Intelligence", 20);
+		
+		Adjustment headbandAdjustment = new Adjustment("Headband of Vast Intelligence +2", true);
+		headbandAdjustment.addEffect("Intelligence", "Enhancement", 2);
+		Item headbandOfInt = new Item("Headband of Vast Intelligence +2", 4000, "Headband", 
+				"This intricate gold headband is decorated with several small blue and deep purple gemstones.\r\nThe headband grants the wearer an enhancement bonus to Intelligence of +2. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. A headband of vast intelligence +2 has one skill associated with it. After being worn for 24 hours, the headband grants a number of skill ranks in that skill equal to the wearer’s total Hit Dice. These ranks do not stack with the ranks a creature already possesses. This skill is chosen when the headband is created. If no skill is listed, the headband is assumed to grant skill ranks in a randomly determined Knowledge skill.", 
+				headbandAdjustment, null);
+		
+		prosopa.equip(headbandOfInt);
+		
+		assertEquals(22, prosopa.getAbilityValue("Intelligence"));
+		assertTrue(prosopa.getItems().contains(headbandOfInt));
+		
+		Adjustment beltAdjustment = new Adjustment("Belt of Overpowered Constitution", true);
+		beltAdjustment.addEffect("Constitution", "Invincible", 9999);
+		Item unequippedOverpoweredBelt = new Item("Belt of Overpowered Constitution", 999999999, "Belt",
+				"Nobody playtested this item and the munchkins found out how to get it.",
+				beltAdjustment, null);
+		
+		prosopa.giveItem(unequippedOverpoweredBelt);
+		assertEquals(10, prosopa.getAbilityValue("Constitution"));
+		assertTrue(prosopa.getItems().contains(unequippedOverpoweredBelt));
+		
+		TrackedResource persistentRodTracking = new TrackedResource("Lesser Persistent Metamagic Rod", "3 times per day, you may cast a 3rd or lower level spell as if it had the Persistent Spell metamagic feat", 3, 3);
+		Item lesserPersistentRod = new Item("Persistent Metamagic Rod, Lesser", 9000, "Rod", "The wielder can cast up to three spells per day as though using the Persistent Spell feat.", null, persistentRodTracking);
+		prosopa.equip(lesserPersistentRod);
+		
+		assertTrue(prosopa.getItems().contains(lesserPersistentRod));
+		
+		List<Item> rods = prosopa.getAllItemsWithName("Persistent Metamagic Rod, Lesser");
+		assertEquals(1, rods.size());
+		assertEquals(3, rods.get(0).getTrackedResourceRemaining());
+		
+		TrackedResource slightlyUsedRod = new TrackedResource("Lesser Persistent Metamagic Rod", "3 times per day, you may cast a 3rd or lower level spell as if it had the Persistent Spell metamagic feat", 2, 3);
+		Item usedLesserPersistentRod = new Item("Persistent Metamagic Rod, Lesser", 9000, "Rod", "The wielder can cast up to three spells per day as though using the Persistent Spell feat.", null, slightlyUsedRod);
+		prosopa.equip(usedLesserPersistentRod);
+		
+		for (int i = 0; i < 1000; i++) { //Make sure this never comes in a random order so it's consistent for the player too.
+			rods = prosopa.getAllItemsWithName("Persistent Metamagic Rod, Lesser");
+			assertEquals(2, rods.size());
+			assertEquals(3, rods.get(0).getTrackedResourceRemaining());
+			assertEquals(2, rods.get(1).getTrackedResourceRemaining());
+		}
 	}
 	
 	private Adjustment buildAndAddAdjustment(PathfinderCharacter character, String adjName, boolean enabled, String... effectStrings) {
