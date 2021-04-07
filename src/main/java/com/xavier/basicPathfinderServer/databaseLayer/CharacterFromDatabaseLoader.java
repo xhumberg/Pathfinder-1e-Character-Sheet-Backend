@@ -5,18 +5,28 @@ import java.util.Map;
 
 import com.xavier.basicPathfinderServer.Adjustment;
 import com.xavier.basicPathfinderServer.CharacterClass;
+import com.xavier.basicPathfinderServer.ClassFeature;
+import com.xavier.basicPathfinderServer.Feat;
 import com.xavier.basicPathfinderServer.Item;
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
 import com.xavier.basicPathfinderServer.Spell;
+import com.xavier.basicPathfinderServer.TrackedResource;
 import com.xavier.basicPathfinderServer.ResultSetMappers.AllowedAdjustmentsMapper;
+import com.xavier.basicPathfinderServer.ResultSetMappers.CharacterHealthInterimMapper;
+import com.xavier.basicPathfinderServer.ResultSetMappers.CharacterWealthInterimMapper;
+import com.xavier.basicPathfinderServer.ResultSetMappers.ClassFeatureMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.ClassMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.ClassSkillMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.EnabledAdjustmentsMapper;
+import com.xavier.basicPathfinderServer.ResultSetMappers.FeatMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.ItemMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.KnownSpellMapper;
+import com.xavier.basicPathfinderServer.ResultSetMappers.MiscResourceMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.PathfinderCharacterMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.SkillRanksMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.SpellInterimMapper;
+import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.CharacterHealthInterim;
+import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.CharacterWealthInterim;
 import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.SpellNameLevelAndClassInterim;
 
 public class CharacterFromDatabaseLoader {
@@ -31,6 +41,12 @@ public class CharacterFromDatabaseLoader {
 	private final static String GET_PREPPED_SPELLS_QUERY = "select ClassID, SpellsPrepped.SpellLevel, SpellName from SpellsPrepped inner join Spells on SpellsPrepped.SpellID = Spells.SpellID where CharacterID = ?";
 	private final static String GET_SPELLS_CAST = "select SpellName, SpellsCast.SpellLevel, ClassID from SpellsCast inner join Spells on Spells.SpellID = SpellsCast.SpellID where SpellsCast.CharacterID = ?";
 	private final static String GET_EQUIPMENT = "select * from Equipment inner join Items on Items.ItemID = Equipment.ItemID left join TrackedResources on TrackedResources.ResourceID = Equipment.TrackedResourceID where CharacterID = ?";
+	private final static String GET_FEATS = "select * from Feats inner join TakenFeats on Feats.FeatID = TakenFeats.FeatID where CharacterID = ?";
+	private final static String GET_CLASS_FEATURES = "select * from CharacterClassFeatures inner join ClassFeatures on CharacterClassFeatures.FeatureID = ClassFeatures.FeatureID left join TrackedResources on CharacterClassFeatures.TrackedResourceID = TrackedResources.ResourceID where CharacterID = ?";
+	private final static String GET_MISC_TRACKED_RESOURCES = "select * from CharactersTrackedResources inner join TrackedResources on CharactersTrackedResources.TrackedResourceId = TrackedResources.ResourceID where CharacterID = ?";
+	private final static String GET_CHARACTER_WEALTH = "select * from CharacterWealth where CharacterID = ?";
+	private final static String GET_CHARACTER_HEALTH = "select * from CharacterHP where CharacterID = ?";
+	
 	
 	@SuppressWarnings("unchecked")
 	public static PathfinderCharacter loadCharacter(String idString) {
@@ -81,6 +97,29 @@ public class CharacterFromDatabaseLoader {
 					character.giveItem(item);
 				}
 			}
+			
+			List<Feat> feats = (List<Feat>)db.executeSelectQuery(new FeatMapper(), GET_FEATS, id);
+			for (Feat feat : feats) {
+				character.giveFeat(feat);
+			}
+			
+			List<ClassFeature> features = (List<ClassFeature>)db.executeSelectQuery(new ClassFeatureMapper(), GET_CLASS_FEATURES, id);
+			for (ClassFeature feature : features) {
+				character.giveClassFeature(feature);
+			}
+			
+			List<TrackedResource> miscTrackedResources = (List<TrackedResource>)db.executeSelectQuery(new MiscResourceMapper(), GET_MISC_TRACKED_RESOURCES, id);	
+			for (TrackedResource resource : miscTrackedResources) {
+				character.giveMiscTrackedResource(resource);
+			}
+			
+			CharacterWealthInterim characterWealth = (CharacterWealthInterim)db.executeSelectQuery(new CharacterWealthInterimMapper(), GET_CHARACTER_WEALTH, id);
+			character.setTotalEarnedGold(characterWealth.getEarnedGold());
+			character.setSpentGold(characterWealth.getSpentGold());
+			
+			CharacterHealthInterim characterHealth = (CharacterHealthInterim)db.executeSelectQuery(new CharacterHealthInterimMapper(), GET_CHARACTER_HEALTH, id);
+			character.setFavoredClassBonusHP(characterHealth.getFavoredClassBonusHp());
+			character.takeDamage(characterHealth.getDamageTaken());
 			
 			db.close();
 			return character;

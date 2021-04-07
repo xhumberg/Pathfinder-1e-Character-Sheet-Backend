@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xavier.basicPathfinderServer.Spell;
 import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.SpellNameLevelAndClassInterim;
 
 public class SpellInterimMapper implements ResultSetMapper<Object> {

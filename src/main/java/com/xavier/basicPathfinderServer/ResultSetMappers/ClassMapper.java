@@ -16,20 +16,27 @@ public class ClassMapper implements ResultSetMapper<Object> {
 		List<CharacterClass> classes = new ArrayList<>();
 		try {
 			while (resultSet.next()) {
-				int id = Integer.parseInt(resultSet.getString("ClassID"));
-				int level = Integer.parseInt(resultSet.getString("ClassLevel"));
-				int bab = Integer.parseInt(resultSet.getString("ClassBAB"));
-				int fort = Integer.parseInt(resultSet.getString("ClassFort"));
-				int ref = Integer.parseInt(resultSet.getString("ClassRef"));
-				int will = Integer.parseInt(resultSet.getString("ClassWill"));
+				int id = resultSet.getInt("ClassID");
+				int level = resultSet.getInt("ClassLevel");
+				int bab = resultSet.getInt("ClassBAB");
+				int fort = resultSet.getInt("ClassFort");
+				int ref = resultSet.getInt("ClassRef");
+				int will = resultSet.getInt("ClassWill");
+				int skillsPerLevel = resultSet.getInt("SkillsPerLevel");
+				int hitDice = resultSet.getInt("HitDice");
 				String name = resultSet.getString("ClassName");
 				boolean spellcasting = resultSet.getString("Spellcasting").equals("t");
-				CastingType type = CastingType.valueOf(resultSet.getString("SpellcastingType"));
-				String ability = resultSet.getString("SpellcastingAbility");
-				String spellsPerDayString = resultSet.getString("SpellsPerDay");
-				Map<Integer, Integer> baseSpellsPerDay = SpellsPerDayParser.parse(spellsPerDayString);
-				
-				CharacterClass characterClass = new CharacterClass(id, level, bab, fort, ref, will, name, spellcasting, type, ability, baseSpellsPerDay);
+				CharacterClass characterClass = null;
+				if (spellcasting) {
+					CastingType type = CastingType.valueOf(resultSet.getString("SpellcastingType"));
+					String ability = resultSet.getString("SpellcastingAbility");
+					String spellsPerDayString = resultSet.getString("SpellsPerDay");
+					Map<Integer, Integer> baseSpellsPerDay = SpellsPerDayParser.parse(spellsPerDayString);
+					
+					characterClass = new CharacterClass(id, level, bab, fort, ref, will, skillsPerLevel, hitDice, name, spellcasting, type, ability, baseSpellsPerDay);
+				} else {
+					characterClass = new CharacterClass(id, level, bab, fort, ref, will, skillsPerLevel, hitDice, name, false, CastingType.NONE, null, null);
+				}
 				classes.add(characterClass);
 			}
 		} catch (SQLException e) {

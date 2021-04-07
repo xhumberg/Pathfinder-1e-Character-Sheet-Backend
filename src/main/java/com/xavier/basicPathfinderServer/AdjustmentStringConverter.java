@@ -2,7 +2,8 @@ package com.xavier.basicPathfinderServer;
 
 public class AdjustmentStringConverter {
 	public static Adjustment convert(String name, String adjustmentString) {
-		adjustmentString = adjustmentString.replaceAll("\\[T:\\d+\\]", "");
+		adjustmentString = adjustmentString.replaceAll("\\[T:.*\\]", "");
+		adjustmentString = adjustmentString.replaceAll("\\[Special Save:.*\\]", "");
 		if (adjustmentString.trim().equals("")) {
 			return null;
 		}
@@ -11,6 +12,9 @@ public class AdjustmentStringConverter {
 		for (String currentAdjustmentString : adjustmentStrings) {
 			currentAdjustmentString = currentAdjustmentString.trim();
 			String[] adjustmentDefinition = currentAdjustmentString.split("##");
+			if (adjustmentDefinition.length < 3) {
+				System.out.println("Improperly formatted adjustment: '" + currentAdjustmentString + "'");
+			}
 			newAdjustment.addEffect(adjustmentDefinition[0], adjustmentDefinition[1], Integer.parseInt(adjustmentDefinition[2]));
 		}
 		return newAdjustment;

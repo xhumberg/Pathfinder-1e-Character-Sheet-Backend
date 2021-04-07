@@ -19,6 +19,9 @@ public class PathfinderCharacterMapper implements ResultSetMapper<Object> {
 				int intel = resultSet.getInt("Intelligence");
 				int wis = resultSet.getInt("Wisdom");
 				int cha = resultSet.getInt("Charisma");
+				String race = resultSet.getString("Race");
+				String alignment = resultSet.getString("Alignment");
+				String sizeString = resultSet.getString("CharacterSize"); //TODO: small and large characters exist
 				
 				PathfinderCharacter character = new PathfinderCharacter(characterName, characterImageUrl);
 				character.setAbility("Strength", str);
@@ -27,6 +30,7 @@ public class PathfinderCharacterMapper implements ResultSetMapper<Object> {
 				character.setAbility("Intelligence", intel);
 				character.setAbility("Wisdom", wis);
 				character.setAbility("Charisma", cha);
+				character.setAlignment(alignment);
 				return character;
 			}
 		} catch (SQLException e) {

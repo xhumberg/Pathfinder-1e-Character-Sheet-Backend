@@ -18,4 +18,8 @@ public class TrackedResource {
 		return remaining;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 }

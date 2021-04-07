@@ -20,7 +20,11 @@ CREATE TABLE PathfinderCharacter /*Done*/
 (
 	CharacterID int,
 	CharacterName varchar(255),
+	PlayerName varChar(255),
 	CharacterImageURL varchar(255),
+	Alignment varchar(50),
+	Race varchar(255),
+	CharacterSize varChar(50),
 	Strength int,
 	Dexterity int,
 	Constitution int,
@@ -30,12 +34,12 @@ CREATE TABLE PathfinderCharacter /*Done*/
 );
 
 INSERT INTO PathfinderCharacter
-VALUES (0, 'Prosopa Dramatis', 'https://media.discordapp.net/attachments/526680690218106891/731649744937418792/107571564_607483240193629_5533577863028070138_n.png', 7, 16, 14, 21, 11, 5)
-	  ,(1, 'Coco the Mermaid', 'https://media.discordapp.net/attachments/526680690218106891/787088464713220096/130739401_2147415525390293_7206321013511074323_n.png', 16, 16, 14, 10, 7, 18)
-	  ,(2, 'Jordan Fenrir Wolfe', 'https://i.pinimg.com/originals/80/26/43/80264379fd64b1931b0930e22bab1ab5.jpg', 14, 20, 14, 10, 7, 14)
+VALUES (0, 'Prosopa Dramatis', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 7, 16, 14, 21, 11, 5)
+	  ,(1, 'Coco the Mermaid', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/787088464713220096/130739401_2147415525390293_7206321013511074323_n.png', 'LN', 'Mermaid', 'Medium', 16, 16, 14, 10, 7, 18)
+	  ,(2, 'Jordan Fenrir Wolfe', 'Xavier', 'https://i.pinimg.com/originals/80/26/43/80264379fd64b1931b0930e22bab1ab5.jpg', 'N', 'Human', 'Medium', 14, 20, 14, 10, 7, 14)
 	  ;
 	  
-CREATE TABLE Items
+CREATE TABLE Items /*Done*/
 (
 	ItemID int,
 	ItemName varchar(255),
@@ -61,7 +65,7 @@ VALUES
 		,(11, 'Scroll of Touch of the Sea', 25, 'Scroll', 'Scroll of first level Touch of the Sea', '')
 		;
 		
-CREATE TABLE Equipment
+CREATE TABLE Equipment /*Done*/
 (
 	CharacterID int,
 	ItemID int,
@@ -88,7 +92,7 @@ VALUES
 	   ,(1, 2, -1, 2000, true)
 	   ;
 	   
-CREATE TABLE Feats
+CREATE TABLE Feats /*Done*/
 (
 	FeatID int,
 	FeatName varchar(255),
@@ -104,7 +108,7 @@ VALUES
     ,(3, 'Extra Arcane Reservoir', 'You gain three more points in your arcane reservoir, and the maximum number of points in your arcane reservoir increases by that amount. (Apply by modifying the Arcane Reservoir uses per day)', '')
     ;
 	
-CREATE TABLE TakenFeats
+CREATE TABLE TakenFeats /*Done*/
 (
 	CharacterID int,
 	FeatID int
@@ -118,7 +122,7 @@ VALUES
 	,(0, 3)
 	;
 
-CREATE TABLE ClassFeatures
+CREATE TABLE ClassFeatures /*Done*/
 (
 	FeatureID int,
 	FeatureName varchar(255),
@@ -140,6 +144,8 @@ CREATE TABLE Classes /*Done*/
 	ClassFort int,
 	ClassRef int,
 	ClassWill int,
+	SkillsPerLevel int,
+	HitDice int,
 	ClassName varchar(255),
 	Spellcasting boolean,
 	SpellcastingType varchar(255),
@@ -149,19 +155,9 @@ CREATE TABLE Classes /*Done*/
 
 INSERT INTO Classes
 VALUES
-	 (0, 7, 3, 2, 2, 5, 'Exploiter Wizard 5/Harrower 2', true, 'PREPARED', 'Intelligence', '0-4 1-4 2-3 3-2 4-1')
+	 (0, 5, 2, 1, 1, 4, 2, 6, 'Exploiter Wizard 5 (Modified)', true, 'PREPARED', 'Intelligence', '0-4 1-4 2-3 3-2 4-1')
+	,(1, 3, 1, 1, 1, 2, 2, 6, 'Harrower 3', false, null, null, null)
 	; 
-
-CREATE TABLE ClassesToClassFeatures
-(
-	ClassID int,
-	FeatureID int
-);
-
-INSERT INTO ClassesToClassFeatures
-VALUES
-	 (0, 0)
-	;
 	
 CREATE TABLE CharacterClasses /*Done*/
 (
@@ -172,9 +168,21 @@ CREATE TABLE CharacterClasses /*Done*/
 INSERT INTO CharacterClasses
 VALUES
 	 (0, 0)
+	,(0, 1)
+	;
+
+CREATE TABLE ClassesToClassFeatures /*To be implemented later, when adding classes and archetypes*/
+(
+	ClassID int,
+	FeatureID int
+);
+
+INSERT INTO ClassesToClassFeatures
+VALUES
+	 (0, 0)
 	;
 	
-CREATE TABLE CharacterClassFeatures
+CREATE TABLE CharacterClassFeatures /*Done*/
 (
 	CharacterID int,
 	FeatureID int,
@@ -186,7 +194,7 @@ VALUES
 	 (0, 0, 0)
 	;
 	
-CREATE TABLE TrackedResources
+CREATE TABLE TrackedResources /*Done*/
 (
 	ResourceID int,
 	ResourceName varchar(255),
@@ -203,9 +211,11 @@ VALUES
 	,(3, 'Wand of Mage Armor', 'Casts 1st level Mage Armor', 49, 50)
 	,(4, 'Wand of Infernal Healing', 'Casts 1st level Infernal Healing', 49, 50)
 	,(5, 'Dummy', 'You shouldn''t see this', 9, 120)
+	,(6, 'Harrowed', 'Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card''s suit. You may assign this roll after you make the roll, but you must do so before you know wheteher the roll was a success or not.', 1, 1)
 	;
 	
-CREATE TABLE CharactersTrackedResources
+/*This is for resources a character may have that are not given by class features or items, such as those given by specific feats (Like Harrowed) or bonuses from specific spells (like Lucky Number) as those things only rarely have tracked resources*/
+CREATE TABLE CharactersTrackedResources /*Done*/
 (
 	CharacterID int,
 	TrackedResourceID int
@@ -213,7 +223,7 @@ CREATE TABLE CharactersTrackedResources
 
 INSERT INTO CharactersTrackedResources
 VALUES
-	 (0, 0)
+	 (0, 6)
 	;
 	
 CREATE TABLE Spells /*Done*/
@@ -233,7 +243,7 @@ CREATE TABLE Spells /*Done*/
 	SpellDescription varChar(2000)
 );
 
-INSERT INTO Spells
+INSERT INTO Spells /*Done*/
 VALUES
 	 (0, 'arcanist 1, bloodrager 1, occultist 1, psychic 1, sorcerer 1, spiritualist 1, summoner 1, summoner (unchained) 1, witch 1, wizard 1', 'Mage Armor', 'Conjuration', 'Creation, Force', '1 standard action', 'V, S, F (a piece of cured leather)', 'touch', 'creature touched', '1 hour/level (D)', 'Will negates (harmless)', 'no', 'An invisible but tangible field of force surrounds the subject of a mage armor spell, providing a +4 armor bonus to AC.\r\n\r\nUnlike mundane armor, mage armor entails no armor check penalty, arcane spell failure chance, or speed reduction. Since mage armor is made of force, incorporeal creatures can''t bypass it the way they do normal armor.')
 	,(1, 'arcanist 1, bard 1, bloodrager 1, inquisitor 1, medium 1, psychic 1, skald 1, sorcerer 1, witch 1, wizard 1', 'Ear-Piercing Scream', 'Evocation', 'Sonic', '1 standard action', 'V, S', 'close (25 ft. + 5 ft./2 levels)', 'one creature', 'instantaneous; see text', 'Fortitude partial (see text)', 'yes', 'You unleash a powerful scream, inaudible to all but a single target. The target is dazed for 1 round and takes 1d6 points of sonic damage per two caster levels (maximum 5d6). A successful save negates the daze effect and halves the damage.')
@@ -319,7 +329,7 @@ VALUES
 	,(0, 13, 0)
 	;
 	
-CREATE TABLE CharacterWealth
+CREATE TABLE CharacterWealth /*Done*/
 (
 	CharacterID int,
 	EarnedGold int,
@@ -424,6 +434,18 @@ VALUES
 	,(0, 'Perform')
 	,(0, 'UMD')
 	;
+	
+CREATE TABLE CharacterHP (
+	CharacterID int,
+	FavoredClassBonusHP int,
+	DamageTaken int,
+	NonLethalDamateTaken int,
+	TempHP int /*TODO: add to code*/
+);
+
+INSERT INTO CharacterHP
+VALUES
+	 (0, 5, 0, 0, 0);
 ---------
 
 SELECT CharacterName FROM UserIDToEmail

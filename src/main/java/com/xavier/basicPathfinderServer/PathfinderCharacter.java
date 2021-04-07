@@ -26,6 +26,11 @@ public class PathfinderCharacter {
 	private String alignment;
 	private String player;
 	private final List<Item> items;
+	private final List<Feat> feats;
+	private final List<ClassFeature> classFeatures;
+	private final List<TrackedResource> miscTrackedResources;
+	private int totalEarnedGold;
+	private int spentGold;
 	
 	public PathfinderCharacter(String name, String imageUrl) {
 		this.name = name;
@@ -42,6 +47,10 @@ public class PathfinderCharacter {
 		hp = new HP(getAbility("Constitution"));
 		skillRanks = new SkillRanks(getAbility("Intelligence"));
 		items = new LinkedList<>();
+		feats = new LinkedList<>();
+		classFeatures = new LinkedList<>();
+		miscTrackedResources = new LinkedList<>();
+		totalEarnedGold = 0;
 	}
 
 	private void initAbilities() {
@@ -408,6 +417,8 @@ public class PathfinderCharacter {
 		addToStat("Fortitude", characterClass.getFort());
 		addToStat("Reflex", characterClass.getRef());
 		addToStat("Will", characterClass.getWill());
+		addHitDice(characterClass.getLevel(), characterClass.getHitDice());
+		addTotalSkillRanks(characterClass.getLevel(), characterClass.getBaseSkillsPerLevel());
 		if (characterClass.hasSpellcasting()) {
 			giveSpellcasting(characterClass.getId(), characterClass.getSpellcastingType(), characterClass.getSpellcastingAbility());
 			for (int spellLevel : characterClass.getBaseSpellsPerDay().keySet()) {
@@ -448,4 +459,46 @@ public class PathfinderCharacter {
 		}
 		return foundItems;
 	}
+
+	public void giveFeat(Feat feat) {
+		feats.add(feat);
+		if (feat.effect != null) {
+			addAdjustment(feat.effect);
+		}
+		System.out.println(name + " has taken " + feat.name);
+	}
+
+	public void giveClassFeature(ClassFeature feature) {
+		classFeatures.add(feature);
+		if (feature.effect != null) {
+			addAdjustment(feature.effect);
+		}
+		System.out.println(name + " has " + feature.name + " as a class feature.");
+	}
+
+	public void giveMiscTrackedResource(TrackedResource resource) {
+		miscTrackedResources.add(resource);
+		System.out.println(name + " has misc tracked resource: " + resource.getName());
+	}
+
+	public void setTotalEarnedGold(int earnedGold) {
+		totalEarnedGold = earnedGold;
+	}
+	
+	public int getTotalEarnedGold() {
+		return totalEarnedGold;
+	}
+
+	/**
+	 * @param spentGold - The amount of gold spent not on items (like flipping the barkeep a gold or bribing a guard) and on used items no longer on the character sheet.
+	 */
+	public void setSpentGold(int spentGold) {
+		this.spentGold = spentGold;
+	}
+	
+	public int getSpentGold() {
+		return spentGold;
+	}
+	
+	
 }

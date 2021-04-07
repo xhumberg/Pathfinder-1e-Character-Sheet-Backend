@@ -9,7 +9,6 @@ import com.xavier.basicPathfinderServer.Adjustment;
 import com.xavier.basicPathfinderServer.AdjustmentStringConverter;
 import com.xavier.basicPathfinderServer.Item;
 import com.xavier.basicPathfinderServer.TrackedResource;
-import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.SpellNameLevelAndClassInterim;
 
 public class ItemMapper implements ResultSetMapper<Object> {
 
