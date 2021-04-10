@@ -9,6 +9,7 @@ import com.xavier.basicPathfinderServer.ClassFeature;
 import com.xavier.basicPathfinderServer.Feat;
 import com.xavier.basicPathfinderServer.Item;
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
+import com.xavier.basicPathfinderServer.RacialTrait;
 import com.xavier.basicPathfinderServer.Spell;
 import com.xavier.basicPathfinderServer.TrackedResource;
 import com.xavier.basicPathfinderServer.ResultSetMappers.AllowedAdjustmentsMapper;
@@ -23,6 +24,7 @@ import com.xavier.basicPathfinderServer.ResultSetMappers.ItemMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.KnownSpellMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.MiscResourceMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.PathfinderCharacterMapper;
+import com.xavier.basicPathfinderServer.ResultSetMappers.RacialTraitMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.SkillRanksMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.SpellInterimMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.CharacterHealthInterim;
@@ -46,6 +48,7 @@ public class CharacterFromDatabaseLoader {
 	private final static String GET_MISC_TRACKED_RESOURCES = "select * from CharactersTrackedResources inner join TrackedResources on CharactersTrackedResources.TrackedResourceId = TrackedResources.ResourceID where CharacterID = ?";
 	private final static String GET_CHARACTER_WEALTH = "select * from CharacterWealth where CharacterID = ?";
 	private final static String GET_CHARACTER_HEALTH = "select * from CharacterHP where CharacterID = ?";
+	private final static String GET_CHARACTER_RACIAL_TRAITS = "select * from RacialTraits inner join CharacterRacialTraits on RacialTraits.TraitID = CharacterRacialTraits.TraitID where CharacterID = ?";
 	
 	
 	@SuppressWarnings("unchecked")
@@ -111,6 +114,11 @@ public class CharacterFromDatabaseLoader {
 			List<TrackedResource> miscTrackedResources = (List<TrackedResource>)db.executeSelectQuery(new MiscResourceMapper(), GET_MISC_TRACKED_RESOURCES, id);	
 			for (TrackedResource resource : miscTrackedResources) {
 				character.giveMiscTrackedResource(resource);
+			}
+			
+			List<RacialTrait> racialTraits = (List<RacialTrait>)db.executeSelectQuery(new RacialTraitMapper(), GET_CHARACTER_RACIAL_TRAITS, id);
+			for (RacialTrait racialTrait : racialTraits) {
+				character.giveRacialTrait(racialTrait);
 			}
 			
 			CharacterWealthInterim characterWealth = (CharacterWealthInterim)db.executeSelectQuery(new CharacterWealthInterimMapper(), GET_CHARACTER_WEALTH, id);

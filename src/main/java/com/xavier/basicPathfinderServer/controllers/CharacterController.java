@@ -1,4 +1,4 @@
-package com.xavier.basicPathfinderServer;
+package com.xavier.basicPathfinderServer.controllers;
 
 import java.net.URISyntaxException;
 import java.util.List;
@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import com.xavier.basicPathfinderServer.GoogleAuthenticationResponseJson;
+import com.xavier.basicPathfinderServer.PathfinderCharacter;
+import com.xavier.basicPathfinderServer.Prosopa;
 import com.xavier.basicPathfinderServer.ResultSetMappers.AccessibleCharactersMapper;
 import com.xavier.basicPathfinderServer.databaseLayer.CharacterFromDatabaseLoader;
 import com.xavier.basicPathfinderServer.databaseLayer.DatabaseAccess;

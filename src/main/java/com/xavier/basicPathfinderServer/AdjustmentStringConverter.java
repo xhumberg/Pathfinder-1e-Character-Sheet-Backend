@@ -4,6 +4,11 @@ public class AdjustmentStringConverter {
 	public static Adjustment convert(String name, String adjustmentString) {
 		adjustmentString = adjustmentString.replaceAll("\\[T:.*\\]", "");
 		adjustmentString = adjustmentString.replaceAll("\\[Special Save:.*\\]", "");
+		adjustmentString = adjustmentString.replaceAll("\\[Type:.*\\]", "");
+		adjustmentString = adjustmentString.replaceAll("\\[Special Defense:.*\\]", "");
+		adjustmentString = adjustmentString.replaceAll("\\[Size:.*\\]", "");
+		adjustmentString = adjustmentString.replaceAll("\\[Speed:.*\\]", "");
+		adjustmentString = adjustmentString.replaceAll("\\[Sense:.*\\]", "");
 		if (adjustmentString.trim().equals("")) {
 			return null;
 		}

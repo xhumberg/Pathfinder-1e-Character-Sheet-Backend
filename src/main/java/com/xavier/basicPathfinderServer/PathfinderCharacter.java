@@ -27,6 +27,7 @@ public class PathfinderCharacter {
 	private String player;
 	private final List<Item> items;
 	private final List<Feat> feats;
+	private final List<RacialTrait> racialTraits;
 	private final List<ClassFeature> classFeatures;
 	private final List<TrackedResource> miscTrackedResources;
 	private int totalEarnedGold;
@@ -48,6 +49,7 @@ public class PathfinderCharacter {
 		skillRanks = new SkillRanks(getAbility("Intelligence"));
 		items = new LinkedList<>();
 		feats = new LinkedList<>();
+		racialTraits = new LinkedList<>();
 		classFeatures = new LinkedList<>();
 		miscTrackedResources = new LinkedList<>();
 		totalEarnedGold = 0;
@@ -185,7 +187,7 @@ public class PathfinderCharacter {
 	}
 	
 	public CharacterJson convertToJson() {
-		return new CharacterJson(name, imageUrl, AbilityListMapper.map(abilities));
+		return new CharacterJson(this);
 	}
 
 	public void toggleAdjustment(String adjustmentName) {
@@ -466,6 +468,14 @@ public class PathfinderCharacter {
 			addAdjustment(feat.effect);
 		}
 		System.out.println(name + " has taken " + feat.name);
+	}
+
+	public void giveRacialTrait(RacialTrait trait) {
+		racialTraits.add(trait);
+		if (trait.effect != null) {
+			addAdjustment(trait.effect);
+		}
+		System.out.println(name + " has racial trait " + trait.name);
 	}
 
 	public void giveClassFeature(ClassFeature feature) {

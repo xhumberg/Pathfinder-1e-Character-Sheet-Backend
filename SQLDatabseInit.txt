@@ -439,13 +439,49 @@ CREATE TABLE CharacterHP (
 	CharacterID int,
 	FavoredClassBonusHP int,
 	DamageTaken int,
-	NonLethalDamateTaken int,
+	NonLethalDamateTaken int, /*TODO: add to code*/
 	TempHP int /*TODO: add to code*/
 );
 
 INSERT INTO CharacterHP
 VALUES
 	 (0, 5, 0, 0, 0);
+	 
+CREATE TABLE RacialTraits (
+	TraitID int,
+	TraitName varchar(255),
+	TraitDescription varchar(1500),
+	TraitEffect varchar(1500)
+);
+
+INSERT INTO RacialTraits
+VALUES
+	 (0, 'Tiefling: Outsider (Native)', 'Tieflings are outsiders with the native subtype', '[Type: Outsider (Native)]')
+	,(1, 'Size Medium', 'Medium creatures receive no bonuses or penalties due to their size', '[Size: Medium]')
+	,(2, 'Speed 30 feet', 'Has a base speed of 30 feet', '[Speed: 30 ft]')
+	,(3, 'Tiefling: Fiendish Resistance', 'Tieflings have cold resistance 5, electricity resistance 5, and fire resistance 5.', '[Special Defense: Resist Cold 5][Special Defense: Resist Electricity 5][Special Defense: Resist Fire 5]')
+	,(4, 'Tiefling: Skilled', 'Tieflings gain a +2 racial bonus on Bluff and Stealth checks', 'Bluff##Racial##2; Stealth##Racial##2')
+	,(5, 'Darkvision 60', 'Can see perfectly in the dark for up to 60 ft.', '[Sense: Darkvision 60 ft.]')
+	,(6, 'Tiefling: Maw', 'Some tieflings take on the more bestial aspects of their fiendish ancestors. These tieflings exhibit either powerful, toothy maws, or dangerous claws. This tiefling gains a bite attack that deals 1d6 points of damage. These attacks are primary natural attacks. This racial trait replaces the spell-like ability racial trait. (Add as a weapon if planning to use for more than threatening)', '')
+	,(7, 'Tiefling: Prehensile Tail', 'Many tieflings have tails, but some have long, flexible tails that can be used to carry items. While they cannot wield weapons with their tails, they can use them to retrieve small, stowed objects carried on their persons as a swift action. This racial trait replaces fiendish sorcery.', '')
+	;
+	
+CREATE TABLE CharacterRacialTraits (
+	CharacterID int,
+	TraitID int
+);
+
+INSERT INTO CharacterRacialTraits
+VALUES
+	 (0, 0)
+	,(0, 1)
+	,(0, 2)
+	,(0, 3)
+	,(0, 4)
+	,(0, 5)
+	,(0, 6)
+	,(0, 7)
+	;
 ---------
 
 SELECT CharacterName FROM UserIDToEmail
