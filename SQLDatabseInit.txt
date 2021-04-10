@@ -34,7 +34,7 @@ CREATE TABLE PathfinderCharacter /*Done*/
 );
 
 INSERT INTO PathfinderCharacter
-VALUES (0, 'Prosopa Dramatis', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 7, 16, 14, 21, 11, 5)
+VALUES (0, 'Prosopa Dramatis', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 7, 16, 14, 22, 11, 5)
 	  ,(1, 'Coco the Mermaid', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/787088464713220096/130739401_2147415525390293_7206321013511074323_n.png', 'LN', 'Mermaid', 'Medium', 16, 16, 14, 10, 7, 18)
 	  ,(2, 'Jordan Fenrir Wolfe', 'Xavier', 'https://i.pinimg.com/originals/80/26/43/80264379fd64b1931b0930e22bab1ab5.jpg', 'N', 'Human', 'Medium', 14, 20, 14, 10, 7, 14)
 	  ;

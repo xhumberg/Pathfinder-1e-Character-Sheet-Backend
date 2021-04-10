@@ -23,14 +23,14 @@ import com.xavier.basicPathfinderServer.databaseLayer.DatabaseAccess;
 @RestController
 public class CharacterController {
 
-	PathfinderCharacter character;
+	PathfinderCharacter defaultProsopa;
 	Gson gson;
 	
 	private final String GET_CHARACTERS_FOR_USER_QUERY = "SELECT CharacterName, PathfinderCharacter.CharacterID FROM UserIDToEmail INNER JOIN UserAccess ON UserIDToEmail.UserID = UserAccess.UserID INNER JOIN PathfinderCharacter ON UserAccess.CharacterID = PathfinderCharacter.CharacterID WHERE UserIDToEmail.UserEmail = (?) OR UserAccess.UserID = -1;";
 	
 	@Autowired
 	public CharacterController() {
-		character = Prosopa.get();
+		defaultProsopa = Prosopa.get();
 		gson = new Gson();
 	}
 	
@@ -39,7 +39,7 @@ public class CharacterController {
 		if (id.equals("prosopa")) {
 			System.out.println("Fetching default Prosopa");
 			Gson gson = new Gson();
-			return gson.toJson(character.convertToJson());
+			return gson.toJson(defaultProsopa.convertToJson());
 		} else if (token == null){
 			PathfinderCharacter character = new PathfinderCharacter("Error: cannot access character without logging in", "");
 			return gson.toJson(character.convertToJson());
@@ -86,7 +86,7 @@ public class CharacterController {
 	@PutMapping("/character/prosopa/toggle/{adjustmentName}") 
 	public void toggleAdjustment(@PathVariable String adjustmentName) {
 		System.out.println("Time to toggle " + adjustmentName);
-		character.toggleAdjustment(adjustmentName);
+		defaultProsopa.toggleAdjustment(adjustmentName);
 	}
 	
 }
