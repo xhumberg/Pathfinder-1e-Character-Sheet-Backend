@@ -70,7 +70,7 @@ class PathfinderCharacterTest {
 	void spellsPerDayTest() {
 		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", null);
 		
-		prosopa.giveSpellcasting(0, CastingType.PREPARED, "Intelligence");
+		prosopa.giveSpellcasting(0, "Wizard", CastingType.PREPARED, 7, "Intelligence");
 		prosopa.setSpellsPerDay(0, 1, 2);
 		assertEquals(2, prosopa.getSpellsPerDay(0, 1));
 		
@@ -112,7 +112,7 @@ class PathfinderCharacterTest {
 		Spell babble = new Spell(3, "Babble", "Enchantment", "Compulsion, mind-affecting", "1 Standard Action", "V, S", "close", "One creature; see text", "1 round/level", "Will negates", "yes", "This spell causes the target to break into a fit of bizarre...");
 		Spell summonMonster3 = new Spell(3, "Summon Monster III", "Conjuration", "Summoning", "1 round", "V, S, F/DF (a tiny bag and a small candle)", "close", "One summoned creature", "1 round/level", "none", "no", "Summons an extraplanar creature (typically...)");
 	
-		prosopa.giveSpellcasting(0, CastingType.PREPARED, "Intelligence");
+		prosopa.giveSpellcasting(0, "Wizard", CastingType.PREPARED, 7, "Intelligence");
 		prosopa.setSpellsPerDay(0, 3, 2);
 		prosopa.giveSpellKnown(0, babble);
 		prosopa.giveSpellKnown(0, summonMonster3);

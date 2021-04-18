@@ -20,7 +20,6 @@ public class PathfinderCharacter {
 	public final HashMap<String, Stat> allStats;
 	public final HashMap<Weapon.WeaponType, HashMap<Weapon, Stat>> weaponAttack;
 	public final HashMap<Integer, Spellcasting> spellcastingByClass;
-	public final HashMap<String, Spell> knownSpells;
 	public HP hp;
 	public SkillRanks skillRanks;
 	private String alignment;
@@ -42,7 +41,6 @@ public class PathfinderCharacter {
 		adjustments = new HashMap<>();
 		allowedAdjustments = new ArrayList<>();
 		classes = new ArrayList<>();
-		knownSpells = new HashMap<>();
 		weaponAttack = new HashMap<>();
 		spellcastingByClass = new HashMap<>();
 		hp = new HP(getAbility("Constitution"));
@@ -263,8 +261,8 @@ public class PathfinderCharacter {
 		return -100;
 	}
 
-	public void giveSpellcasting(int classId, CastingType type, String castingStat) {
-		Spellcasting newSpellcasting = new Spellcasting(classId, type, castingStat, this);
+	public void giveSpellcasting(int classId, String name, CastingType type, int casterLevel, String castingStat) {
+		Spellcasting newSpellcasting = new Spellcasting(classId, name, type, casterLevel, castingStat, this);
 		spellcastingByClass.put(classId, newSpellcasting);
 	}
 
@@ -422,7 +420,8 @@ public class PathfinderCharacter {
 		addHitDice(characterClass.getLevel(), characterClass.getHitDice());
 		addTotalSkillRanks(characterClass.getLevel(), characterClass.getBaseSkillsPerLevel());
 		if (characterClass.hasSpellcasting()) {
-			giveSpellcasting(characterClass.getId(), characterClass.getSpellcastingType(), characterClass.getSpellcastingAbility());
+			//TODO: Caster Level is not always class level (for example, bloodrager and paladin)
+			giveSpellcasting(characterClass.getId(), characterClass.getName(), characterClass.getSpellcastingType(), characterClass.getLevel(), characterClass.getSpellcastingAbility());
 			for (int spellLevel : characterClass.getBaseSpellsPerDay().keySet()) {
 				int baseSpells = characterClass.getBaseSpellsPerDay().get(spellLevel);
 				setSpellsPerDay(characterClass.getId(), spellLevel, baseSpells);

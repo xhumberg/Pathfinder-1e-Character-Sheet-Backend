@@ -1,23 +1,29 @@
 package com.xavier.basicPathfinderServer;
 
+import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Spellcasting {
 
-	private CastingType type;
 	private int classId;
+	private String name;
+	private CastingType type;
+	private int casterLevel;
 	private String castingStat;
 	private PathfinderCharacter character;
 	private HashMap<Integer, Integer> spellsPerDay;
 	private LinkedList<Spell> spellsKnown;
-	private HashMap<Integer, LinkedList<Spell>> spellsPrepped;
-	private HashMap<Integer, LinkedList<Spell>> spellsCast;
+	public HashMap<Integer, List<Spell>> spellsPrepped;
+	private HashMap<Integer, List<Spell>> spellsCast;
 	
-	public Spellcasting(int classId, CastingType type, String castingStat,
+	public Spellcasting(int classId, String name, CastingType type, int casterLevel, String castingStat,
 			PathfinderCharacter character) {
 		this.classId = classId;
+		this.name = name;
 		this.type = type;
+		this.casterLevel = casterLevel;
 		this.castingStat = castingStat;
 		this.character = character;
 		spellsPerDay = new HashMap<>();
@@ -49,7 +55,7 @@ public class Spellcasting {
 		Spell spell = getSpell(spellName);
 		if (spell != null) {
 			addSpellDCToSpell(level, spell);
-			LinkedList<Spell> spellsOfLevel = spellsPrepped.get(level);
+			List<Spell> spellsOfLevel = spellsPrepped.get(level);
 			if (spellsOfLevel == null) {
 				spellsPrepped.put(level, new LinkedList<Spell>());
 				spellsOfLevel = spellsPrepped.get(level);
@@ -61,7 +67,7 @@ public class Spellcasting {
 	//Note: The spell MUST be prepped
 	public void castSpell(String spellName, int level) {
 		Spell targetSpell = null;
-		LinkedList<Spell> spellsOfLevel = spellsPrepped.get(level);
+		List<Spell> spellsOfLevel = spellsPrepped.get(level);
 		for (Spell spell : spellsOfLevel) {
 			if (spell.name.equals(spellName)) {
 				targetSpell = spell;
@@ -70,7 +76,7 @@ public class Spellcasting {
 		}
 		spellsOfLevel.remove(targetSpell);
 		
-		LinkedList<Spell> castSpellsOfLevel = spellsCast.get(level);
+		List<Spell> castSpellsOfLevel = spellsCast.get(level);
 		if (castSpellsOfLevel == null) {
 			spellsCast.put(level, new LinkedList<Spell>());
 			castSpellsOfLevel = spellsCast.get(level);
@@ -116,6 +122,42 @@ public class Spellcasting {
 			return spell.getSpellDCValue();
 		}
 		return -1;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getTypeString() {
+		if (type == CastingType.PREPARED) {
+			return "Spells Prepared";
+		} else {
+			return "Unsupported casting type";
+		}
+	}
+
+	public int getCasterLevel() {
+		return casterLevel;
+	}
+
+	public List<Spell> getSpellsForLevel(int level) {
+		if (type == CastingType.PREPARED) {
+			List<Spell> allSpellsOfLevel = new LinkedList<>();
+			if (spellsPrepped.get(level) != null) {
+				List<Spell> preppedSpells = spellsPrepped.get(level);
+				allSpellsOfLevel.addAll(preppedSpells);
+			}
+			if (spellsCast.get(level) != null) {
+				List<Spell> castSpells = spellsCast.get(level);
+				for (Spell castSpell : castSpells) {
+					castSpell.setAsCast(); //TODO: since we don't deep copy, this isn't proper logic. Probably return not just a List<Spell>
+				}
+				allSpellsOfLevel.addAll(castSpells);
+			}
+			return allSpellsOfLevel;
+		} else {
+			throw new InvalidParameterException("Spellcasting type not currently supported");
+		}
 	}
 
 }

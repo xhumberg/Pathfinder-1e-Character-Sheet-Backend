@@ -17,6 +17,7 @@ public class Spell {
 	String description;
 	Stat spellDC;
 	int classId;
+	boolean hasBeenCast;
 	
 	public Spell(String levelInformation, String name, String school, String tags, String castingTime, String components, String range,
 			String target, String duration, String savingThrow, String spellResistance, String description) {
@@ -56,4 +57,71 @@ public class Spell {
 		return classId;
 	}
 	
+	public void setAsCast() {
+		this.hasBeenCast = true;
+	}
+	
+	public boolean hasBeenCast() {
+		return hasBeenCast;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public String getSchool() {
+		return school;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public String getLevelInformation() {
+		return levelInformation;
+	}
+
+	public String getCastingTime() {
+		return castingTime;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public String getComponents() {
+		return components;
+	}
+
+	public String getRange() {
+		return range;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public String getSavingThrow() {
+		return savingThrow;
+	}
+
+	public String getSpellResistance() {
+		return spellResistance;
+	}
+
+	public Stat getSpellDC() {
+		return spellDC;
+	}
+
+	public boolean isHasBeenCast() {
+		return hasBeenCast;
+	}
 }
