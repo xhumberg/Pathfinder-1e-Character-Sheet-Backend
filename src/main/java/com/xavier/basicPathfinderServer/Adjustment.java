@@ -1,8 +1,10 @@
 package com.xavier.basicPathfinderServer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,6 +12,11 @@ public class Adjustment {
 	public final String name;
 	Map<String, Map<String, Stat>> valuesToAdjust;
 	private boolean enabled;
+	public final List<String> types;
+	public final List<String> senses;
+	public final List<String> specialDefenses;
+	public final List<String> specialOffenses;
+	public String speed;
 	
 	public Adjustment(String name) {
 		this(name, false);
@@ -19,6 +26,14 @@ public class Adjustment {
 		this.name = name;
 		valuesToAdjust = new HashMap<>();
 		enabled=initiallyEnabled;
+		types = new ArrayList<>();
+		senses = new ArrayList<>();
+		specialDefenses = new ArrayList<>();
+		specialOffenses = new ArrayList<>();
+	}
+	
+	public boolean isEnabled() {
+		return enabled;
 	}
 
 	public int getValue(String bonusType, String statName) {
@@ -71,5 +86,29 @@ public class Adjustment {
 	
 	public String getName() {
 		return name;
+	}
+
+	public boolean isEmpty() {
+		return (valuesToAdjust.isEmpty() && types.isEmpty() && senses.isEmpty() && specialDefenses.isEmpty() && specialOffenses.isEmpty() && (speed == null));
+	}
+
+	public void addSenses(List<String> senses) {
+		this.senses.addAll(senses);
+	}
+	
+	public void addTypes(List<String> types) {
+		this.types.addAll(types);
+	}
+
+	public void addSpecialDefenses(List<String> defenses) {
+		this.specialDefenses.addAll(defenses);
+	}
+
+	public void addSpecialOffenses(List<String> offenses) {
+		this.specialOffenses.addAll(offenses);
+	}
+
+	public void addSpeed(String speed) {
+		this.speed = speed;
 	}
 }

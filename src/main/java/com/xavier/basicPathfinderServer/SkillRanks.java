@@ -22,19 +22,13 @@ public class SkillRanks {
 	}
 
 	public int getMaxRanks() {
-		int currentHealth = 0;
-		if (ranksFromLevels.size() > 0) {
-			currentHealth += ranksFromLevels.get(0);
+		int maxRanks = 0;
+		for (Integer ranks : ranksFromLevels) {
+			maxRanks += Math.max(1, ranks + abilityPerHitDice.getMod()); //Minimum 1!
 		}
-		if (ranksFromLevels.size() > 1) {
-			for (int i = 1; i < ranksFromLevels.size(); i++) {
-				currentHealth += ranksFromLevels.get(i)/2+1;
-			}
-		}
-		currentHealth += abilityPerHitDice.getMod()*ranksFromLevels.size();
-		currentHealth += favoredClassBonus;
+		maxRanks += favoredClassBonus;
 		
-		return Math.max(1, currentHealth);
+		return maxRanks;
 	}
 	
 	public int getRemainingRanks() {

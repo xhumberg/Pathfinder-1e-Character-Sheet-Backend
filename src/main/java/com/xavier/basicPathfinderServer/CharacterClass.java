@@ -86,5 +86,10 @@ public class CharacterClass {
 	public int getId() {
 		return id;
 	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 
 }

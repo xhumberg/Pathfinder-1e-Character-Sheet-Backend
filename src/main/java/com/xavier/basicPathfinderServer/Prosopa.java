@@ -2,7 +2,7 @@ package com.xavier.basicPathfinderServer;
 
 public class Prosopa {
 	public static PathfinderCharacter get() {
-		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", "https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png");
+		PathfinderCharacter prosopa = new PathfinderCharacter(-999, "Prosopa", "https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png");
 		prosopa.setAlignment("CG");
 		prosopa.setPlayer("Xavier");
 //		Race tiefling = new Race("Tiefling"); //Make sure all of this information passes through to where it's needed

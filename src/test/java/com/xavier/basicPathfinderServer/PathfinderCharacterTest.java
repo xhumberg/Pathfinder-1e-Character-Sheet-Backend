@@ -11,7 +11,7 @@ class PathfinderCharacterTest {
 
 	@Test
 	void rageTest() {
-		PathfinderCharacter character = new PathfinderCharacter("Grog", null);
+		PathfinderCharacter character = new PathfinderCharacter(0, "Grog", null);
 		
 		buildAndAddAdjustment(character, "Rage", false, "Strength#Morale#4", "Constitution#Morale#4", "Charisma#Penalty#-2");
 		
@@ -27,7 +27,7 @@ class PathfinderCharacterTest {
 
 	@Test
 	void beltAndBullsStrengthTest() {
-		PathfinderCharacter character = new PathfinderCharacter("Grog", null);
+		PathfinderCharacter character = new PathfinderCharacter(0, "Grog", null);
 		
 		buildAndAddAdjustment(character, "Belt of Strength +2", true, "Strength#Enhancement#2");
 		buildAndAddAdjustment(character, "Bull's Strength", false, "Strength#Enhancement#4");
@@ -42,7 +42,7 @@ class PathfinderCharacterTest {
 	
 	@Test
 	void giveAManAHammer() {
-		PathfinderCharacter bob = new PathfinderCharacter("Bob the Builder", null);
+		PathfinderCharacter bob = new PathfinderCharacter(0, "Bob the Builder", null);
 		
 		//Just ability
 		bob.setAbility("Strength", 14);
@@ -68,7 +68,7 @@ class PathfinderCharacterTest {
 	
 	@Test
 	void spellsPerDayTest() {
-		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", null);
+		PathfinderCharacter prosopa = new PathfinderCharacter(0, "Prosopa", null);
 		
 		prosopa.giveSpellcasting(0, "Wizard", CastingType.PREPARED, 7, "Intelligence");
 		prosopa.setSpellsPerDay(0, 1, 2);
@@ -106,7 +106,7 @@ class PathfinderCharacterTest {
 	
 	@Test
 	void aTaleOfTwoSpells() {
-		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", null);
+		PathfinderCharacter prosopa = new PathfinderCharacter(0, "Prosopa", null);
 		prosopa.setAbility("Intelligence", 20);
 		
 		Spell babble = new Spell(3, "Babble", "Enchantment", "Compulsion, mind-affecting", "1 Standard Action", "V, S", "close", "One creature; see text", "1 round/level", "Will negates", "yes", "This spell causes the target to break into a fit of bizarre...");
@@ -130,7 +130,7 @@ class PathfinderCharacterTest {
 	
 	@Test
 	void saveYourself() {
-		PathfinderCharacter almond = new PathfinderCharacter("Almond", null);
+		PathfinderCharacter almond = new PathfinderCharacter(0, "Almond", null);
 		almond.setAbility("Constitution", 16);
 		almond.setAbility("Wisdom", 8);
 		almond.setAbility("Dexterity", 12);
@@ -155,7 +155,7 @@ class PathfinderCharacterTest {
 	@Test
 	void defendYourself() {
 		//NOTE: Abilities must apply to each AC individually, as some things are denied in FF and Touch while others may not be
-		PathfinderCharacter almond = new PathfinderCharacter("Almond", null);
+		PathfinderCharacter almond = new PathfinderCharacter(0, "Almond", null);
 		almond.setAbility("Dexterity", 14);
 		
 		assertEquals(12, almond.getStatValue("AC"));
@@ -177,7 +177,7 @@ class PathfinderCharacterTest {
 	
 	@Test
 	void skillsTest() {
-		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", null);
+		PathfinderCharacter prosopa = new PathfinderCharacter(0, "Prosopa", null);
 		prosopa.setAbility("Strength", 7);
 		prosopa.setAbility("Dexterity", 18);
 		prosopa.setAbility("Constitution", 14);
@@ -234,7 +234,7 @@ class PathfinderCharacterTest {
 	
 	@Test
 	public void healthTest() {
-		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", null);
+		PathfinderCharacter prosopa = new PathfinderCharacter(0, "Prosopa", null);
 		prosopa.setAbility("Constitution", 14);
 		prosopa.addHitDice(1, 6);
 		assertEquals(8, prosopa.getMaxHealth());
@@ -269,7 +269,7 @@ class PathfinderCharacterTest {
 	
 	@Test
 	public void skillRanks() {
-		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", null);
+		PathfinderCharacter prosopa = new PathfinderCharacter(0, "Prosopa", null);
 		prosopa.setAbility("Intelligence", 20);
 		prosopa.addTotalSkillRanks(2, 2);
 		
@@ -294,7 +294,7 @@ class PathfinderCharacterTest {
 	
 	@Test
 	public void headbandsAndRods() {
-		PathfinderCharacter prosopa = new PathfinderCharacter("Prosopa", null);
+		PathfinderCharacter prosopa = new PathfinderCharacter(0, "Prosopa", null);
 		prosopa.setAbility("Intelligence", 20);
 		
 		Adjustment headbandAdjustment = new Adjustment("Headband of Vast Intelligence +2", true);

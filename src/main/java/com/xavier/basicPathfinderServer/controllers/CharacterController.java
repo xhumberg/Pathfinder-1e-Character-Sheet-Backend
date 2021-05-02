@@ -41,7 +41,7 @@ public class CharacterController {
 			Gson gson = new Gson();
 			return gson.toJson(defaultProsopa.convertToJson());
 		} else if (token == null){
-			PathfinderCharacter character = new PathfinderCharacter("Error: cannot access character without logging in", "");
+			PathfinderCharacter character = new PathfinderCharacter(-1, "Error: cannot access character without logging in", "");
 			return gson.toJson(character.convertToJson());
 		} else {
 			System.out.println("Request to get character id " + id);

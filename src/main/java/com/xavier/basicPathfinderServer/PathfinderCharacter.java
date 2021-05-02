@@ -5,25 +5,38 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
+
 import com.xavier.basicPathfinderServer.Weapon.WeaponType;
 import com.xavier.basicPathfinderServer.json.CharacterJson;
-import com.xavier.basicPathfinderServer.json.mappers.AbilityListMapper;
 
 public class PathfinderCharacter {
 	
+	public int characterId;
 	public String name;
+	public String playerName;
 	public String imageUrl;
+	public String alignment;
+	public String race;
+	public String characterSize;
+	public String gender;
+	public String age;
+	public String weight;
+	public String height;
 	public List<Ability> abilities;
 	public final HashMap<String, Adjustment> adjustments;
 	public List<Adjustment> allowedAdjustments;
+	public final List<String> typesAndSubtypes;
+	public final List<String> senses;
+	public final List<String> specialDefenses;
+	public final List<String> specialOffenses;
+	public final List<String> speed;
 	public final List<CharacterClass> classes;
 	public final HashMap<String, Stat> allStats;
 	public final HashMap<Weapon.WeaponType, HashMap<Weapon, Stat>> weaponAttack;
 	public final HashMap<Integer, Spellcasting> spellcastingByClass;
 	public HP hp;
 	public SkillRanks skillRanks;
-	private String alignment;
-	private String player;
 	private final List<Item> items;
 	private final List<Feat> feats;
 	private final List<RacialTrait> racialTraits;
@@ -32,7 +45,8 @@ public class PathfinderCharacter {
 	private int totalEarnedGold;
 	private int spentGold;
 	
-	public PathfinderCharacter(String name, String imageUrl) {
+	public PathfinderCharacter(int characterId, String name, String imageUrl) {
+		this.characterId = characterId;
 		this.name = name;
 		this.imageUrl = imageUrl;
 		allStats = new HashMap<>();
@@ -40,6 +54,11 @@ public class PathfinderCharacter {
 		initOtherNeededStats();
 		adjustments = new HashMap<>();
 		allowedAdjustments = new ArrayList<>();
+		typesAndSubtypes = new ArrayList<>();
+		senses = new ArrayList<>();
+		specialDefenses = new ArrayList<>();
+		specialOffenses = new ArrayList<>();
+		speed = new ArrayList<>();
 		classes = new ArrayList<>();
 		weaponAttack = new HashMap<>();
 		spellcastingByClass = new HashMap<>();
@@ -51,6 +70,8 @@ public class PathfinderCharacter {
 		classFeatures = new LinkedList<>();
 		miscTrackedResources = new LinkedList<>();
 		totalEarnedGold = 0;
+		
+		System.out.println("New character created. ID: " + characterId + "; Name: " + name);
 	}
 
 	private void initAbilities() {
@@ -180,8 +201,10 @@ public class PathfinderCharacter {
 		for (Ability ability : abilities) {
 			if (ability.getName().equals(abilityName)) {
 				ability.setBaseValue(baseValue);
+				break;
 			}
 		}
+		System.out.println(name + " has a " + baseValue + " base " + abilityName);
 	}
 	
 	public CharacterJson convertToJson() {
@@ -189,12 +212,42 @@ public class PathfinderCharacter {
 	}
 
 	public void toggleAdjustment(String adjustmentName) {
-		adjustments.get(adjustmentName).toggleAdjustment();
+		Adjustment adjustment = adjustments.get(adjustmentName);
+		adjustment.toggleAdjustment();
+		
+		handleMiscAdjustmentFeatures(adjustment);
 	}
 
 	public void addAdjustment(Adjustment adjustment) {
+		handleMiscAdjustmentFeatures(adjustment);
 		adjustments.put(adjustment.name, adjustment);
 		addAdjustmentToApplicableStats(adjustment);
+	}
+	
+	public void handleMiscAdjustmentFeatures(Adjustment adjustment) {
+		if (adjustment.isEnabled()) {
+			if (!adjustment.types.isEmpty())
+				typesAndSubtypes.addAll(adjustment.types);
+			if (!adjustment.senses.isEmpty())
+				senses.addAll(adjustment.senses);
+			if (!adjustment.specialDefenses.isEmpty())
+				specialDefenses.addAll(adjustment.specialDefenses);
+			if (!adjustment.specialOffenses.isEmpty())
+				specialOffenses.addAll(adjustment.specialOffenses);
+			if (adjustment.speed != null)
+				speed.add(adjustment.speed);
+		} else {
+			if (!adjustment.types.isEmpty())
+				typesAndSubtypes.removeAll(adjustment.types);
+			if (!adjustment.senses.isEmpty())
+				senses.removeAll(adjustment.senses);
+			if (!adjustment.specialDefenses.isEmpty())
+				specialDefenses.removeAll(adjustment.specialDefenses);
+			if (!adjustment.specialOffenses.isEmpty())
+				specialOffenses.removeAll(adjustment.specialOffenses);
+			if (adjustment.speed != null)
+				speed.remove(adjustment.speed);
+		}
 	}
 
 	private void addAdjustmentToApplicableStats(Adjustment adjustment) {
@@ -320,11 +373,14 @@ public class PathfinderCharacter {
 		int additionalRanksToSpend = ranks-totalRanks;
 		skillRanks.spendRanks(additionalRanksToSpend);
 		skill.setRanks(ranks);
+		
+		System.out.println(name + " has " + ranks + " ranks in " + skillName);
 	}
 
 	public void setClassSkill(String skillName) {
 		Skill skill = (Skill)getStat(skillName);
 		skill.setClassSkill();
+		System.out.println(name + " has " + skillName + " as a class skill.");
 	}
 
 	public void addHitDice(int numberOfDice, int diceType) {
@@ -380,11 +436,12 @@ public class PathfinderCharacter {
 	}
 	
 	public void setPlayer(String player) {
-		this.player = player;
+		this.playerName = player;
+		System.out.println(name + " is played by " + player);
 	}
 
 	public String getPlayer() {
-		return player;
+		return playerName;
 	}
 	
 	public void setAllowedAdjustments(List<Adjustment> adjustments) {
@@ -407,6 +464,7 @@ public class PathfinderCharacter {
 	public void addClasses(List<CharacterClass> classes) {
 		for (CharacterClass characterClass : classes) {
 			addClass(characterClass);
+			System.out.println(name + " has class: " + characterClass.getName());
 		}
 	}
 	
@@ -508,6 +566,172 @@ public class PathfinderCharacter {
 	public int getSpentGold() {
 		return spentGold;
 	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public String getRace() {
+		return race;
+	}
+
+	public void setRace(String race) {
+		this.race = race;
+		System.out.println(name + " is a " + race);
+	}
+
+	public void setSize(String characterSize) {
+		this.characterSize = characterSize;
+		System.out.println(name + " is base size " + characterSize);
+	}
 	
+	public void setGender(String gender) {
+		this.gender = gender;
+		System.out.println(name + " is gender: " + gender);
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+		System.out.println(name + " is age: " + age);
+	}
+
+	public void setWeight(String weight) {
+		this.weight = weight;
+		System.out.println(name + " weighs " + weight);
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+		System.out.println(name + " measures " + height);
+	}
+
+	public String getSize() {
+		return characterSize;
+	}
+
+	public String getGender() {
+		return gender;
+	}
 	
+	public String getAge() {
+		return age;
+	}
+	
+	public String getWeight() {
+		return weight;
+	}
+	
+	public String getHeight() {
+		return height;
+	}
+
+	public String getTypeAndSubtype() {
+		return typesAndSubtypes.toString().replace("[", "").replace("]", "");
+	}
+
+	public int getTotalLevel() {
+		int total = 0;
+		for (CharacterClass characterClass : classes) {
+			total = total+characterClass.getLevel();
+		}
+		return total;
+	}
+
+	public String getClasses() {
+		if (classes.size() == 1) {
+			return classes.get(0).getName();
+		} else {
+			return classes.toString().replace("[", "").replace("]", "").replace(", ", " / ");
+		}
+	}
+
+	public String getSenses() {
+		return senses.toString().replace("[", "").replace("]", "");
+	}
+
+	public String getLandSpeed() {
+		if (speed.size() > 0) {
+			return speed.get(speed.size()-1);
+		} else {
+			return "30 feet";
+		}
+	}
+
+	public String getClimbSpeed() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getSwimSpeed() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getFlySpeed() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int getCharacterId() {
+		return characterId;
+	}
+
+	public List<String> getSpecialDefenses() {
+		if (specialDefenses.isEmpty()) {
+			return null;
+		} else {
+			return specialDefenses;
+		}
+	}
+	
+	public List<String> getSpecialOffenses() {
+		if (specialOffenses.isEmpty()) {
+			return null;
+		} else {
+			return specialOffenses;
+		}
+	}
+
+	public List<Stat> getSkills() {
+		ArrayList<Stat> skills = new ArrayList<>();
+		
+		skills.add(getStat("Acrobatics"));
+		skills.add(getStat("Appraise"));
+		skills.add(getStat("Bluff"));
+		skills.add(getStat("Climb"));
+		skills.add(getStat("Craft A"));
+		skills.add(getStat("Craft B"));
+		skills.add(getStat("Diplomacy"));
+		skills.add(getStat("Disable Device"));
+		skills.add(getStat("Disguise"));
+		skills.add(getStat("Escape Artist"));
+		skills.add(getStat("Fly"));
+		skills.add(getStat("Handle Animal"));
+		skills.add(getStat("Heal"));
+		skills.add(getStat("Intimidate"));
+		skills.add(getStat("Knowledge (Arcana)"));
+		skills.add(getStat("Knowledge (Dungeoneering)"));
+		skills.add(getStat("Knowledge (Engineering)"));
+		skills.add(getStat("Knowledge (Geography)"));
+		skills.add(getStat("Knowledge (History)"));
+		skills.add(getStat("Knowledge (Local)"));
+		skills.add(getStat("Knowledge (Nature)"));
+		skills.add(getStat("Knowledge (Nobility)"));
+		skills.add(getStat("Knowledge (Planes)"));
+		skills.add(getStat("Knowledge (Religion)"));
+		skills.add(getStat("Linguistics"));
+		skills.add(getStat("Perception"));
+		skills.add(getStat("Perform"));
+		skills.add(getStat("Profession"));
+		skills.add(getStat("Ride"));
+		skills.add(getStat("Sense Motive"));
+		skills.add(getStat("Sleight of Hand"));
+		skills.add(getStat("Spellcraft"));
+		skills.add(getStat("Stealth"));
+		skills.add(getStat("Survival"));
+		skills.add(getStat("Swim"));
+		skills.add(getStat("UMD"));
+		
+		return skills;
+	}
 }

@@ -25,6 +25,10 @@ CREATE TABLE PathfinderCharacter /*Done*/
 	Alignment varchar(50),
 	Race varchar(255),
 	CharacterSize varChar(50),
+	Gender varChar(50),
+	Age varChar(50),
+	Weight varChar(50),
+	Height varChar(50),
 	Strength int,
 	Dexterity int,
 	Constitution int,
@@ -34,9 +38,9 @@ CREATE TABLE PathfinderCharacter /*Done*/
 );
 
 INSERT INTO PathfinderCharacter
-VALUES (0, 'Prosopa Dramatis', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 7, 16, 14, 22, 11, 5)
-	  ,(1, 'Coco the Mermaid', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/787088464713220096/130739401_2147415525390293_7206321013511074323_n.png', 'LN', 'Mermaid', 'Medium', 16, 16, 14, 10, 7, 18)
-	  ,(2, 'Jordan Fenrir Wolfe', 'Xavier', 'https://i.pinimg.com/originals/80/26/43/80264379fd64b1931b0930e22bab1ab5.jpg', 'N', 'Human', 'Medium', 14, 20, 14, 10, 7, 14)
+VALUES (0, 'Prosopa Dramatis', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 'Female', '28', '140 lbs', '5'' 7"', 7, 16, 14, 22, 11, 5)
+	  ,(1, 'Coco the Mermaid', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/787088464713220096/130739401_2147415525390293_7206321013511074323_n.png', 'LN', 'Mermaid', 'Medium', 'Female', '21', '120 lbs', '4'' 3"', 16, 16, 14, 10, 7, 18)
+	  ,(2, 'Jordan Fenrir Wolfe', 'Xavier', 'https://i.pinimg.com/originals/80/26/43/80264379fd64b1931b0930e22bab1ab5.jpg', 'N', 'Human', 'Medium', 'Male', '37', '150 lbs', '5'' 10"', 14, 20, 14, 10, 7, 14)
 	  ;
 	  
 CREATE TABLE Items /*Done*/
@@ -103,7 +107,7 @@ CREATE TABLE Feats /*Done*/
 INSERT INTO Feats
 VALUES
 	 (0, 'Spell Focus (Conjuration)', 'Choose a school of magic. Any spells you cast of that school are more difficult to resist.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select.', 'Conjuration##Spell Focus##1')
-	,(1, 'Harrowed', 'You get a +1 bonus on all Will saves made to resist enchantment effects. Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card’s suit. For example, if you drew a card from the suit of Dexterity, you could apply this +2 bonus on an Initiative check, a Reflex save, a Dexterity-based skill check, or a ranged attack roll. You may assign this +2 bonus after you make the roll, but you must do so before you know whether the roll was a success or not.', '[T:1##Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card’s suit. You may assign this +2 bonus after you make the roll, but you must do so before you know whether the roll was a success or not.][Special Save:+1 Will against enchantment effects]')
+	,(1, 'Harrowed', 'You get a +1 bonus on all Will saves made to resist enchantment effects. Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card’s suit. For example, if you drew a card from the suit of Dexterity, you could apply this +2 bonus on an Initiative check, a Reflex save, a Dexterity-based skill check, or a ranged attack roll. You may assign this +2 bonus after you make the roll, but you must do so before you know whether the roll was a success or not.', '[T:1##Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card’s suit. You may assign this +2 bonus after you make the roll, but you must do so before you know whether the roll was a success or not.][Special Defense: +1 Will against enchantment effects]')
     ,(2, 'Spell Focus (Evocation)', 'Choose a school of magic. Any spells you cast of that school are more difficult to resist.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select.', 'Evocation##Spell Focus##1')
     ,(3, 'Extra Arcane Reservoir', 'You gain three more points in your arcane reservoir, and the maximum number of points in your arcane reservoir increases by that amount. (Apply by modifying the Arcane Reservoir uses per day)', '')
     ;
@@ -457,7 +461,7 @@ CREATE TABLE RacialTraits (
 INSERT INTO RacialTraits
 VALUES
 	 (0, 'Tiefling: Outsider (Native)', 'Tieflings are outsiders with the native subtype', '[Type: Outsider (Native)]')
-	,(1, 'Size Medium', 'Medium creatures receive no bonuses or penalties due to their size', '[Size: Medium]')
+	,(1, 'Size Medium', 'Medium creatures receive no bonuses or penalties due to their size', '')
 	,(2, 'Speed 30 feet', 'Has a base speed of 30 feet', '[Speed: 30 ft]')
 	,(3, 'Tiefling: Fiendish Resistance', 'Tieflings have cold resistance 5, electricity resistance 5, and fire resistance 5.', '[Special Defense: Resist Cold 5][Special Defense: Resist Electricity 5][Special Defense: Resist Fire 5]')
 	,(4, 'Tiefling: Skilled', 'Tieflings gain a +2 racial bonus on Bluff and Stealth checks', 'Bluff##Racial##2; Stealth##Racial##2')

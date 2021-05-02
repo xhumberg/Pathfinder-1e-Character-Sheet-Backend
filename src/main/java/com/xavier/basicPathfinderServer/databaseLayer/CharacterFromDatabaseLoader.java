@@ -58,14 +58,18 @@ public class CharacterFromDatabaseLoader {
 		PathfinderCharacter character = (PathfinderCharacter)db.executeSelectQuery(new PathfinderCharacterMapper(), GET_CHARACTER_QUERY, id);
 		
 		if (character != null) {
-			List<Adjustment> allowedAdjustments = (List<Adjustment>)db.executeSelectQuery(new AllowedAdjustmentsMapper(), GET_ALLOWED_ADJUSTMENTS_QUERY, id);
-			character.setAllowedAdjustments(allowedAdjustments);
-			
-			List<String> enabledAdjustments = (List<String>)db.executeSelectQuery(new EnabledAdjustmentsMapper(), GET_ENABLED_ADJUSTMENTS_QUERY, id);
-			character.toggleAdjustments(enabledAdjustments);
+			List<RacialTrait> racialTraits = (List<RacialTrait>)db.executeSelectQuery(new RacialTraitMapper(), GET_CHARACTER_RACIAL_TRAITS, id);
+			for (RacialTrait racialTrait : racialTraits) {
+				character.giveRacialTrait(racialTrait);
+			}
 			
 			List<CharacterClass> classes = (List<CharacterClass>)db.executeSelectQuery(new ClassMapper(), GET_CLASSES_FOR_CHARACTER, id);
 			character.addClasses(classes);
+			
+			List<ClassFeature> features = (List<ClassFeature>)db.executeSelectQuery(new ClassFeatureMapper(), GET_CLASS_FEATURES, id);
+			for (ClassFeature feature : features) {
+				character.giveClassFeature(feature);
+			}
 			
 			List<String> classSkills = (List<String>)db.executeSelectQuery(new ClassSkillMapper(), GET_CLASS_SKILLS, id);
 			for (String classSkill : classSkills) {
@@ -106,19 +110,9 @@ public class CharacterFromDatabaseLoader {
 				character.giveFeat(feat);
 			}
 			
-			List<ClassFeature> features = (List<ClassFeature>)db.executeSelectQuery(new ClassFeatureMapper(), GET_CLASS_FEATURES, id);
-			for (ClassFeature feature : features) {
-				character.giveClassFeature(feature);
-			}
-			
 			List<TrackedResource> miscTrackedResources = (List<TrackedResource>)db.executeSelectQuery(new MiscResourceMapper(), GET_MISC_TRACKED_RESOURCES, id);	
 			for (TrackedResource resource : miscTrackedResources) {
 				character.giveMiscTrackedResource(resource);
-			}
-			
-			List<RacialTrait> racialTraits = (List<RacialTrait>)db.executeSelectQuery(new RacialTraitMapper(), GET_CHARACTER_RACIAL_TRAITS, id);
-			for (RacialTrait racialTrait : racialTraits) {
-				character.giveRacialTrait(racialTrait);
 			}
 			
 			CharacterWealthInterim characterWealth = (CharacterWealthInterim)db.executeSelectQuery(new CharacterWealthInterimMapper(), GET_CHARACTER_WEALTH, id);
@@ -128,11 +122,17 @@ public class CharacterFromDatabaseLoader {
 			CharacterHealthInterim characterHealth = (CharacterHealthInterim)db.executeSelectQuery(new CharacterHealthInterimMapper(), GET_CHARACTER_HEALTH, id);
 			character.setFavoredClassBonusHP(characterHealth.getFavoredClassBonusHp());
 			character.takeDamage(characterHealth.getDamageTaken());
+
+			List<Adjustment> allowedAdjustments = (List<Adjustment>)db.executeSelectQuery(new AllowedAdjustmentsMapper(), GET_ALLOWED_ADJUSTMENTS_QUERY, id);
+			character.setAllowedAdjustments(allowedAdjustments);
+			
+			List<String> enabledAdjustments = (List<String>)db.executeSelectQuery(new EnabledAdjustmentsMapper(), GET_ENABLED_ADJUSTMENTS_QUERY, id);
+			character.toggleAdjustments(enabledAdjustments);
 			
 			db.close();
 			return character;
 		}
 		db.close();
-		return new PathfinderCharacter("Error: Couldn't load character", "https://www.aautomate.com/images/easyblog_shared/November_2018/11-12-18/human_error_stop_400.png");
+		return new PathfinderCharacter(-1, "Error: Couldn't load character", "https://www.aautomate.com/images/easyblog_shared/November_2018/11-12-18/human_error_stop_400.png");
 	}
 }
