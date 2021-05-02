@@ -77,7 +77,7 @@ public class Stat {
 	}
 
 	public void addStat(Stat stat) {
-		Adjustment abilityAdj = new Adjustment(stat.getName(), true);
+		Adjustment abilityAdj = new Adjustment(-1, stat.getName(), true);
 		abilityAdj.addEffect(name, stat.getName(), stat);
 		this.addAdjustment(abilityAdj);
 	}

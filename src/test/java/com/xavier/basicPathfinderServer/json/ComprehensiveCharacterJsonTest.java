@@ -47,11 +47,11 @@ class ComprehensiveCharacterJsonTest {
 		int id = 0;
 		String name = "Human: Humanoid (Human)";
 		String description = "Humans are humanoids with the human subtype";
-		Adjustment effect = AdjustmentStringConverter.convert(name, "[Type: Humanoid (Human)][Sense: Slightly Above Average Smell]");
+		Adjustment effect = AdjustmentStringConverter.convert(-1, name, "[Type: Humanoid (Human)][Sense: Slightly Above Average Smell]");
 		effect.toggleAdjustment();
 		johnDoe.giveRacialTrait(new RacialTrait(id, name, description, effect));
 		
-		Adjustment featEffect = AdjustmentStringConverter.convert("Custom Feat", 
+		Adjustment featEffect = AdjustmentStringConverter.convert(-1, "Custom Feat", 
 				"[Special Defense: Stinky toes][Special Offense: Finger of Stupidity][Speed: 35 feet]");
 		featEffect.toggleAdjustment();
 		johnDoe.giveFeat(new Feat(10, "Custom Feat", "Does custom things!", featEffect));

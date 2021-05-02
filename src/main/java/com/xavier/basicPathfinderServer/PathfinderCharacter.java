@@ -211,11 +211,12 @@ public class PathfinderCharacter {
 		return new CharacterJson(this);
 	}
 
-	public void toggleAdjustment(String adjustmentName) {
+	public Adjustment toggleAdjustment(String adjustmentName) {
 		Adjustment adjustment = adjustments.get(adjustmentName);
 		adjustment.toggleAdjustment();
 		
 		handleMiscAdjustmentFeatures(adjustment);
+		return adjustment;
 	}
 
 	public void addAdjustment(Adjustment adjustment) {
@@ -288,7 +289,7 @@ public class PathfinderCharacter {
 			weaponAttack.put(type, weaponsOfType);
 		}
 		Stat weaponStat = new Stat(weapon.getTitle());
-		Adjustment weaponAttackAdjustment = new Adjustment(attackStat, true);
+		Adjustment weaponAttackAdjustment = new Adjustment(-1, attackStat, true);
 		weaponAttackAdjustment.addEffect(weapon.getTitle(), attackStat, getStat(attackStat));
 		weaponAttackAdjustment.addEffect(weapon.getTitle(), "All Attacks", getStat("All Attacks"));
 		weaponAttackAdjustment.addEffect(weapon.getTitle() , "BAB", getStat("BAB"));
@@ -733,5 +734,14 @@ public class PathfinderCharacter {
 		skills.add(getStat("UMD"));
 		
 		return skills;
+	}
+
+	public boolean isAdjustmentEnabled(String adjustmentName) {
+		for (Adjustment adjustment : allowedAdjustments) {
+			if (adjustment.getName().equals(adjustmentName)) {
+				return adjustment.isEnabled();
+			}
+		}
+		return false;
 	}
 }

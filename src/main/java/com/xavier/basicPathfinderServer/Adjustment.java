@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Adjustment {
+	public final int id;
 	public final String name;
 	Map<String, Map<String, Stat>> valuesToAdjust;
 	private boolean enabled;
@@ -18,11 +19,12 @@ public class Adjustment {
 	public final List<String> specialOffenses;
 	public String speed;
 	
-	public Adjustment(String name) {
-		this(name, false);
+	public Adjustment(int id, String name) {
+		this(id, name, false);
 	}
 	
-	public Adjustment(String name, boolean initiallyEnabled) {
+	public Adjustment(int id, String name, boolean initiallyEnabled) {
+		this.id = id;
 		this.name = name;
 		valuesToAdjust = new HashMap<>();
 		enabled=initiallyEnabled;
@@ -110,5 +112,9 @@ public class Adjustment {
 
 	public void addSpeed(String speed) {
 		this.speed = speed;
+	}
+
+	public int getId() {
+		return id;
 	}
 }

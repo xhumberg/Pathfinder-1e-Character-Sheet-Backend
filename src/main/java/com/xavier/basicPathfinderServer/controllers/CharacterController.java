@@ -1,7 +1,9 @@
 package com.xavier.basicPathfinderServer.controllers;
 
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import com.xavier.basicPathfinderServer.Adjustment;
 import com.xavier.basicPathfinderServer.GoogleAuthenticationResponseJson;
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
 import com.xavier.basicPathfinderServer.Prosopa;
 import com.xavier.basicPathfinderServer.ResultSetMappers.AccessibleCharactersMapper;
+import com.xavier.basicPathfinderServer.databaseLayer.AdjustmentDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.CharacterFromDatabaseLoader;
 import com.xavier.basicPathfinderServer.databaseLayer.DatabaseAccess;
 
@@ -24,6 +28,7 @@ import com.xavier.basicPathfinderServer.databaseLayer.DatabaseAccess;
 public class CharacterController {
 
 	PathfinderCharacter defaultProsopa;
+	Map<String, PathfinderCharacter> loadedCharacters; //TODO: Make this a cache
 	Gson gson;
 	
 	private final String GET_CHARACTERS_FOR_USER_QUERY = "SELECT CharacterName, PathfinderCharacter.CharacterID FROM UserIDToEmail INNER JOIN UserAccess ON UserIDToEmail.UserID = UserAccess.UserID INNER JOIN PathfinderCharacter ON UserAccess.CharacterID = PathfinderCharacter.CharacterID WHERE UserIDToEmail.UserEmail = (?) OR UserAccess.UserID = -1;";
@@ -32,6 +37,7 @@ public class CharacterController {
 	public CharacterController() {
 		defaultProsopa = Prosopa.get();
 		gson = new Gson();
+		loadedCharacters = new HashMap<>();
 	}
 	
 	@GetMapping("/character/{id}")
@@ -54,7 +60,10 @@ public class CharacterController {
 		GoogleAuthenticationResponseJson authenticatedGoogleToken = authenticateToken(token);
 		System.out.println(authenticatedGoogleToken.getEmail() + " wants to load character " + id);
 		
-		return CharacterFromDatabaseLoader.loadCharacter(id);
+		if(!loadedCharacters.containsKey(id)) {
+			loadedCharacters.put(id, CharacterFromDatabaseLoader.loadCharacter(id));
+		} 
+		return loadedCharacters.get(id);
 	}
 
 	@GetMapping("character/load")
@@ -82,11 +91,32 @@ public class CharacterController {
 		return responseJson;
 	}
 	
-	//TODO: Once adjustments are in the database, generalize this
-	@PutMapping("/character/prosopa/toggle/{adjustmentName}") 
-	public void toggleAdjustment(@PathVariable String adjustmentName) {
+	@PutMapping("/character/{id}/toggle/{adjustmentName}") 
+	public void toggleAdjustment(@PathVariable String id, @PathVariable String adjustmentName, @RequestParam(required = false) String token) {
 		System.out.println("Time to toggle " + adjustmentName);
-		defaultProsopa.toggleAdjustment(adjustmentName);
+		if (id.equals("prosopa")) {
+			defaultProsopa.toggleAdjustment(adjustmentName);
+		} else {
+			PathfinderCharacter character = loadCharacterID(id, token);
+			if (character.isAdjustmentEnabled(adjustmentName)) {
+				System.out.println("Disabling " + adjustmentName + " for character id " + id);
+				Adjustment adjustment = character.toggleAdjustment(adjustmentName);
+				AdjustmentDatabaseModifier.disableAdjustment(adjustment.getId(), Integer.parseInt(id));
+				
+			} else {
+				System.out.println("Enabling " + adjustmentName + " for character id " + id);
+				Adjustment adjustment = character.toggleAdjustment(adjustmentName);
+				AdjustmentDatabaseModifier.enableAdjustment(adjustment.getId(), Integer.parseInt(id));
+			}
+		}
+	}
+	
+	@PutMapping("/character/{id}/forceReload")
+	public void forceCharacterReload(@PathVariable String id, @RequestParam String token) {
+		authenticateToken(token);
+		System.out.println("Forcing reload from database for character " + id);
+		loadedCharacters.remove(id);
+		loadCharacterID(id, token);
 	}
 	
 }

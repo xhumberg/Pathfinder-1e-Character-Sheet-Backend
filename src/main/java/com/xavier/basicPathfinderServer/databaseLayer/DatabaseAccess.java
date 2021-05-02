@@ -39,7 +39,7 @@ public class DatabaseAccess<T> {
 	
 	public T executeSelectQuery(ResultSetMapper<T> mapper, String query, Object ...queryParams) {
 		try {
-			ResultSet resultSet = queryDb(databaseConnection, query, queryParams);
+			ResultSet resultSet = queryDb(true, databaseConnection, query, queryParams);
 			T queryResult = mapper.map(resultSet);
 			resultSet.close();
 			
@@ -51,7 +51,15 @@ public class DatabaseAccess<T> {
 		return null;
 	}
 	
-	private ResultSet queryDb(Connection conn, String query, Object ...queryParams) throws SQLException {
+	public void executeModifyQuery(String query, Object ...queryParams) {
+		try {
+			queryDb(false, databaseConnection, query, queryParams);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private ResultSet queryDb(boolean expectResult, Connection conn, String query, Object ...queryParams) throws SQLException {
 		conn.setAutoCommit(false);
 		PreparedStatement statement = conn.prepareStatement(query);
 		for (int i = 0; i < queryParams.length; i++) {
@@ -64,9 +72,14 @@ public class DatabaseAccess<T> {
 			}
 		}
 		System.out.println("Executing statement: " + statement.toString());
-		
-		ResultSet result = statement.executeQuery();
-		return result;
+		if (expectResult) {
+			ResultSet result = statement.executeQuery();
+			return result;
+		} else {
+			statement.execute();
+			conn.commit();
+			return null;
+		}
 	}
 
 	public void close() {

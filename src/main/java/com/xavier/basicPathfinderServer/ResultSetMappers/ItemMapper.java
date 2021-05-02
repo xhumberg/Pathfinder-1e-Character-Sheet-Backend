@@ -21,7 +21,7 @@ public class ItemMapper implements ResultSetMapper<Object> {
 				int cost = resultSet.getInt("ItemCost");
 				String slot = resultSet.getString("ItemSlot");
 				String description = resultSet.getString("ItemDescription");
-				Adjustment adjustment = AdjustmentStringConverter.convert(name, resultSet.getString("Adjustments"));
+				Adjustment adjustment = AdjustmentStringConverter.convert(-1, name, resultSet.getString("Adjustments"));
 				if (adjustment != null) {
 					adjustment.toggleAdjustment();
 				}

@@ -6,8 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AdjustmentStringConverter {
-	public static Adjustment convert(String name, String adjustmentString) {
-		Adjustment newAdjustment = new Adjustment(name);
+	public static Adjustment convert(int id, String name, String adjustmentString) {
+		Adjustment newAdjustment = new Adjustment(id, name);
 		adjustmentString = adjustmentString.replaceAll("\\[T:.*?\\]", ""); //Only used in creating new resources.
 		adjustmentString = getTypesIfPresent(adjustmentString, newAdjustment);
 		adjustmentString = getSpecialDefensesIfPresent(adjustmentString, newAdjustment);

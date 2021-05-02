@@ -91,7 +91,7 @@ public class Spellcasting {
 			spellDC.setBaseValue(-1);
 		} else {
 			spellDC.setBaseValue(10);
-			Adjustment spellDCAdjustments = new Adjustment("DC adjustment", true);
+			Adjustment spellDCAdjustments = new Adjustment(-1, "DC adjustment", true);
 			spellDCAdjustments.addEffect("DC", "Casting Stat", character.getAbility(castingStat));
 			spellDCAdjustments.addEffect("DC", "Spell Level", level);
 			spellDCAdjustments.addEffect("DC", spell.school, character.getStat(spell.school));

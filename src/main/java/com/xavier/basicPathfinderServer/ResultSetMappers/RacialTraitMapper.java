@@ -19,7 +19,7 @@ public class RacialTraitMapper implements ResultSetMapper<Object> {
 				int id = resultSet.getInt("TraitID");
 				String name = resultSet.getString("TraitName");
 				String description = resultSet.getString("TraitDescription");
-				Adjustment effect = AdjustmentStringConverter.convert(name, resultSet.getString("TraitEffect"));
+				Adjustment effect = AdjustmentStringConverter.convert(-1, name, resultSet.getString("TraitEffect"));
 				if (effect != null) {
 					effect.toggleAdjustment();
 				}

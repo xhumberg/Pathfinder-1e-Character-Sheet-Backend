@@ -34,7 +34,7 @@ import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.SpellNam
 public class CharacterFromDatabaseLoader {
 
 	private final static String GET_CHARACTER_QUERY = "select * from PathfinderCharacter where CharacterID = ?";
-	private final static String GET_ALLOWED_ADJUSTMENTS_QUERY = "select AdjustmentName, AdjustmentEffect from AllowedAdjustments inner join StandardAdjustments on AllowedAdjustments.AdjustmentID = StandardAdjustments.AdjustmentID where CharacterID = ?";
+	private final static String GET_ALLOWED_ADJUSTMENTS_QUERY = "select AllowedAdjustments.AdjustmentID, AdjustmentName, AdjustmentEffect from AllowedAdjustments inner join StandardAdjustments on AllowedAdjustments.AdjustmentID = StandardAdjustments.AdjustmentID where CharacterID = ?";
 	private final static String GET_ENABLED_ADJUSTMENTS_QUERY = "select AdjustmentName from EnabledAdjustments inner join StandardAdjustments on EnabledAdjustments.AdjustmentID = StandardAdjustments.AdjustmentID where CharacterID = ?";
 	private final static String GET_CLASSES_FOR_CHARACTER = "select * from Classes inner join CharacterClasses on Classes.ClassID = CharacterClasses.ClassID where CharacterClasses.CharacterID = ?";
 	private final static String GET_SKILL_RANKS = "select * from SkillRanks where CharacterID = ?";

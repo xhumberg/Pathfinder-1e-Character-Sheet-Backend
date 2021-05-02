@@ -5,31 +5,33 @@ import java.util.List;
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
 import com.xavier.basicPathfinderServer.json.mappers.AbilityJson;
 import com.xavier.basicPathfinderServer.json.mappers.AbilityListMapper;
+import com.xavier.basicPathfinderServer.json.mappers.AdjustmentListMapper;
+import com.xavier.basicPathfinderServer.json.mappers.EnabledAdjustmentListMapper;
 import com.xavier.basicPathfinderServer.json.mappers.SkillJson;
 import com.xavier.basicPathfinderServer.json.mappers.SkillListMapper;
 import com.xavier.basicPathfinderServer.json.mappers.SpellcastingListMapper;
 
 public class CharacterJson {
 	public final int characterId;
-	public final String name;
-	public final String imageUrl;
-	public final String alignment;
+	public final String name; //
+	public final String imageUrl; //
+	public final String alignment; //
 	public final String player;
-	public final String race;
-	public final String size;
-	public final String gender;
-	public final String age;
-	public final String weight;
-	public final String height;
-	public final String typeAndSubtype;
-	public final int totalLevel;
-	public final String classes;
-	public final String senses;
-	public final String landSpeed;
+	public final String race; //
+	public final String size; //
+	public final String gender; //
+	public final String age; //
+	public final String weight; //
+	public final String height; //
+	public final String typeAndSubtype; //
+	public final int totalLevel; //
+	public final String classes; //
+	public final String senses; //
+	public final String landSpeed; //
 	public final String climbSpeed;
 	public final String swimSpeed;
 	public final String flySpeed;
-	public final int unspentSkillRanks;
+	public final int unspentSkillRanks; //UNSPENT!
 	public final int ac;
 	public final int flatFooted;
 	public final int touch;
@@ -39,6 +41,8 @@ public class CharacterJson {
 	public final String will;
 	public final List<String> specialDefenses;
 	public final List<String> specialOffenses;
+	public final List<String> allowedAdjustments;
+	public final List<String> enabledAdjustments;
 	public final List<SkillJson> skills;
 	public final List<AbilityJson> ability;
 	public final List<SpellcastingJson> spellcasting;
@@ -74,9 +78,52 @@ public class CharacterJson {
 		
 		this.specialDefenses = character.getSpecialDefenses();
 		this.specialOffenses = character.getSpecialOffenses();
+		this.allowedAdjustments = AdjustmentListMapper.map(character.getAllowedAdjustments());
+		this.enabledAdjustments = EnabledAdjustmentListMapper.map(character.getAllowedAdjustments());
 		this.skills = SkillListMapper.map(character.getSkills());
 		this.ability = AbilityListMapper.map(character.abilities);
 		this.spellcasting = SpellcastingListMapper.map(character.spellcastingByClass);
+		
+	}
+
+	public int getAc() {
+		return ac;
+	}
+
+	public int getFlatFooted() {
+		return flatFooted;
+	}
+
+	public int getTouch() {
+		return touch;
+	}
+
+	public int getCmd() {
+		return cmd;
+	}
+
+	public String getFortitude() {
+		return fortitude;
+	}
+
+	public String getReflex() {
+		return reflex;
+	}
+
+	public String getWill() {
+		return will;
+	}
+
+	public List<String> getAllowedAdjustments() {
+		return allowedAdjustments;
+	}
+
+	public List<String> getEnabledAdjustments() {
+		return enabledAdjustments;
+	}
+
+	public List<SkillJson> getSkills() {
+		return skills;
 	}
 
 	public int getCharacterId() {

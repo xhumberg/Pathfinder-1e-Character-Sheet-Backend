@@ -297,7 +297,7 @@ class PathfinderCharacterTest {
 		PathfinderCharacter prosopa = new PathfinderCharacter(0, "Prosopa", null);
 		prosopa.setAbility("Intelligence", 20);
 		
-		Adjustment headbandAdjustment = new Adjustment("Headband of Vast Intelligence +2", true);
+		Adjustment headbandAdjustment = new Adjustment(-1, "Headband of Vast Intelligence +2", true);
 		headbandAdjustment.addEffect("Intelligence", "Enhancement", 2);
 		Item headbandOfInt = new Item("Headband of Vast Intelligence +2", 4000, "Headband", 
 				"This intricate gold headband is decorated with several small blue and deep purple gemstones.\r\nThe headband grants the wearer an enhancement bonus to Intelligence of +2. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. A headband of vast intelligence +2 has one skill associated with it. After being worn for 24 hours, the headband grants a number of skill ranks in that skill equal to the wearer’s total Hit Dice. These ranks do not stack with the ranks a creature already possesses. This skill is chosen when the headband is created. If no skill is listed, the headband is assumed to grant skill ranks in a randomly determined Knowledge skill.", 
@@ -308,7 +308,7 @@ class PathfinderCharacterTest {
 		assertEquals(22, prosopa.getAbilityValue("Intelligence"));
 		assertTrue(prosopa.getItems().contains(headbandOfInt));
 		
-		Adjustment beltAdjustment = new Adjustment("Belt of Overpowered Constitution", true);
+		Adjustment beltAdjustment = new Adjustment(-1, "Belt of Overpowered Constitution", true);
 		beltAdjustment.addEffect("Constitution", "Invincible", 9999);
 		Item unequippedOverpoweredBelt = new Item("Belt of Overpowered Constitution", 999999999, "Belt",
 				"Nobody playtested this item and the munchkins found out how to get it.",
@@ -341,7 +341,7 @@ class PathfinderCharacterTest {
 	}
 	
 	private Adjustment buildAndAddAdjustment(PathfinderCharacter character, String adjName, boolean enabled, String... effectStrings) {
-		Adjustment adj = new Adjustment(adjName, enabled);
+		Adjustment adj = new Adjustment(-1, adjName, enabled);
 		for (String effectString : effectStrings) {
 			String[] strings = effectString.split("#");
 			int value = Integer.parseInt(strings[2]);

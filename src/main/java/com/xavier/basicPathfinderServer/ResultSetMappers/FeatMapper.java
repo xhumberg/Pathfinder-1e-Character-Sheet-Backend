@@ -19,7 +19,7 @@ public class FeatMapper implements ResultSetMapper<Object> {
 				int id = resultSet.getInt("FeatID");
 				String name = resultSet.getString("FeatName");
 				String description = resultSet.getString("FeatDescription");
-				Adjustment effect = AdjustmentStringConverter.convert(name, resultSet.getString("FeatEffect"));
+				Adjustment effect = AdjustmentStringConverter.convert(-1, name, resultSet.getString("FeatEffect"));
 				if (effect != null) {
 					effect.toggleAdjustment();
 				}
