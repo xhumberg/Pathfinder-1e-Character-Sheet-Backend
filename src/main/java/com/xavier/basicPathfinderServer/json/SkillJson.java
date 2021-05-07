@@ -1,4 +1,4 @@
-package com.xavier.basicPathfinderServer.json.mappers;
+package com.xavier.basicPathfinderServer.json;
 
 public class SkillJson {
 	public final String name;

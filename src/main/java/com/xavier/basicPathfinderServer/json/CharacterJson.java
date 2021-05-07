@@ -3,13 +3,19 @@ package com.xavier.basicPathfinderServer.json;
 import java.util.List;
 
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
-import com.xavier.basicPathfinderServer.json.mappers.AbilityJson;
 import com.xavier.basicPathfinderServer.json.mappers.AbilityListMapper;
 import com.xavier.basicPathfinderServer.json.mappers.AdjustmentListMapper;
+import com.xavier.basicPathfinderServer.json.mappers.ClassFeatureMapper;
+import com.xavier.basicPathfinderServer.json.mappers.ClassTrackedFeatureMapper;
 import com.xavier.basicPathfinderServer.json.mappers.EnabledAdjustmentListMapper;
-import com.xavier.basicPathfinderServer.json.mappers.SkillJson;
+import com.xavier.basicPathfinderServer.json.mappers.FeatMapper;
+import com.xavier.basicPathfinderServer.json.mappers.GoldMapper;
+import com.xavier.basicPathfinderServer.json.mappers.ItemMapper;
+import com.xavier.basicPathfinderServer.json.mappers.MiscTrackedResourceMapper;
+import com.xavier.basicPathfinderServer.json.mappers.RacialTraitMapper;
 import com.xavier.basicPathfinderServer.json.mappers.SkillListMapper;
 import com.xavier.basicPathfinderServer.json.mappers.SpellcastingListMapper;
+import com.xavier.basicPathfinderServer.json.mappers.TrackedItemMapper;
 
 public class CharacterJson {
 	public final int characterId;
@@ -46,6 +52,14 @@ public class CharacterJson {
 	public final List<SkillJson> skills;
 	public final List<AbilityJson> ability;
 	public final List<SpellcastingJson> spellcasting;
+	public final List<FeatJson> feats;
+	public final List<ClassTrackedFeatureJson> classTrackedFeatures;
+	public final List<ClassFeatureJson> classFeatures;
+	public final List<RacialTraitJson> racialTraits;
+	public final List<MiscTrackedResourceJson> miscTrackedResources;
+	public final List<TrackedItemJson> trackedItems;
+	public final List<ItemJson> items;
+	public final GoldJson gold;
 	
 	public CharacterJson(PathfinderCharacter character) {
 		this.characterId = character.getCharacterId();
@@ -83,7 +97,14 @@ public class CharacterJson {
 		this.skills = SkillListMapper.map(character.getSkills());
 		this.ability = AbilityListMapper.map(character.abilities);
 		this.spellcasting = SpellcastingListMapper.map(character.spellcastingByClass);
-		
+		this.feats = FeatMapper.map(character.getFeats());
+		this.classTrackedFeatures = ClassTrackedFeatureMapper.map(character.getClassFeatures());
+		this.classFeatures = ClassFeatureMapper.map(character.getClassFeatures());
+		this.racialTraits = RacialTraitMapper.map(character.getRacialTraits());
+		this.miscTrackedResources = MiscTrackedResourceMapper.map(character.getMiscTrackedResources());
+		this.trackedItems = TrackedItemMapper.map(character.getItems());
+		this.items = ItemMapper.map(character.getItems());
+		this.gold = GoldMapper.map(character);
 	}
 
 	public int getAc() {

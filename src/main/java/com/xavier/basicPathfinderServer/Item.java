@@ -110,6 +110,18 @@ public class Item {
 			return false;
 		return true;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public boolean hasTrackedResource() {
+		return trackedResource != null;
+	}
+
+	public int getTrueCost() {
+		return trueCost;
+	}
 	
 	
 

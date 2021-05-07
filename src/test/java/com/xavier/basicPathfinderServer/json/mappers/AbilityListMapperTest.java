@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import com.xavier.basicPathfinderServer.Ability;
+import com.xavier.basicPathfinderServer.json.AbilityJson;
 
 class AbilityListMapperTest {
 

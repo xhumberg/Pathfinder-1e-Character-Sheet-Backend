@@ -1,4 +1,4 @@
-package com.xavier.basicPathfinderServer.json.mappers;
+package com.xavier.basicPathfinderServer.json;
 
 public class AbilityJson {
 	public final String name;

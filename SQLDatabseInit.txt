@@ -137,7 +137,8 @@ CREATE TABLE ClassFeatures /*Done*/
 
 INSERT INTO ClassFeatures
 VALUES
-	 (0, 'Arcane Reservoir (modified)', 'The exploiter wizard gains the arcanist''s arcane reservoir class feature. The exploiter wizard can use his wizard level as his arcanist level for determining how many arcanist reservoir points he gains at each level.', '[T:8]', 0)
+	 (0, 'Arcane Reservoir (modified)', 'The exploiter wizard gains the arcanist''s arcane reservoir class feature. The exploiter wizard can use his wizard level as his arcanist level for determining how many arcanist reservoir points he gains at each level.', '[T:8]', 0),
+	,(1, 'Exploiter Exploit', 'At 1st level and every 4 levels thereafter, the exploiter wizard gains a single arcanist exploit. The exploiter wizard uses his wizard level as his arcanist level for determining the effects and DCs of his arcanist exploits.\r\nThis ability replaces arcane school.', '', -1)
 	;
 
 CREATE TABLE Classes /*Done*/
@@ -180,11 +181,6 @@ CREATE TABLE ClassesToClassFeatures /*To be implemented later, when adding class
 	ClassID int,
 	FeatureID int
 );
-
-INSERT INTO ClassesToClassFeatures
-VALUES
-	 (0, 0)
-	;
 	
 CREATE TABLE CharacterClassFeatures /*Done*/
 (
@@ -196,6 +192,7 @@ CREATE TABLE CharacterClassFeatures /*Done*/
 INSERT INTO CharacterClassFeatures
 VALUES
 	 (0, 0, 0)
+	,(0, 1, -1)
 	;
 	
 CREATE TABLE TrackedResources /*Done*/

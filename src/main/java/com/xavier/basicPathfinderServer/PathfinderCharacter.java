@@ -744,4 +744,32 @@ public class PathfinderCharacter {
 		}
 		return false;
 	}
+
+	public List<Feat> getFeats() {
+		return feats;
+	}
+
+	public List<ClassFeature> getClassFeatures() {
+		return classFeatures;
+	}
+
+	public List<RacialTrait> getRacialTraits() {
+		return racialTraits;
+	}
+	
+	public List<TrackedResource> getMiscTrackedResources() {
+		return miscTrackedResources;
+	}
+
+	public int getTotalSpentGold() {
+		int itemSum = 0;
+		for (Item item : items) {
+			itemSum += item.getTrueCost();
+		}
+		return itemSum + spentGold;
+	}
+	
+	public int getRemainingGold() {
+		return getTotalEarnedGold() - getTotalSpentGold();
+	}
 }

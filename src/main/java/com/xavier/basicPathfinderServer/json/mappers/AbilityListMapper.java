@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.xavier.basicPathfinderServer.Ability;
+import com.xavier.basicPathfinderServer.json.AbilityJson;
 
 public class AbilityListMapper {
 	public static List<AbilityJson> map(List<Ability> abilities) {
