@@ -483,6 +483,41 @@ VALUES
 	,(0, 6)
 	,(0, 7)
 	;
+	
+CREATE TABLE WeaponDefinitions (
+	WeaponID int,
+	WeaponName varchar(255),
+	DamageDice varchar(255),
+	DamageType varchar(255),
+	WeaponModifiers varchar(255),
+	AttackMod int,
+	DamageMod int,
+	CritLow int,
+	CritMultiplier int,
+	WeaponDescription varchar(1500),
+	WeaponCategory varchar(255),
+	WeaponProficiency varchar(255),
+	WeaponSpecialTags varchar(255),
+	Weight int,
+	WeaponGroups varchar(255)
+);
+
+INSERT INTO WeaponDefinitions
+VALUES
+	 (0, 'Heavy Crossbow', '1d10', 'P', '', 0, -1, 19, 2, 'You draw a heavy crossbow back by turning a small winch. Loading a heavy crossbow is a full-round action that provokes attacks of opportunity. A heavy crossbow fires crossbow bolts.\r\nNormally, operating a heavy crossbow requires two hands. However, you can shoot, but not load, a heavy crossbow with one hand at a –4 penalty on attack rolls. You can shoot a heavy crossbow with each hand, but you take a penalty on attack rolls as if attacking with two one-handed weapons. This penalty is cumulative with the penalty for one-handed firing.', 'Ranged', 'Simple', 'Range 120 ft.', 8, 'Crossbows')
+	;
+	
+CREATE TABLE CharacterWeapons (
+	CharacterID int,
+	WeaponID int,
+	WeaponAttackStat varchar(255),
+	WeaponDamageStat varchar(255)
+);
+
+INSERT INTO CharacterWeapons
+VALUES
+	 (0, 0, 'Dexterity', '')
+	;
 ---------
 
 SELECT CharacterName FROM UserIDToEmail

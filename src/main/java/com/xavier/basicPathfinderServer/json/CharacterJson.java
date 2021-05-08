@@ -16,6 +16,7 @@ import com.xavier.basicPathfinderServer.json.mappers.RacialTraitMapper;
 import com.xavier.basicPathfinderServer.json.mappers.SkillListMapper;
 import com.xavier.basicPathfinderServer.json.mappers.SpellcastingListMapper;
 import com.xavier.basicPathfinderServer.json.mappers.TrackedItemMapper;
+import com.xavier.basicPathfinderServer.json.mappers.WeaponsMapper;
 
 public class CharacterJson {
 	public final int characterId;
@@ -41,10 +42,15 @@ public class CharacterJson {
 	public final int ac;
 	public final int flatFooted;
 	public final int touch;
+	public final int cmb;
 	public final int cmd;
 	public final String fortitude;
 	public final String reflex;
 	public final String will;
+	public final String initiative;
+	public final int bab;
+	public final int maxHp;
+	public final int currentHp;
 	public final List<String> specialDefenses;
 	public final List<String> specialOffenses;
 	public final List<String> allowedAdjustments;
@@ -59,6 +65,7 @@ public class CharacterJson {
 	public final List<MiscTrackedResourceJson> miscTrackedResources;
 	public final List<TrackedItemJson> trackedItems;
 	public final List<ItemJson> items;
+	public final List<WeaponJson> weapons;
 	public final GoldJson gold;
 	
 	public CharacterJson(PathfinderCharacter character) {
@@ -85,10 +92,15 @@ public class CharacterJson {
 		this.ac = character.getStatValue("AC");
 		this.flatFooted = character.getStatValue("Flat-Footed");
 		this.touch = character.getStatValue("Touch");
+		this.cmb = -1;
 		this.cmd = -1;
 		this.fortitude = "+" + character.getStatValue("Fortitude"); //TODO: could be negative
 		this.reflex = "+" + character.getStatValue("Reflex"); //TODO: could be negative
 		this.will = "+" + character.getStatValue("Will"); //TODO: could be negative
+		this.initiative = "+" + character.getStatValue("Initiative");
+		this.bab = character.getStatValue("BAB");
+		this.maxHp = character.getMaxHealth();
+		this.currentHp = character.getCurrentHealth();
 		
 		this.specialDefenses = character.getSpecialDefenses();
 		this.specialOffenses = character.getSpecialOffenses();
@@ -105,6 +117,8 @@ public class CharacterJson {
 		this.trackedItems = TrackedItemMapper.map(character.getItems());
 		this.items = ItemMapper.map(character.getItems());
 		this.gold = GoldMapper.map(character);
+		this.weapons = WeaponsMapper.map(character.getWeapons(), character.getStatValue("BAB"));
+		
 	}
 
 	public int getAc() {

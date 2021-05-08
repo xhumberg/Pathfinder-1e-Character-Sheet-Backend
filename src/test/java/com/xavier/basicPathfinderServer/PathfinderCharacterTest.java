@@ -49,21 +49,26 @@ class PathfinderCharacterTest {
 		Weapon warhammer = new Weapon("Warhammer", "d8", "B", "", 0, 0, 20, 3, "HAMMER!", "hammers", "martial", "", 5, "hammers");
 		bob.giveWeapon(warhammer, "Strength", "Strength", Weapon.WeaponType.MELEE);
 		assertEquals(2, bob.getMeleeAttack("Warhammer"));
+		assertEquals(2, bob.getMeleeDamage("Warhammer"));
 		
 		//Permanent adjustment
 		buildAndAddAdjustment(bob, "Fighter 3", true, "All Attacks#BAB#3");
 		assertEquals(5, bob.getMeleeAttack("Warhammer"));
+		assertEquals(2, bob.getMeleeDamage("Warhammer"));
 		
 		//Toggle adjustment
 		buildAndAddAdjustment(bob, "Heroism", true, "All Attacks#Morale#2");
 		assertEquals(7, bob.getMeleeAttack("Warhammer"));
+		assertEquals(2, bob.getMeleeDamage("Warhammer"));
 		
 		bob.toggleAdjustment("Heroism");
 		assertEquals(5, bob.getMeleeAttack("Warhammer"));
+		assertEquals(2, bob.getMeleeDamage("Warhammer"));
 		
 		//Melee only adjustment
-		buildAndAddAdjustment(bob, "Power Attack", true, "Melee Attacks#Penalty#-1");
+		buildAndAddAdjustment(bob, "Power Attack", true, "Melee Attacks#Penalty#-1", "Melee Damage#Power Attack#2");
 		assertEquals(4, bob.getMeleeAttack("Warhammer"));
+		assertEquals(4, bob.getMeleeDamage("Warhammer"));
 	}
 	
 	@Test

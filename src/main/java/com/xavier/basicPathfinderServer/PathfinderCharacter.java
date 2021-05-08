@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
+import java.util.Map;
 
 import com.xavier.basicPathfinderServer.Weapon.WeaponType;
 import com.xavier.basicPathfinderServer.json.CharacterJson;
+import com.xavier.basicPathfinderServer.json.WeaponStats;
 
 public class PathfinderCharacter {
 	
@@ -33,7 +33,8 @@ public class PathfinderCharacter {
 	public final List<String> speed;
 	public final List<CharacterClass> classes;
 	public final HashMap<String, Stat> allStats;
-	public final HashMap<Weapon.WeaponType, HashMap<Weapon, Stat>> weaponAttack;
+	public final HashMap<Weapon.WeaponType, HashMap<Weapon, WeaponStats>> weapons;
+	//Weapon damage.........
 	public final HashMap<Integer, Spellcasting> spellcastingByClass;
 	public HP hp;
 	public SkillRanks skillRanks;
@@ -60,7 +61,7 @@ public class PathfinderCharacter {
 		specialOffenses = new ArrayList<>();
 		speed = new ArrayList<>();
 		classes = new ArrayList<>();
-		weaponAttack = new HashMap<>();
+		weapons = new HashMap<>();
 		spellcastingByClass = new HashMap<>();
 		hp = new HP(getAbility("Constitution"));
 		skillRanks = new SkillRanks(getAbility("Intelligence"));
@@ -97,6 +98,7 @@ public class PathfinderCharacter {
 		initAC();
 		initSkills();
 		initNewStat("Level");
+		initStatWithStats("Initiative", getAbility("Dexterity"));
 	}
 
 	private void initAttackMods() {
@@ -104,6 +106,9 @@ public class PathfinderCharacter {
 		initNewStat("All Attacks");
 		initNewStat("Melee Attacks");
 		initNewStat("Ranged attacks");
+		initNewStat("All Damage");
+		initNewStat("Melee Damage");
+		initNewStat("Ranged Damage");
 	}
 
 	private void initSaves() {
@@ -283,32 +288,59 @@ public class PathfinderCharacter {
 	}
 
 	public void giveWeapon(Weapon weapon, String attackStat, String damageStat, WeaponType type) {
-		HashMap<Weapon, Stat> weaponsOfType = weaponAttack.get(type);
+		HashMap<Weapon, WeaponStats> weaponsOfType = weapons.get(type);
 		if (weaponsOfType == null) {
-			weaponsOfType = new HashMap<Weapon, Stat>();
-			weaponAttack.put(type, weaponsOfType);
+			weaponsOfType = new HashMap<Weapon, WeaponStats>();
+			weapons.put(type, weaponsOfType);
 		}
-		Stat weaponStat = new Stat(weapon.getTitle());
-		Adjustment weaponAttackAdjustment = new Adjustment(-1, attackStat, true);
-		weaponAttackAdjustment.addEffect(weapon.getTitle(), attackStat, getStat(attackStat));
-		weaponAttackAdjustment.addEffect(weapon.getTitle(), "All Attacks", getStat("All Attacks"));
-		weaponAttackAdjustment.addEffect(weapon.getTitle() , "BAB", getStat("BAB"));
-		if (type == Weapon.WeaponType.MELEE) {
-			weaponAttackAdjustment.addEffect(weapon.getTitle(), "Melee Specific", getStat("Melee Attacks"));
-		} else {
-			weaponAttackAdjustment.addEffect(weapon.getTitle(), "Ranged Specific", getStat("Ranged Attacks"));
-		}
-		weaponStat.addAdjustment(weaponAttackAdjustment);
 		
-		weaponsOfType.put(weapon, weaponStat);
+		String attackModString = weapon.getTitle() + " attack mod";
+		Stat weaponAttackStat = new Stat(attackModString);
+		Adjustment weaponAttackAdjustment = new Adjustment(-1, attackStat, true);
+		weaponAttackAdjustment.addEffect(attackModString, attackStat, getStat(attackStat));
+		weaponAttackAdjustment.addEffect(attackModString, "All Attacks", getStat("All Attacks"));
+		weaponAttackAdjustment.addEffect(attackModString , "BAB", getStat("BAB"));
+		if (type == Weapon.WeaponType.MELEE) {
+			weaponAttackAdjustment.addEffect(attackModString, "Melee Specific", getStat("Melee Attacks"));
+		} else {
+			weaponAttackAdjustment.addEffect(attackModString, "Ranged Specific", getStat("Ranged Attacks"));
+		}
+		weaponAttackStat.addAdjustment(weaponAttackAdjustment);
+		
+		String damageModString = weapon.getTitle() + " damage mod";
+		Stat weaponDamageStat = new Stat(damageModString);
+		Adjustment weaponDamageAdjustment = new Adjustment(-1, damageStat, true);
+		if (damageStat != null && !damageStat.isBlank())
+			weaponDamageAdjustment.addEffect(damageModString, damageStat, getStat(damageStat));
+		weaponDamageAdjustment.addEffect(weapon.getTitle(), "All Damage", getStat("All Damage"));
+		if (type == Weapon.WeaponType.MELEE) {
+			weaponDamageAdjustment.addEffect(damageModString, "Melee Specific", getStat("Melee Damage"));
+		} else {
+			weaponDamageAdjustment.addEffect(damageModString, "Ranged Specific", getStat("Ranged Damage"));
+		}
+		weaponDamageStat.addAdjustment(weaponDamageAdjustment);
+		
+		weaponsOfType.put(weapon, new WeaponStats(weaponAttackStat, weaponDamageStat));
 	}
 
 	public int getMeleeAttack(String weaponTitle) {
-		HashMap<Weapon, Stat> meleeWeapons = weaponAttack.get(Weapon.WeaponType.MELEE);
+		HashMap<Weapon, WeaponStats> meleeWeapons = weapons.get(Weapon.WeaponType.MELEE);
 		
 		for (Weapon weapon : meleeWeapons.keySet()) {
 			if (weapon.getTitle().equals(weaponTitle)) {
-				return meleeWeapons.get(weapon).getValue();
+				return meleeWeapons.get(weapon).attackStat.getValue();
+			}
+		}
+		
+		return -100;
+	}
+	
+	public int getMeleeDamage(String weaponTitle) {
+		HashMap<Weapon, WeaponStats> meleeWeapons = weapons.get(Weapon.WeaponType.MELEE);
+		
+		for (Weapon weapon : meleeWeapons.keySet()) {
+			if (weapon.getTitle().equals(weaponTitle)) {
+				return meleeWeapons.get(weapon).damageStat.getValue();
 			}
 		}
 		
@@ -771,5 +803,9 @@ public class PathfinderCharacter {
 	
 	public int getRemainingGold() {
 		return getTotalEarnedGold() - getTotalSpentGold();
+	}
+
+	public Map<Weapon, WeaponStats> getWeapons() {
+		return weapons.get(WeaponType.MELEE);
 	}
 }

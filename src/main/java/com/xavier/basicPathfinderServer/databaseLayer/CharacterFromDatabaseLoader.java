@@ -12,6 +12,7 @@ import com.xavier.basicPathfinderServer.PathfinderCharacter;
 import com.xavier.basicPathfinderServer.RacialTrait;
 import com.xavier.basicPathfinderServer.Spell;
 import com.xavier.basicPathfinderServer.TrackedResource;
+import com.xavier.basicPathfinderServer.Weapon;
 import com.xavier.basicPathfinderServer.ResultSetMappers.AllowedAdjustmentsMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.CharacterHealthInterimMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.CharacterWealthInterimMapper;
@@ -27,9 +28,12 @@ import com.xavier.basicPathfinderServer.ResultSetMappers.PathfinderCharacterMapp
 import com.xavier.basicPathfinderServer.ResultSetMappers.RacialTraitMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.SkillRanksMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.SpellInterimMapper;
+import com.xavier.basicPathfinderServer.ResultSetMappers.WeaponInterimMapper;
 import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.CharacterHealthInterim;
 import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.CharacterWealthInterim;
 import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.SpellNameLevelAndClassInterim;
+import com.xavier.basicPathfinderServer.ResultSetMappers.interimObjects.WeaponInterim;
+import com.xavier.basicPathfinderServer.Weapon.WeaponType;
 
 public class CharacterFromDatabaseLoader {
 
@@ -49,7 +53,7 @@ public class CharacterFromDatabaseLoader {
 	private final static String GET_CHARACTER_WEALTH = "select * from CharacterWealth where CharacterID = ?";
 	private final static String GET_CHARACTER_HEALTH = "select * from CharacterHP where CharacterID = ?";
 	private final static String GET_CHARACTER_RACIAL_TRAITS = "select * from RacialTraits inner join CharacterRacialTraits on RacialTraits.TraitID = CharacterRacialTraits.TraitID where CharacterID = ?";
-	
+	private final static String GET_WEAPONS = "select * from CharacterWeapons inner join WeaponDefinitions on CharacterWeapons.WeaponID = WeaponDefinitions.WeaponID where CharacterID = ?";
 	
 	@SuppressWarnings("unchecked")
 	public static PathfinderCharacter loadCharacter(String idString) {
@@ -113,6 +117,11 @@ public class CharacterFromDatabaseLoader {
 			List<TrackedResource> miscTrackedResources = (List<TrackedResource>)db.executeSelectQuery(new MiscResourceMapper(), GET_MISC_TRACKED_RESOURCES, id);	
 			for (TrackedResource resource : miscTrackedResources) {
 				character.giveMiscTrackedResource(resource);
+			}
+			
+			List<WeaponInterim> weapons = (List<WeaponInterim>)db.executeSelectQuery(new WeaponInterimMapper(), GET_WEAPONS, id);
+			for (WeaponInterim interim : weapons) {
+				character.giveWeapon(interim.weapon, interim.attackStat, interim.damageStat, WeaponType.MELEE);
 			}
 			
 			CharacterWealthInterim characterWealth = (CharacterWealthInterim)db.executeSelectQuery(new CharacterWealthInterimMapper(), GET_CHARACTER_WEALTH, id);
