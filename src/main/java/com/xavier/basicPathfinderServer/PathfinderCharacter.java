@@ -387,6 +387,13 @@ public class PathfinderCharacter {
 			spellcasting.castSpell(spellName, level);
 		}
 	}
+	
+	public void uncastSpell(int classId, String spellName, int level) {
+		Spellcasting spellcasting = spellcastingByClass.get(classId);
+		if (spellcasting != null) {
+			spellcasting.uncastSpell(spellName, level);
+		}
+	}
 
 	public Ability getAbility(String abilityName) {
 		return (Ability)allStats.get(abilityName);
@@ -807,5 +814,23 @@ public class PathfinderCharacter {
 
 	public Map<Weapon, WeaponStats> getWeapons() {
 		return weapons.get(WeaponType.MELEE);
+	}
+
+	public void reduceUsesForItem(int resourceId) {
+		for (Item item : items) {
+			if (item.getTrackedResourceId() == resourceId) {
+				item.reduceTrackedResource();
+				return;
+			}
+		}
+	}
+	
+	public void increaseUsesForItem(int resourceId) {
+		for (Item item : items) {
+			if (item.getTrackedResourceId() == resourceId) {
+				item.increaseTrackedResource();
+				return;
+			}
+		}
 	}
 }

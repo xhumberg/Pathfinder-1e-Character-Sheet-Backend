@@ -28,11 +28,12 @@ public class ItemMapper implements ResultSetMapper<Object> {
 				TrackedResource trackedResource = null;
 				String trackedResourceName = resultSet.getString("ResourceName");
 				if (trackedResourceName != null) {
+					int resourceId = resultSet.getInt("TrackedResourceID");
 					System.out.println(name + " has a tracked resource.");
 					String resourceDescription = resultSet.getString("ResourceDescription");
 					int remaining = resultSet.getInt("ResourceRemaining");
 					int max = resultSet.getInt("ResourceMax");
-					trackedResource = new TrackedResource(trackedResourceName, resourceDescription, remaining, max);
+					trackedResource = new TrackedResource(resourceId, trackedResourceName, resourceDescription, remaining, max);
 				}
 				
 				Item item = new Item(name, cost, slot, description, adjustment, trackedResource);

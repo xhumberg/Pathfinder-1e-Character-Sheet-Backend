@@ -1,6 +1,8 @@
 package com.xavier.basicPathfinderServer;
 
 import java.security.InvalidParameterException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -83,6 +85,26 @@ public class Spellcasting {
 		}
 		castSpellsOfLevel.add(targetSpell);
 	}
+	
+	//Note: The spell MUST be prepped
+	public void uncastSpell(String spellName, int level) {
+		Spell targetSpell = null;
+		List<Spell> castSpellsOfLevel = spellsCast.get(level);
+		for (Spell spell : castSpellsOfLevel) {
+			if (spell.name.equals(spellName)) {
+				targetSpell = spell;
+				break;
+			}
+		}
+		castSpellsOfLevel.remove(targetSpell);
+		
+		List<Spell> spellsOfLevel = spellsPrepped.get(level);
+		if (spellsOfLevel == null) {
+			spellsPrepped.put(level, new LinkedList<Spell>());
+			spellsOfLevel = spellsCast.get(level);
+		}
+		spellsOfLevel.add(targetSpell);
+	}
 
 	private void addSpellDCToSpell(int level, Spell spell) {
 		ensureSchoolSpecificCharacterStat(spell.school);
@@ -155,6 +177,46 @@ public class Spellcasting {
 				allSpellsOfLevel.addAll(castSpells);
 			}
 			return allSpellsOfLevel;
+		} else {
+			throw new InvalidParameterException("Spellcasting type not currently supported");
+		}
+	}
+
+	public List<Spell> getSpellsPreppedForLevel(int level) {
+		if (type == CastingType.PREPARED) {
+			List<Spell> preppedSpells = spellsPrepped.get(level);
+			if (preppedSpells == null) {
+				return Collections.emptyList();
+			}
+			preppedSpells.sort(new Comparator<Spell>() {
+
+				@Override
+				public int compare(Spell o1, Spell o2) {
+					return o1.getName().compareTo(o2.getName());
+				}
+				
+			});
+			return preppedSpells;
+		} else {
+			throw new InvalidParameterException("Spellcasting type not currently supported");
+		}
+	}
+
+	public List<Spell> getSpellsCastForLevel(int level) {
+		if (type == CastingType.PREPARED) {
+			List<Spell> castSpells = spellsCast.get(level);
+			if (castSpells == null) {
+				return Collections.emptyList();
+			}
+			castSpells.sort(new Comparator<Spell>() {
+
+				@Override
+				public int compare(Spell o1, Spell o2) {
+					return o1.getName().compareTo(o2.getName());
+				}
+				
+			});
+			return castSpells;
 		} else {
 			throw new InvalidParameterException("Spellcasting type not currently supported");
 		}

@@ -14,11 +14,12 @@ public class MiscResourceMapper implements ResultSetMapper<Object> {
 		List<TrackedResource> resources = new ArrayList<>();
 		try {
 			while (resultSet.next()) {
+				int id = resultSet.getInt("TrackedResourceID");
 				String trackedResourceName = resultSet.getString("ResourceName");
 				String resourceDescription = resultSet.getString("ResourceDescription");
 				int remaining = resultSet.getInt("ResourceRemaining");
 				int max = resultSet.getInt("ResourceMax");
-				TrackedResource trackedResource = new TrackedResource(trackedResourceName, resourceDescription, remaining, max);
+				TrackedResource trackedResource = new TrackedResource(id, trackedResourceName, resourceDescription, remaining, max);
 				resources.add(trackedResource);
 			}
 		} catch (SQLException e) {

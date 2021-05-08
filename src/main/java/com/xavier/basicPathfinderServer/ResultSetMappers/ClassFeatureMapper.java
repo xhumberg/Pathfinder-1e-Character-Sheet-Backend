@@ -24,10 +24,11 @@ public class ClassFeatureMapper implements ResultSetMapper<Object> {
 				TrackedResource trackedResource = null;
 				String trackedResourceName = resultSet.getString("ResourceName");
 				if (trackedResourceName != null) {
+					int resourceId = resultSet.getInt("TrackedResourceId");
 					String resourceDescription = resultSet.getString("ResourceDescription");
 					int remaining = resultSet.getInt("ResourceRemaining");
 					int max = resultSet.getInt("ResourceMax");
-					trackedResource = new TrackedResource(trackedResourceName, resourceDescription, remaining, max);
+					trackedResource = new TrackedResource(resourceId, trackedResourceName, resourceDescription, remaining, max);
 				}
 				
 				ClassFeature feature = new ClassFeature(id, name, description, featureEffect, trackedResource);

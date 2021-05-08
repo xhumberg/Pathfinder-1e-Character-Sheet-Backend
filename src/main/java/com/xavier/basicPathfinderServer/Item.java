@@ -122,6 +122,26 @@ public class Item {
 	public int getTrueCost() {
 		return trueCost;
 	}
+
+	public int getTrackedResourceId() {
+		if (hasTrackedResource()) {
+			return trackedResource.getId();
+		} else {
+			return -1;
+		}
+	}
+
+	public void reduceTrackedResource() {
+		if (hasTrackedResource()) {
+			trackedResource.reduce();
+		}
+	}
+
+	public void increaseTrackedResource() {
+		if (hasTrackedResource()) {
+			trackedResource.increase();
+		}
+	}
 	
 	
 

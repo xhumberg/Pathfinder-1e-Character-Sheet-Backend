@@ -323,7 +323,7 @@ class PathfinderCharacterTest {
 		assertEquals(10, prosopa.getAbilityValue("Constitution"));
 		assertTrue(prosopa.getItems().contains(unequippedOverpoweredBelt));
 		
-		TrackedResource persistentRodTracking = new TrackedResource("Lesser Persistent Metamagic Rod", "3 times per day, you may cast a 3rd or lower level spell as if it had the Persistent Spell metamagic feat", 3, 3);
+		TrackedResource persistentRodTracking = new TrackedResource(1, "Lesser Persistent Metamagic Rod", "3 times per day, you may cast a 3rd or lower level spell as if it had the Persistent Spell metamagic feat", 3, 3);
 		Item lesserPersistentRod = new Item("Persistent Metamagic Rod, Lesser", 9000, "Rod", "The wielder can cast up to three spells per day as though using the Persistent Spell feat.", null, persistentRodTracking);
 		prosopa.equip(lesserPersistentRod);
 		
@@ -333,7 +333,7 @@ class PathfinderCharacterTest {
 		assertEquals(1, rods.size());
 		assertEquals(3, rods.get(0).getTrackedResourceRemaining());
 		
-		TrackedResource slightlyUsedRod = new TrackedResource("Lesser Persistent Metamagic Rod", "3 times per day, you may cast a 3rd or lower level spell as if it had the Persistent Spell metamagic feat", 2, 3);
+		TrackedResource slightlyUsedRod = new TrackedResource(2, "Lesser Persistent Metamagic Rod", "3 times per day, you may cast a 3rd or lower level spell as if it had the Persistent Spell metamagic feat", 2, 3);
 		Item usedLesserPersistentRod = new Item("Persistent Metamagic Rod, Lesser", 9000, "Rod", "The wielder can cast up to three spells per day as though using the Persistent Spell feat.", null, slightlyUsedRod);
 		prosopa.equip(usedLesserPersistentRod);
 		
