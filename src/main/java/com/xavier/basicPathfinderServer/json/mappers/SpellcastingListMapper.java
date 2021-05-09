@@ -21,7 +21,7 @@ public class SpellcastingListMapper {
 			int concentration = 0; //TODO: implement concentration, as that's a character stat.
 			List<SpellsPerLevelJson> spellsPerLevel = SpellsPerLevelMapper.map(classSpellcasting);
 			
-			SpellcastingJson spellcasting = new SpellcastingJson(name, type, casterLevel, concentration, spellsPerLevel);
+			SpellcastingJson spellcasting = new SpellcastingJson(classID, name, type, casterLevel, concentration, spellsPerLevel);
 			spellcastingJsons.add(spellcasting);
 		}
 		

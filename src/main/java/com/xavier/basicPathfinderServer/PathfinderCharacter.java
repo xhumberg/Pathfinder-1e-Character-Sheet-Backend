@@ -825,10 +825,46 @@ public class PathfinderCharacter {
 		}
 	}
 	
+	public void reduceUsesForClassFeature(int resourceId) {
+		for (ClassFeature feature : classFeatures) {
+			if (feature.getTrackedResourceId() == resourceId) {
+				feature.reduceTrackedResource();
+				return;
+			}
+		}
+	}
+
+	public void reduceUsesForMiscResource(int resourceId) {
+		for (TrackedResource miscResource : miscTrackedResources) {
+			if (miscResource.getId() == resourceId) {
+				miscResource.reduce();
+				return;
+			}
+		}
+	}
+	
 	public void increaseUsesForItem(int resourceId) {
 		for (Item item : items) {
 			if (item.getTrackedResourceId() == resourceId) {
 				item.increaseTrackedResource();
+				return;
+			}
+		}
+	}
+
+	public void increaseUsesForClassFeature(int resourceId) {
+		for (ClassFeature feature : classFeatures) {
+			if (feature.getTrackedResourceId() == resourceId) {
+				feature.increaseTrackedResource();
+				return;
+			}
+		}
+	}
+
+	public void increaseUsesForMiscResource(int resourceId) {
+		for (TrackedResource miscResource : miscTrackedResources) {
+			if (miscResource.getId() == resourceId) {
+				miscResource.increase();
 				return;
 			}
 		}

@@ -119,4 +119,76 @@ public class CharacterController {
 		loadCharacterID(id, token);
 	}
 	
+	@PutMapping("/character/{id}/castSpell")
+	public void castSpellforCharacter(@PathVariable String id, @RequestParam String token, @RequestParam String classId, @RequestParam String spellName, @RequestParam String level) {
+		PathfinderCharacter character = loadCharacterID(id, token);
+		int DCstart = spellName.lastIndexOf('(');
+		if (DCstart > 1) {
+			spellName = spellName.substring(0, DCstart-1);
+		}
+		System.out.println("Casting spell " + spellName);
+		character.castSpell(Integer.parseInt(classId), spellName, Integer.parseInt(level));
+		//TODO: tell database
+	}
+	
+	@PutMapping("/character/{id}/uncastSpell")
+	public void uncastSpellforCharacter(@PathVariable String id, @RequestParam String token, @RequestParam String classId, @RequestParam String spellName, @RequestParam String level) {
+		PathfinderCharacter character = loadCharacterID(id, token);
+		int DCstart = spellName.lastIndexOf('(');
+		if (DCstart > 1) {
+			spellName = spellName.substring(0, DCstart-1);
+		}
+		System.out.println("Uncasting spell " + spellName);
+		character.uncastSpell(Integer.parseInt(classId), spellName, Integer.parseInt(level));
+		//TODO: tell database
+	}
+	
+	@PutMapping("/character/{id}/heal")
+	public void healCharacter(@PathVariable String id, @RequestParam String token, @RequestParam String amount) {
+		PathfinderCharacter character = loadCharacterID(id, token);
+		character.heal(Integer.parseInt(amount));
+		//TODO: tell database
+	}
+	
+	@PutMapping("/character/{id}/damage")
+	public void damageCharacter(@PathVariable String id, @RequestParam String token, @RequestParam String amount) {
+		PathfinderCharacter character = loadCharacterID(id, token);
+		character.takeDamage(Integer.parseInt(amount));
+		//TODO: tell database
+	}
+	
+	@PutMapping("/character/{id}/reduceResource/{resourceType}/{resourceId}")
+	public void reduceResource(@PathVariable String id, @RequestParam String token, @PathVariable String resourceType, @PathVariable String resourceId) {
+		PathfinderCharacter character = loadCharacterID(id, token);
+		if (resourceType.equals("ITEM")) {
+			character.reduceUsesForItem(Integer.parseInt(resourceId));
+			//TODO: tell database
+		} else if (resourceType.equals("CLASS_FEATURE")) {
+			character.reduceUsesForClassFeature(Integer.parseInt(resourceId));
+			//TODO: tell database
+		} else if (resourceType.equals("MISC")) {
+			character.reduceUsesForMiscResource(Integer.parseInt(resourceId));
+			//TODO: tell database
+		} else {
+			throw new IllegalArgumentException("Resource type: " + resourceType + " not supported!");
+		}
+	}
+	
+	@PutMapping("/character/{id}/increaseResource/{resourceType}/{itemId}")
+	public void increaseResource(@PathVariable String id, @RequestParam String token, @PathVariable String resourceType, @PathVariable String resourceId) {
+		PathfinderCharacter character = loadCharacterID(id, token);
+		if (resourceType.equals("ITEM")) {
+			character.increaseUsesForItem(Integer.parseInt(resourceId));
+			//TODO: tell database
+		} else if (resourceType.equals("CLASS_FEATURE")) {
+			character.increaseUsesForClassFeature(Integer.parseInt(resourceId));
+			//TODO: tell database
+		} else if (resourceType.equals("MISC")) {
+			character.increaseUsesForMiscResource(Integer.parseInt(resourceId));
+			//TODO: tell database
+		} else {
+			throw new IllegalArgumentException("Resource type: " + resourceType + " not supported!");
+		}
+	}
+	
 }

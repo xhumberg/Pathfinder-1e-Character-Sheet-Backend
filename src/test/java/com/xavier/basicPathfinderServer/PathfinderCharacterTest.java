@@ -345,6 +345,44 @@ class PathfinderCharacterTest {
 		}
 	}
 	
+	@Test
+	public void resourceManagement() {
+		PathfinderCharacter prosopa = new PathfinderCharacter(5, "Prosopa", null);
+		
+		//First, item without a resource.
+		Item headband = new Item("Headband of Cool", 4000, "Head", "Looks cool and does stuff", null, null);
+		TrackedResource wandOfCoolCharges = new TrackedResource(2, "Wand of Cool", "Super cool wand!", 40, 50);
+		Item wandOfCool = new Item("Wand of Cool", 99999, "Wand", "Looks cool and does stuff", null, wandOfCoolCharges);
+		Item boots = new Item("Boots", 2, "Feet", "Literally just boots", null, null);
+		
+		prosopa.giveItem(headband);
+		prosopa.giveItem(wandOfCool);
+		prosopa.giveItem(boots);
+		
+		assertEquals(40, wandOfCool.getTrackedResourceRemaining());
+		
+		prosopa.reduceUsesForItem(2);
+		prosopa.reduceUsesForItem(2);
+		prosopa.reduceUsesForItem(2);
+		prosopa.reduceUsesForItem(2);
+		prosopa.reduceUsesForItem(2);
+		
+		assertEquals(35, wandOfCool.getTrackedResourceRemaining());
+		
+		prosopa.increaseUsesForItem(2);
+		prosopa.increaseUsesForItem(2);
+		prosopa.increaseUsesForItem(2);
+		prosopa.increaseUsesForItem(2);
+		prosopa.increaseUsesForItem(2);
+		prosopa.increaseUsesForItem(2);
+		prosopa.increaseUsesForItem(2);
+		prosopa.increaseUsesForItem(2);
+		prosopa.increaseUsesForItem(2);
+		prosopa.increaseUsesForItem(2);
+		
+		assertEquals(45, wandOfCool.getTrackedResourceRemaining());
+	}
+	
 	private Adjustment buildAndAddAdjustment(PathfinderCharacter character, String adjName, boolean enabled, String... effectStrings) {
 		Adjustment adj = new Adjustment(-1, adjName, enabled);
 		for (String effectString : effectStrings) {

@@ -19,7 +19,7 @@ public class SpellsPerLevelMapper {
 			int perDay = classSpellcasting.getSpellsPerDay(level);
 			List<SpellJson> spellsPrepped = SpellListMapper.map(level, classSpellcasting.getSpellsPreppedForLevel(level));
 			List<SpellJson> spellsCast = SpellListMapper.map(level, classSpellcasting.getSpellsCastForLevel(level));
-			SpellsPerLevelJson spellsForLevel = new SpellsPerLevelJson(levelString, perDay, spellsPrepped, spellsCast); 
+			SpellsPerLevelJson spellsForLevel = new SpellsPerLevelJson(level, levelString, perDay, spellsPrepped, spellsCast); 
 			spellsPerLevel.add(spellsForLevel);
 		}
 //		List<SpellJson> thirdLevelSpells = null;

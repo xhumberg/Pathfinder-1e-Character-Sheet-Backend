@@ -15,4 +15,20 @@ public class ClassFeature {
 		this.effect = effect;
 		this.trackedResource = trackedResource;
 	}
+
+	public int getTrackedResourceId() {
+		if (trackedResource != null) {
+			return trackedResource.getId();
+		} else {
+			return -1;
+		}
+	}
+
+	public void reduceTrackedResource() {
+		trackedResource.reduce();
+	}
+	
+	public void increaseTrackedResource() {
+		trackedResource.increase();
+	}
 }
