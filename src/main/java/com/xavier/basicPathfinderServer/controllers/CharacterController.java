@@ -174,7 +174,7 @@ public class CharacterController {
 		}
 	}
 	
-	@PutMapping("/character/{id}/increaseResource/{resourceType}/{itemId}")
+	@PutMapping("/character/{id}/increaseResource/{resourceType}/{resourceId}")
 	public void increaseResource(@PathVariable String id, @RequestParam String token, @PathVariable String resourceType, @PathVariable String resourceId) {
 		PathfinderCharacter character = loadCharacterID(id, token);
 		if (resourceType.equals("ITEM")) {

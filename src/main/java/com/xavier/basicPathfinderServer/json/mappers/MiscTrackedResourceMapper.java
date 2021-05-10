@@ -11,7 +11,7 @@ public class MiscTrackedResourceMapper {
 		List<MiscTrackedResourceJson> resourceJsons = new LinkedList<>();
 		
 		for (TrackedResource resource : resources) {
-			MiscTrackedResourceJson json = new MiscTrackedResourceJson(resource.getName(), resource.getName() + ". TODO: implement description", resource.getRemaining());
+			MiscTrackedResourceJson json = new MiscTrackedResourceJson(resource.getId(), resource.getName(), resource.getName() + ". TODO: implement description", resource.getRemaining());
 			resourceJsons.add(json);
 		}
 		

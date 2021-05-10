@@ -14,7 +14,7 @@ public class ClassTrackedFeatureMapper {
 		
 		for (ClassFeature feature : features) {
 			if (feature.trackedResource != null) {
-				ClassTrackedFeatureJson json = new ClassTrackedFeatureJson(feature.name, feature.description, feature.trackedResource.getRemaining());
+				ClassTrackedFeatureJson json = new ClassTrackedFeatureJson(feature.getTrackedResourceId(), feature.name, feature.description, feature.trackedResource.getRemaining());
 				featureJsons.add(json);
 			}
 		}
