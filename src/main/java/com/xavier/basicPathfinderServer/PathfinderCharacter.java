@@ -381,18 +381,20 @@ public class PathfinderCharacter {
 		}
 	}
 	
-	public void castSpell(int classId, String spellName, int level) {
+	public Spell castSpell(int classId, String spellName, int level) {
 		Spellcasting spellcasting = spellcastingByClass.get(classId);
 		if (spellcasting != null) {
-			spellcasting.castSpell(spellName, level);
+			return spellcasting.castSpell(spellName, level);
 		}
+		return null;
 	}
 	
-	public void uncastSpell(int classId, String spellName, int level) {
+	public Spell uncastSpell(int classId, String spellName, int level) {
 		Spellcasting spellcasting = spellcastingByClass.get(classId);
 		if (spellcasting != null) {
-			spellcasting.uncastSpell(spellName, level);
+			return spellcasting.uncastSpell(spellName, level);
 		}
+		return null;
 	}
 
 	public Ability getAbility(String abilityName) {
@@ -439,12 +441,12 @@ public class PathfinderCharacter {
 		return hp.getCurrentHealth();
 	}
 
-	public void takeDamage(int damage) {
-		hp.takeDamage(damage);
+	public int takeDamage(int damage) {
+		return hp.takeDamage(damage);
 	}
 
-	public void heal(int health) {
-		hp.heal(health);
+	public int heal(int health) {
+		return hp.heal(health);
 	}
 
 	public void fullHeal() {
@@ -816,57 +818,57 @@ public class PathfinderCharacter {
 		return weapons.get(WeaponType.MELEE);
 	}
 
-	public void reduceUsesForItem(int resourceId) {
+	public int reduceUsesForItem(int resourceId) {
 		for (Item item : items) {
 			if (item.getTrackedResourceId() == resourceId) {
-				item.reduceTrackedResource();
-				return;
+				return item.reduceTrackedResource();
 			}
 		}
+		return -1;
 	}
 	
-	public void reduceUsesForClassFeature(int resourceId) {
+	public int reduceUsesForClassFeature(int resourceId) {
 		for (ClassFeature feature : classFeatures) {
 			if (feature.getTrackedResourceId() == resourceId) {
-				feature.reduceTrackedResource();
-				return;
+				return feature.reduceTrackedResource();
 			}
 		}
+		return -1;
 	}
 
-	public void reduceUsesForMiscResource(int resourceId) {
+	public int reduceUsesForMiscResource(int resourceId) {
 		for (TrackedResource miscResource : miscTrackedResources) {
 			if (miscResource.getId() == resourceId) {
-				miscResource.reduce();
-				return;
+				return miscResource.reduce();
 			}
 		}
+		return -1;
 	}
 	
-	public void increaseUsesForItem(int resourceId) {
+	public int increaseUsesForItem(int resourceId) {
 		for (Item item : items) {
 			if (item.getTrackedResourceId() == resourceId) {
-				item.increaseTrackedResource();
-				return;
+				return item.increaseTrackedResource();
 			}
 		}
+		return -1;
 	}
 
-	public void increaseUsesForClassFeature(int resourceId) {
+	public int increaseUsesForClassFeature(int resourceId) {
 		for (ClassFeature feature : classFeatures) {
 			if (feature.getTrackedResourceId() == resourceId) {
-				feature.increaseTrackedResource();
-				return;
+				return feature.increaseTrackedResource();
 			}
 		}
+		return -1;
 	}
 
-	public void increaseUsesForMiscResource(int resourceId) {
+	public int increaseUsesForMiscResource(int resourceId) {
 		for (TrackedResource miscResource : miscTrackedResources) {
 			if (miscResource.getId() == resourceId) {
-				miscResource.increase();
-				return;
+				return miscResource.increase();
 			}
 		}
+		return -1;
 	}
 }

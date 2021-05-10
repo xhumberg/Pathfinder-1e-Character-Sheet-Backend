@@ -46,12 +46,14 @@ public class HP {
 		return getMaxHealth() - currentDamage;
 	}
 
-	public void takeDamage(int damage) {
+	public int takeDamage(int damage) {
 		currentDamage += damage;
+		return currentDamage;
 	}
 
-	public void heal(int health) {
+	public int heal(int health) {
 		currentDamage = Math.max(0, currentDamage - health);
+		return currentDamage;
 	}
 
 	public void fullHeal() {

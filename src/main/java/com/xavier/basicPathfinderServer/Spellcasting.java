@@ -67,7 +67,8 @@ public class Spellcasting {
 	}
 	
 	//Note: The spell MUST be prepped
-	public void castSpell(String spellName, int level) {
+	public Spell castSpell(String spellName, int level) {
+		System.out.println("XAH: casting " + spellName + " at level " + level);
 		Spell targetSpell = null;
 		List<Spell> spellsOfLevel = spellsPrepped.get(level);
 		for (Spell spell : spellsOfLevel) {
@@ -84,10 +85,11 @@ public class Spellcasting {
 			castSpellsOfLevel = spellsCast.get(level);
 		}
 		castSpellsOfLevel.add(targetSpell);
+		return targetSpell;
 	}
 	
 	//Note: The spell MUST be prepped
-	public void uncastSpell(String spellName, int level) {
+	public Spell uncastSpell(String spellName, int level) {
 		Spell targetSpell = null;
 		List<Spell> castSpellsOfLevel = spellsCast.get(level);
 		for (Spell spell : castSpellsOfLevel) {
@@ -104,6 +106,7 @@ public class Spellcasting {
 			spellsOfLevel = spellsCast.get(level);
 		}
 		spellsOfLevel.add(targetSpell);
+		return targetSpell;
 	}
 
 	private void addSpellDCToSpell(int level, Spell spell) {

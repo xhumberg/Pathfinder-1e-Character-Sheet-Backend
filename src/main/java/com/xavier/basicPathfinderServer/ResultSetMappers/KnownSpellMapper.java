@@ -14,7 +14,8 @@ public class KnownSpellMapper implements ResultSetMapper<Object> {
 		List<Spell> spells = new ArrayList<>();
 		try {
 			while (resultSet.next()) {
-				String level = resultSet.getString("SpellLevel");
+				int id = resultSet.getInt("SpellID");
+				String levelInformation = resultSet.getString("SpellLevel");
 				String name = resultSet.getString("SpellName");
 				String school = resultSet.getString("SpellSchool");
 				String tags = resultSet.getString("SpellTags");
@@ -29,7 +30,7 @@ public class KnownSpellMapper implements ResultSetMapper<Object> {
 				
 				int classId = Integer.parseInt(resultSet.getString("ClassId"));
 				
-				Spell spell = new Spell(level, name, school, tags, castingTime, components, range, target, duration, savingThrow, spellResistance, description);
+				Spell spell = new Spell(id, levelInformation, name, school, tags, castingTime, components, range, target, duration, savingThrow, spellResistance, description);
 				spell.addClassId(classId);
 				spells.add(spell);
 			}

@@ -24,11 +24,17 @@ public class ClassFeature {
 		}
 	}
 
-	public void reduceTrackedResource() {
-		trackedResource.reduce();
+	public int reduceTrackedResource() {
+		if (trackedResource != null) {
+			return trackedResource.reduce();
+		}
+		return -1;
 	}
 	
-	public void increaseTrackedResource() {
-		trackedResource.increase();
+	public int increaseTrackedResource() {
+		if (trackedResource != null) {
+			return trackedResource.increase();
+		}
+		return -1;
 	}
 }

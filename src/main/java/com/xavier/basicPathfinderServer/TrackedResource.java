@@ -28,12 +28,14 @@ public class TrackedResource {
 		return id;
 	}
 
-	public void reduce() {
+	public int reduce() {
 		remaining -= 1;
+		return remaining;
 	}
 
-	public void increase() {
+	public int increase() {
 		remaining += 1;
+		return remaining;
 	}
 
 }

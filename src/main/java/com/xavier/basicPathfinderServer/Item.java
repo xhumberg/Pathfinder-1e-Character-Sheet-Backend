@@ -131,16 +131,18 @@ public class Item {
 		}
 	}
 
-	public void reduceTrackedResource() {
+	public int reduceTrackedResource() {
 		if (hasTrackedResource()) {
-			trackedResource.reduce();
+			return trackedResource.reduce();
 		}
+		return -1;
 	}
 
-	public void increaseTrackedResource() {
+	public int increaseTrackedResource() {
 		if (hasTrackedResource()) {
-			trackedResource.increase();
+			return trackedResource.increase();
 		}
+		return -1;
 	}
 	
 	

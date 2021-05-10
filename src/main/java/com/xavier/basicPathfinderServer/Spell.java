@@ -2,6 +2,7 @@ package com.xavier.basicPathfinderServer;
 
 public class Spell {
 
+	int id;
 	int level;
 	String levelInformation;
 	String name;
@@ -19,14 +20,15 @@ public class Spell {
 	int classId;
 	boolean hasBeenCast;
 	
-	public Spell(String levelInformation, String name, String school, String tags, String castingTime, String components, String range,
+	public Spell(int id, String levelInformation, String name, String school, String tags, String castingTime, String components, String range,
 			String target, String duration, String savingThrow, String spellResistance, String description) {
-		this(-1, name, school, tags, castingTime, components, range, target, duration, savingThrow, spellResistance, description);
+		this(id, -1, name, school, tags, castingTime, components, range, target, duration, savingThrow, spellResistance, description);
 		this.levelInformation = levelInformation;
 	}
 	
-	public Spell(int level, String name, String school, String tags, String castingTime, String components, String range,
+	public Spell(int id, int level, String name, String school, String tags, String castingTime, String components, String range,
 			String target, String duration, String savingThrow, String spellResistance, String description) {
+		this.id = id;
 		this.level = level;
 		this.name = name;
 		this.school = school;
@@ -123,5 +125,9 @@ public class Spell {
 
 	public boolean isHasBeenCast() {
 		return hasBeenCast;
+	}
+	
+	public int getId() {
+		return id;
 	}
 }
