@@ -521,7 +521,7 @@ public class PathfinderCharacter {
 		addTotalSkillRanks(characterClass.getLevel(), characterClass.getBaseSkillsPerLevel());
 		if (characterClass.hasSpellcasting()) {
 			//TODO: Caster Level is not always class level (for example, bloodrager and paladin)
-			giveSpellcasting(characterClass.getId(), characterClass.getName(), characterClass.getSpellcastingType(), characterClass.getLevel(), characterClass.getSpellcastingAbility());
+			giveSpellcasting(characterClass.getId(), characterClass.getName(), characterClass.getSpellcastingType(), characterClass.getCasterLevel(), characterClass.getSpellcastingAbility());
 			for (int spellLevel : characterClass.getBaseSpellsPerDay().keySet()) {
 				int baseSpells = characterClass.getBaseSpellsPerDay().get(spellLevel);
 				setSpellsPerDay(characterClass.getId(), spellLevel, baseSpells);

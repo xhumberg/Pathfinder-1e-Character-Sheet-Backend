@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.xavier.basicPathfinderServer.CastingType;
 import com.xavier.basicPathfinderServer.Spellcasting;
 import com.xavier.basicPathfinderServer.json.SpellJson;
 import com.xavier.basicPathfinderServer.json.SpellsPerLevelJson;
@@ -15,17 +16,28 @@ public class SpellsPerLevelMapper {
 		List<Integer> levels = new LinkedList<>(classSpellcasting.spellsPrepped.keySet());
 		Collections.sort(levels, Collections.reverseOrder());
 		for (int level : levels) {
-			String levelString = getLevelString(level);
+			int spellsPerDayForLevel = classSpellcasting.getSpellsPerDay(level);
 			int perDay = classSpellcasting.getSpellsPerDay(level);
 			List<SpellJson> spellsPrepped = SpellListMapper.map(level, classSpellcasting.getSpellsPreppedForLevel(level));
 			List<SpellJson> spellsCast = SpellListMapper.map(level, classSpellcasting.getSpellsCastForLevel(level));
-			SpellsPerLevelJson spellsForLevel = new SpellsPerLevelJson(level, levelString, perDay, spellsPrepped, spellsCast); 
-			spellsPerLevel.add(spellsForLevel);
+			
+
+			String levelString = "Error";
+			if (classSpellcasting.getType() == CastingType.PREPARED) {
+				levelString = getLevelString(level) + " (" + spellsPerDayForLevel + "/day)";
+				
+				SpellsPerLevelJson spellsForLevel = new SpellsPerLevelJson(level, levelString, perDay, spellsPrepped, spellsCast); 
+				spellsPerLevel.add(spellsForLevel);
+			}
+			else if (classSpellcasting.getType() == CastingType.SPONTANEOUS) {
+				levelString = getLevelString(level) + " (" + (spellsPerDayForLevel-spellsCast.size()) + "/" + spellsPerDayForLevel + " per day)";
+				
+				spellsCast = Collections.singletonList(new SpellJson("Uncast", "Click uncast to the left to regain a slot for level " + level, classSpellcasting.getId(), level, true));
+				
+				SpellsPerLevelJson spellsForLevel = new SpellsPerLevelJson(level, levelString, perDay, spellsPrepped, spellsCast); 
+				spellsPerLevel.add(spellsForLevel);
+			}
 		}
-//		List<SpellJson> thirdLevelSpells = null;
-//		if (classSpellcasting.getSpellsPerDay(3) > 0) {
-//			thirdLevelSpells = SpellListMapper.map(3, classSpellcasting.getSpellsForLevel(3));
-//		}
 		return spellsPerLevel;
 	}
 	

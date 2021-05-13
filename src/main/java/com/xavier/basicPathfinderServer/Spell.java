@@ -42,12 +42,19 @@ public class Spell {
 		this.spellResistance = spellResistance;
 		this.description = description;
 	}
+	
+	public static Spell fillerSpell() {
+		return new Spell(0, 0, "Filler", "", "", "", "", "", "", "", "", "", "");
+	}
 
 	public void addSpellDC(Stat spellDC) {
 		this.spellDC = spellDC;
 	}
 
 	public int getSpellDCValue() {
+		if (spellDC == null) {
+			return -1;
+		}
 		return spellDC.getValue();
 	}
 

@@ -2,20 +2,19 @@ package com.xavier.spellScraper;
 
 public class SpellScraper {
 
-	public static final String scrape =
-			"PFS Legal Telekinetic Charge\r\n" + 
-			"Source Ultimate Combat pg. 247\r\n" + 
-			"School evocation [force]; Level arcanist 4, bloodrager 4, psychic 4, sorcerer 4, spiritualist 4, wizard 4\r\n" + 
+	public static final String scrape = "PFS Legal Hungry Pit\r\n" + 
+			"Source Advanced Player's Guide pg. 228\r\n" + 
+			"School conjuration (creation); Level arcanist 5, sorcerer 5, summoner 5, summoner (unchained) 5, wizard 5\r\n" + 
 			"Casting\r\n" + 
 			"Casting Time 1 standard action\r\n" + 
-			"Components V, S\r\n" + 
+			"Components V, S, F (miniature shovel costing 10 gp)\r\n" + 
 			"Effect\r\n" + 
-			"Range close (25 ft. + 5 ft./2 levels)\r\n" + 
-			"Target one willing creature\r\n" + 
-			"Duration instantaneous\r\n" + 
-			"Saving Throw Will negates (harmless); Spell Resistance yes (harmless)\r\n" + 
+			"Range medium (100 ft. + 10 ft./level)\r\n" + 
+			"Effect 10-ft.-by-10-ft. hole, 10 ft. deep/2 levels\r\n" + 
+			"Duration 1 round + 1 round/level\r\n" + 
+			"Saving Throw Reflex negates, Reflex half, see text; Spell Resistance no\r\n" + 
 			"Description\r\n" + 
-			"You telekinetically launch an ally across the battlefield to anywhere within this spell’s range. While moving, your ally is flying just above the ground unless you wish otherwise. Movement from this spell provokes attacks of opportunity as normal, although you can lift your ally over objects or out of enemy reach, as long as your ally remains within this spell’s range. If your ally lands adjacent to an opponent, he can spend an immediate action to make a melee attack against that opponent with a +2 bonus on the attack roll."
+			"This spell functions as create pit, except that the pit has the ability to squeeze and crush any creature trapped within it and has a maximum depth of 100 feet. Creatures who fall into the hole take falling damage as normal. In addition, anyone within the pit, not just those on the bottom, takes 4d6 points of bludgeoning damage each round as the pit contracts and then returns to its normal size (a successful Reflex save halves this damage). The ever-shifting walls of the pit are quite difficult to scale and have a Climb DC of 35."
 			;
 			
 			
@@ -23,7 +22,7 @@ public class SpellScraper {
 			
 			
 			
-	public static final int spellID = 13;
+	public static final int spellID = 14;
 	
 	public static final String SEP = "', '";
 	

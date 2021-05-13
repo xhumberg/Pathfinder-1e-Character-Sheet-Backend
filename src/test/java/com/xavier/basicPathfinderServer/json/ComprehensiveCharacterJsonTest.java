@@ -58,8 +58,8 @@ class ComprehensiveCharacterJsonTest {
 	}
 	
 	private static void giveFighterAndBarbarianLevels() {
-		CharacterClass fighter = new CharacterClass(0, 3, 0, 0, 0, 0, 0, 0, "Fighter 3", false, CastingType.NONE, null, null);
-		CharacterClass barb = new CharacterClass(0, 2, 0, 0, 0, 0, 0, 0, "Barbarian 2", false, CastingType.NONE, null, null);
+		CharacterClass fighter = new CharacterClass(0, 3, 0, 0, 0, 0, 0, 0, "Fighter 3", false, CastingType.NONE, -1, null, null);
+		CharacterClass barb = new CharacterClass(0, 2, 0, 0, 0, 0, 0, 0, "Barbarian 2", false, CastingType.NONE, -1, null, null);
 		johnDoe.addClass(fighter);
 		johnDoe.addClass(barb);
 	}

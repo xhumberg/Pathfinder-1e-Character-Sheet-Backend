@@ -14,7 +14,7 @@ CREATE TABLE UserAccess
 );
 
 INSERT INTO UserAccess
-VALUES (-1, 0), (-1, 1), (0, 2);
+VALUES (-1, 0), (0, 1), (0, 2), (0, 3);
 
 CREATE TABLE PathfinderCharacter /*Done*/
 (
@@ -38,10 +38,10 @@ CREATE TABLE PathfinderCharacter /*Done*/
 );
 
 INSERT INTO PathfinderCharacter
-VALUES (0, 'Prosopa Dramatis', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 'Female', '28', '140 lbs', '5'' 7"', 7, 16, 14, 22, 11, 5)
-	  ,(1, 'Coco the Mermaid', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/787088464713220096/130739401_2147415525390293_7206321013511074323_n.png', 'LN', 'Mermaid', 'Medium', 'Female', '21', '120 lbs', '4'' 3"', 16, 16, 14, 10, 7, 18)
-	  ,(2, 'Jordan Fenrir Wolfe', 'Xavier', 'https://i.pinimg.com/originals/80/26/43/80264379fd64b1931b0930e22bab1ab5.jpg', 'N', 'Human', 'Medium', 'Male', '37', '150 lbs', '5'' 10"', 14, 20, 14, 10, 7, 14)
-	  ;
+VALUES (0, 'Prosopa (Sample)', 'Sample Character', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 'Female', '28', '140 lbs', '5'' 7"', 7, 16, 14, 22, 11, 5)
+	  ,(1, 'Testy McTestFace', 'Xavier', 'http://www.bobthebuilder.com/en-us/Images/btb_where_to_watch_background_Bob_tcm1239-232957.png', 'LG', 'Human', 'Medium', 'Male', 'Immortal', 'Average', 'Average', 16, 16, 14, 18, 7, 10)
+	  ,(2, 'Prosopa Dramatis', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 'Female', '28', '140 lbs', '5'' 7"', 7, 16, 14, 22, 11, 5)
+	  ,(3, 'Jordan Fenrir Wolfe', 'Xavier', 'https://db4sgowjqfwig.cloudfront.net/images/951266/Edwardface.jpg', 'CG', 'Human', 'Medium', 'Male', '35', '150 lbs', '5'' 8"', 14, 20, 14, 10, 7, 14);
 	  
 CREATE TABLE Items /*Done*/
 (
@@ -67,6 +67,7 @@ VALUES
 		,(9, 'Wand of Infernal Healing', 750, 'Wand', 'Wand of first level Infernal Healing', '[T:50]')
 		,(10, 'Cloak of Resistance +1', 1000, 'Shoulders', 'This garment offers magic protection in the form of a +1 resistance bonus on all saving throws (Fortitude, Reflex, and Will).', 'All Saves##Enhancement##1')
 		,(11, 'Scroll of Touch of the Sea', 25, 'Scroll', 'Scroll of first level Touch of the Sea', '')
+		,(12, 'Headband of Vast Intelligence +6', 36000, 'Headband', 'This intricate gold headband is decorated with several small blue and deep purple gemstones.\r\nThe headband grants the wearer an enhancement bonus to Intelligence of +6. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. A headband of vast intelligence +6 has three skills associated with it. After being worn for 24 hours, the headband grants a number of skill ranks in those skills equal to the wearer’s total Hit Dice. These ranks do not stack with the ranks a creature already possesses. This skill is chosen when the headband is created. If no skill is listed, the headband is assumed to grant skill ranks in a randomly determined Knowledge skill.', 'Intelligence##Enhancement##6') 
 		;
 		
 CREATE TABLE Equipment /*Done*/
@@ -93,7 +94,22 @@ VALUES
 	   ,(0, 10, -1, 1000, true)
 	   ,(0, 11, -1, 25, false)
 	   ,(0, 11, -1, 25, false)
+	   
 	   ,(1, 2, -1, 2000, true)
+	   
+	   ,(2, 12, -1, 36000, true)
+	   ,(2, 1, -1, 10, true)
+	   ,(2, 2, -1, 2000, true)
+	   ,(2, 3, -1, 50, false)
+	   ,(2, 4, 9, 0, false)
+	   ,(2, 5, -1, 1000, true)
+	   ,(2, 6, -1, 2015, true)
+	   ,(2, 7, 8, 9000, false)
+	   ,(2, 8, 10, 0, false)
+	   ,(2, 9, 11, 0, false)
+	   ,(2, 10, -1, 1000, true)
+	   ,(2, 11, -1, 25, false)
+	   ,(2, 11, -1, 25, false)
 	   ;
 	   
 CREATE TABLE Feats /*Done*/
@@ -110,6 +126,9 @@ VALUES
 	,(1, 'Harrowed', 'You get a +1 bonus on all Will saves made to resist enchantment effects. Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card’s suit. For example, if you drew a card from the suit of Dexterity, you could apply this +2 bonus on an Initiative check, a Reflex save, a Dexterity-based skill check, or a ranged attack roll. You may assign this +2 bonus after you make the roll, but you must do so before you know whether the roll was a success or not.', '[T:1##Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card’s suit. You may assign this +2 bonus after you make the roll, but you must do so before you know whether the roll was a success or not.][Special Defense: +1 Will against enchantment effects]')
     ,(2, 'Spell Focus (Evocation)', 'Choose a school of magic. Any spells you cast of that school are more difficult to resist.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select.', 'Evocation##Spell Focus##1')
     ,(3, 'Extra Arcane Reservoir', 'You gain three more points in your arcane reservoir, and the maximum number of points in your arcane reservoir increases by that amount. (Apply by modifying the Arcane Reservoir uses per day)', '')
+	,(4, 'Greater Spell Focus (Conjuration)', 'Choose a school of magic to which you have already applied the Spell Focus feat. Any spells you cast of this school are very hard to resist.\r\nPrerequisites: Spell Focus.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select. This bonus stacks with the bonus from Spell Focus.', 'Conjuration##Greater Spell Focus##1')
+	,(5, 'Spell Penetration', 'Your spells break through spell resistance more easily than most.\r\nBenefit: You get a +2 bonus on caster level checks (1d20 + caster level) made to overcome a creature''s spell resistance. (Not applied in this sheet)', '')
+	,(6, 'Scribe Scroll (Item Creation)', 'You can create magic scrolls.\r\nPrerequisite: Caster level 1st.\r\nBenefit: You can create a scroll of any spell that you know. Scribing a scroll takes 2 hours if its base price is 250 gp or less, otherwise scribing a scroll takes 1 day for each 1,000 gp in its base price. To scribe a scroll, you must use up raw materials costing half of this base price.\r\nSee magic item creation rules for more information.', '')
     ;
 	
 CREATE TABLE TakenFeats /*Done*/
@@ -124,6 +143,14 @@ VALUES
 	,(0, 1)
 	,(0, 2)
 	,(0, 3)
+	,(0, 6)
+	,(2, 0)
+	,(2, 1)
+	,(2, 2)
+	,(2, 3)
+	,(2, 4)
+	,(2, 5)
+	,(2, 6)
 	;
 
 CREATE TABLE ClassFeatures /*Done*/
@@ -131,14 +158,17 @@ CREATE TABLE ClassFeatures /*Done*/
 	FeatureID int,
 	FeatureName varchar(255),
 	FeatureDescription varchar(1500),
-	FeatureEffect varchar(1500),
-	TrackedResourceID int
+	FeatureEffect varchar(1500)
 );
 
 INSERT INTO ClassFeatures
 VALUES
-	 (0, 'Arcane Reservoir (modified)', 'The exploiter wizard gains the arcanist''s arcane reservoir class feature. The exploiter wizard can use his wizard level as his arcanist level for determining how many arcanist reservoir points he gains at each level.', '[T:8]', 0),
-	,(1, 'Exploiter Exploit', 'At 1st level and every 4 levels thereafter, the exploiter wizard gains a single arcanist exploit. The exploiter wizard uses his wizard level as his arcanist level for determining the effects and DCs of his arcanist exploits.\r\nThis ability replaces arcane school.', '', -1)
+	 (0, 'Arcane Reservoir (Level 5)', 'The exploiter wizard gains the arcanist''s arcane reservoir class feature. The exploiter wizard can use his wizard level as his arcanist level for determining how many arcanist reservoir points he gains at each level.', '[T:8]')
+	,(1, 'Exploiter Exploit', 'At 1st level and every 4 levels thereafter, the exploiter wizard gains a single arcanist exploit. The exploiter wizard uses his wizard level as his arcanist level for determining the effects and DCs of his arcanist exploits.\r\nThis ability replaces arcane school.', '')
+	,(2, 'Scribe Scroll', 'At 1st level, a wizard gains Scribe Scroll as a bonus feat.', '')
+	,(3, 'Bonus Feat (5th level)', 'At 5th level, a wizard gains a bonus feat. At each such opportunity, he can choose a metamagic feat, an item creation, or Spell Mastery. The wizard must still meet all prerequisites for a bonus feat, including caster level minimums. These bonus feats are in addition to th efeats that a character of any class gets from advancing levels. The wizard is not limited to the categories of Item Creation Feats, Metamagic Feats, or Spell Mastery when choosing those feats.\r\nA wizard may also choose an Arcane Discovery that he qualifies for in place of a bonus feat at these levels.', '')
+	,(4, 'Dimensional Slide', 'The arcanist can spend 1 point from her arcane reservoir to create a dimensional crack that she can step through to reach another location. This ability is used as part of a move action or withdraw action, allowing her to move up to 10 feet per arcanist level to any location she can see. This counts as 5 feet of movement. She can only use this ability once per round. She does not provoke attacks of opportunity when moving in this way, but any other movement she attempts as part of her move action provokes as normal.', '')
+	,(5, 'Potent Magic', 'Whenever the arcanist expends 1 point from her arcane reservoir to increase the caster level of a spell, the caster level increases by 2 instead of 1. Whenever she expends 1 point from her arcane reservoir to increase the spell''s DC, it increases by 2 instead of 1.', '')
 	;
 
 CREATE TABLE Classes /*Done*/
@@ -154,14 +184,19 @@ CREATE TABLE Classes /*Done*/
 	ClassName varchar(255),
 	Spellcasting boolean,
 	SpellcastingType varchar(255),
+	CasterLevel int,
 	SpellcastingAbility varChar(255),
-	SpellsPerDay varchar(255)
+	SpellsPerDay varchar(255),
+	SpellsKnown varchar(255)
 );
 
 INSERT INTO Classes
 VALUES
-	 (0, 5, 2, 1, 1, 4, 2, 6, 'Exploiter Wizard 5 (Modified)', true, 'PREPARED', 'Intelligence', '0-4 1-4 2-3 3-2 4-1')
-	,(1, 3, 1, 1, 1, 2, 2, 6, 'Harrower 3', false, null, null, null)
+	 (0, 5, 2, 1, 1, 4, 2, 6, 'Exploiter Wizard 5 (Modified: CL 8)', true, 'PREPARED', 8, 'Intelligence', '0-4 1-4 2-3 3-2 4-1', null)
+	,(1, 3, 1, 1, 1, 2, 2, 6, 'Harrower 3', false, null, -1, null, null, null)
+	,(2, 5, 2, 1, 1, 4, 2, 6, 'Exploiter Wizard 5 (Modified: CL 9)', true, 'PREPARED', 9, 'Intelligence', '0-4 1-4 2-4 3-3 4-2 5-1', null)
+	,(3, 4, 2, 1, 1, 2, 2, 6, 'Harrower 4', false, null, -1, null, null, null)
+	,(4, 14, 10, 4, 9, 9, 6, 8, 'Arrowsong Minstrel 14', true, 'SPONTANEOUS', 14, 'Charisma', '1-4 2-4 3-3 4-3 5-1', '0-6 1-6 2-6 3-5 4-4 5-3')
 	; 
 	
 CREATE TABLE CharacterClasses /*Done*/
@@ -174,6 +209,9 @@ INSERT INTO CharacterClasses
 VALUES
 	 (0, 0)
 	,(0, 1)
+	,(2, 2)
+	,(2, 3)
+	,(3, 4)
 	;
 
 CREATE TABLE ClassesToClassFeatures /*To be implemented later, when adding classes and archetypes*/
@@ -193,6 +231,12 @@ INSERT INTO CharacterClassFeatures
 VALUES
 	 (0, 0, 0)
 	,(0, 1, -1)
+	,(2, 0, 7)
+	,(2, 1, -1)
+	,(2, 2, -1)
+	,(2, 3, -1)
+	,(2, 4, -1)
+	,(2, 5, -1)
 	;
 	
 CREATE TABLE TrackedResources /*Done*/
@@ -213,6 +257,12 @@ VALUES
 	,(4, 'Wand of Infernal Healing', 'Casts 1st level Infernal Healing', 49, 50)
 	,(5, 'Dummy', 'You shouldn''t see this', 9, 120)
 	,(6, 'Harrowed', 'Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card''s suit. You may assign this roll after you make the roll, but you must do so before you know wheteher the roll was a success or not.', 1, 1)
+	,(7, 'Arcane Reservoir', 'Using an exploit may use this.', 5, 8)
+	,(8, 'Lesser Persistent Metamagic Rod', '3 times per day, you may cast a 3rd or lower level spell as if it had the Persistent Spell metamagic feat', 3, 3)
+	,(9, 'Wand of Magic Missile', 'Casts 1st level magic missile', 48, 50)
+	,(10, 'Wand of Mage Armor', 'Casts 1st level Mage Armor', 49, 50)
+	,(11, 'Wand of Infernal Healing', 'Casts 1st level Infernal Healing', 49, 50)
+	,(12, 'Harrowed', 'Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card''s suit. You may assign this roll after you make the roll, but you must do so before you know wheteher the roll was a success or not.', 1, 1)
 	;
 	
 /*This is for resources a character may have that are not given by class features or items, such as those given by specific feats (Like Harrowed) or bonuses from specific spells (like Lucky Number) as those things only rarely have tracked resources*/
@@ -225,6 +275,7 @@ CREATE TABLE CharactersTrackedResources /*Done*/
 INSERT INTO CharactersTrackedResources
 VALUES
 	 (0, 6)
+	,(2, 12)
 	;
 	
 CREATE TABLE Spells /*Done*/
@@ -260,6 +311,8 @@ VALUES
 	,(11, 'arcanist 3, bard 2, cleric 3, oracle 3, skald 2, sorcerer 3, warpriest 3, witch 3, wizard 3', 'Charitable Impulse', 'Enchantment', 'compulsion, mind-affecting', '1 standard action', 'V, S, F/DF (a miniature collection plate)', 'close (25 ft. + 5 ft./2 levels)', 'one humanoid creature', '1 round/level', 'Will negates', 'yes', 'This spell makes a creature more charitable, compelling it to aid others rather than use violence. An affected creature practices nonviolent combat behaviors according to the following list of priorities, beginning with the first priority. The subject continues to perform a priority until he can no longer fulfill its demands (at which point he moves to the next priority) or until the spell ends, whichever comes first.\r\n\r\n1st Priority: Heal injured creatures within 30 feet, beginning with the closest creatures and using whatever methods the subject has at hand (including potions, spells, and so on).\r\n\r\n2nd Priority: The subject gives his weapon away to the nearest creature within 30 feet who will accept it. If no creature accepts the weapon, the subject drops the weapon on the ground.\r\n\r\n3rd Priority: Cast beneficial spells and/or use beneficial magic items (including potions, wands, and so on) on creatures within 30 feet, starting with the closest creatures.\r\n\r\n4th Priority: The subject gives away his non-worn possessions—the contents of a backpack or similar item count as one item each, as does the container itself—to creatures within 30 feet. If no creature accepts the items, the subject drops the items on the ground.\r\n\r\n5th Priority: The subject gives away his remaining possessions (including his armor, boots, cloak, and so on) to creatures within 30 feet. If no creature accepts the items, the subject drops them on the ground.\r\n\r\nIf the subject fulfills all five priorities, the spell effect ends. The subject cannot attack or take attacks of opportunity, but can defend himself as normal. If the subject is attacked, the spell’s effect immediately ends.')
 	,(12, 'arcanist 4, sorcerer 4, summoner 4, summoner (unchained) 4, wizard 4', 'Acid Pit', 'Conjuration', 'creation, acid', '1 standard action', 'V, S, M (drop of acid), F (Fine shovel worth 10 gp)', 'medium (100 ft. + 10 ft./level)', '10-ft.-by-10-ft. hole, 10 ft. deep/2 levels', '1 round + 1 round/level', 'Reflex negates, see text', 'no', 'This spell functions as create pit, except that it places a 5-foot-deep pool of acid at the bottom of the pit. The pit has a maximum depth of 100 feet. Creatures who fall into the pit take falling damage as normal (the acid counts as a yielding surface), plus 2d6 points of acid damage per round spent in contact with the acid. In addition, exposed items carried by a creature in the pit may be harmed. Refer to Table 9–2: Items Affected by Magical Attacks (Core Rulebook 216). Items are affected one at a time in the order listed on the table, and must make Fortitude saves after 3 consecutive rounds in the acid or gain the broken condition. Objects with the broken condition (regardless of how they became broken) must make a Fortitude saving throw each round spent within the acid or be destroyed. The walls of the pit are quite slippery and have a Climb DC of 30.')
 	,(13, 'arcanist 4, bloodrager 4, psychic 4, sorcerer 4, spiritualist 4, wizard 4', 'Telekinetic Charge', 'Evocation', 'force', '1 standard action', 'V, S', 'close (25 ft. + 5 ft./2 levels)', 'one willing creature', 'instantaneous', 'Will negates (harmless)', 'yes (harmless)', 'You telekinetically launch an ally across the battlefield to anywhere within this spell’s range. While moving, your ally is flying just above the ground unless you wish otherwise. Movement from this spell provokes attacks of opportunity as normal, although you can lift your ally over objects or out of enemy reach, as long as your ally remains within this spell’s range. If your ally lands adjacent to an opponent, he can spend an immediate action to make a melee attack against that opponent with a +2 bonus on the attack roll.')
+	,(14, 'arcanist 5, sorcerer 5, summoner 5, summoner (unchained) 5, wizard 5', 'Hungry Pit', 'Conjuration', 'creation', '1 standard action', 'V, S, F (miniature shovel costing 10 gp)', 'medium (100 ft. + 10 ft./level)', '10-ft.-by-10-ft. hole, 10 ft. deep/2 levels', '1 round + 1 round/level', 'Reflex negates, Reflex half, see text', 'no', 'This spell functions as create pit, except that the pit has the ability to squeeze and crush any creature trapped within it and has a maximum depth of 100 feet. Creatures who fall into the hole take falling damage as normal. In addition, anyone within the pit, not just those on the bottom, takes 4d6 points of bludgeoning damage each round as the pit contracts and then returns to its normal size (a successful Reflex save halves this damage). The ever-shifting walls of the pit are quite difficult to scale and have a Climb DC of 35.')
+
 	;
 	
 CREATE TABLE SpellsPrepped /*Done*/
@@ -289,6 +342,29 @@ VALUES
 	,(0, 11, 3, 0)
 	,(0, 12, 4, 0)
 	,(0, 13, 4, 0)
+	,(2, 0, 1, 2)
+	,(2, 1, 1, 2)
+	,(2, 2, 1, 2)
+	,(2, 2, 1, 2)
+	,(2, 3, 1, 2)
+	,(2, 4, 1, 2)
+	,(2, 5, 2, 2)
+	,(2, 6, 2, 2)
+	,(2, 7, 2, 2)
+	,(2, 8, 2, 2)
+	,(2, 8, 2, 2)
+	,(2, 9, 3, 2)
+	,(2, 9, 3, 2)
+	,(2, 10, 3, 2)
+	,(2, 11, 3, 2)
+	,(2, 12, 4, 2)
+	,(2, 13, 4, 2)
+	,(2, 14, 5, 2)
+	,(3, 2, 1, 4)
+	,(3, 1, 1, 4)
+	,(3, 5, 2, 4)
+	,(3, 7, 3, 4)
+	,(3, 14, 4, 4)
 	;
 	
 CREATE TABLE SpellsCast /*Done*/
@@ -328,6 +404,26 @@ VALUES
 	,(0, 11, 0)
 	,(0, 12, 0)
 	,(0, 13, 0)
+	,(2, 0, 2)
+	,(2, 1, 2)
+	,(2, 2, 2)
+	,(2, 3, 2)
+	,(2, 4, 2)
+	,(2, 5, 2)
+	,(2, 6, 2)
+	,(2, 7, 2)
+	,(2, 8, 2)
+	,(2, 9, 2)
+	,(2, 10, 2)
+	,(2, 11, 2)
+	,(2, 12, 2)
+	,(2, 13, 2)
+	,(2, 14, 2)
+	,(3, 2, 4)
+	,(3, 1, 4)
+	,(3, 5, 4)
+	,(3, 14, 4)
+	,(3, 7, 4)
 	;
 	
 CREATE TABLE CharacterWealth /*Done*/
@@ -340,6 +436,7 @@ CREATE TABLE CharacterWealth /*Done*/
 INSERT INTO CharacterWealth
 VALUES
 	(0, 33220, 0)
+	,(2, 51311, 0)
 	;
 	
 CREATE TABLE StandardAdjustments /*Done*/

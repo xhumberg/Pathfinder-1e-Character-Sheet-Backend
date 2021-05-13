@@ -31,11 +31,12 @@ public class ClassMapper implements ResultSetMapper<Object> {
 					CastingType type = CastingType.valueOf(resultSet.getString("SpellcastingType"));
 					String ability = resultSet.getString("SpellcastingAbility");
 					String spellsPerDayString = resultSet.getString("SpellsPerDay");
+					int casterLevel = resultSet.getInt("CasterLevel");
 					Map<Integer, Integer> baseSpellsPerDay = SpellsPerDayParser.parse(spellsPerDayString);
 					
-					characterClass = new CharacterClass(id, level, bab, fort, ref, will, skillsPerLevel, hitDice, name, spellcasting, type, ability, baseSpellsPerDay);
+					characterClass = new CharacterClass(id, level, bab, fort, ref, will, skillsPerLevel, hitDice, name, spellcasting, type, casterLevel, ability, baseSpellsPerDay);
 				} else {
-					characterClass = new CharacterClass(id, level, bab, fort, ref, will, skillsPerLevel, hitDice, name, false, CastingType.NONE, null, null);
+					characterClass = new CharacterClass(id, level, bab, fort, ref, will, skillsPerLevel, hitDice, name, false, CastingType.NONE, -1, null, null);
 				}
 				classes.add(characterClass);
 			}

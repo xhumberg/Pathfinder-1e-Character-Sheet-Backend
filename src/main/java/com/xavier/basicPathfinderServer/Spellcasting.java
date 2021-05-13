@@ -53,6 +53,7 @@ public class Spellcasting {
 		spellsKnown.add(spell);
 	}
 
+	//Also marks spells as "known", defining the level at which they ARE known
 	public void prepSpell(String spellName, int level) {
 		Spell spell = getSpell(spellName);
 		if (spell != null) {
@@ -68,45 +69,70 @@ public class Spellcasting {
 	
 	//Note: The spell MUST be prepped
 	public Spell castSpell(String spellName, int level) {
-		System.out.println("XAH: casting " + spellName + " at level " + level);
-		Spell targetSpell = null;
-		List<Spell> spellsOfLevel = spellsPrepped.get(level);
-		for (Spell spell : spellsOfLevel) {
-			if (spell.name.equals(spellName)) {
-				targetSpell = spell;
-				break;
-			}
-		}
-		spellsOfLevel.remove(targetSpell);
 		
 		List<Spell> castSpellsOfLevel = spellsCast.get(level);
 		if (castSpellsOfLevel == null) {
 			spellsCast.put(level, new LinkedList<Spell>());
 			castSpellsOfLevel = spellsCast.get(level);
 		}
-		castSpellsOfLevel.add(targetSpell);
-		return targetSpell;
+		
+		if (type == CastingType.PREPARED) {
+			Spell targetSpell = null;
+			List<Spell> spellsOfLevel = spellsPrepped.get(level);
+			for (Spell spell : spellsOfLevel) {
+				if (spell.name.equals(spellName)) {
+					targetSpell = spell;
+					break;
+				}
+			}
+			spellsOfLevel.remove(targetSpell);
+			castSpellsOfLevel.add(targetSpell);
+			return targetSpell;
+		} else if (type == CastingType.SPONTANEOUS) {
+			Spell fillerSpell = Spell.fillerSpell();
+			castSpellsOfLevel.add(fillerSpell);
+			return fillerSpell;
+		} else {
+			throw new InvalidParameterException("Spellcasting type not currently supported");
+		}
 	}
 	
-	//Note: The spell MUST be prepped
+	//Note: The spell MUST be prepped (for prepared and arcanist casters) or known (for spontaneous casters)
 	public Spell uncastSpell(String spellName, int level) {
-		Spell targetSpell = null;
-		List<Spell> castSpellsOfLevel = spellsCast.get(level);
-		for (Spell spell : castSpellsOfLevel) {
-			if (spell.name.equals(spellName)) {
-				targetSpell = spell;
-				break;
-			}
-		}
-		castSpellsOfLevel.remove(targetSpell);
 		
-		List<Spell> spellsOfLevel = spellsPrepped.get(level);
-		if (spellsOfLevel == null) {
-			spellsPrepped.put(level, new LinkedList<Spell>());
-			spellsOfLevel = spellsCast.get(level);
+		List<Spell> castSpellsOfLevel = spellsCast.get(level);
+		if (castSpellsOfLevel == null) {
+			spellsCast.put(level, new LinkedList<Spell>());
+			castSpellsOfLevel = spellsCast.get(level);
 		}
-		spellsOfLevel.add(targetSpell);
-		return targetSpell;
+		
+		if (type == CastingType.PREPARED) {
+			Spell targetSpell = null;
+			for (Spell spell : castSpellsOfLevel) {
+				if (spell.name.equals(spellName)) {
+					targetSpell = spell;
+					break;
+				}
+			}
+			castSpellsOfLevel.remove(targetSpell);
+			
+			List<Spell> spellsOfLevel = spellsPrepped.get(level);
+			if (spellsOfLevel == null) {
+				spellsPrepped.put(level, new LinkedList<Spell>());
+				spellsOfLevel = spellsCast.get(level);
+			}
+			spellsOfLevel.add(targetSpell);
+			return targetSpell;
+		} else if (type== CastingType.SPONTANEOUS) {
+			if (castSpellsOfLevel.size() > 0) {
+				Spell filler = castSpellsOfLevel.remove(0);
+				return filler;
+			} else {
+				return null;
+			}
+		} else {
+			throw new InvalidParameterException("Spellcasting type not currently supported");
+		}
 	}
 
 	private void addSpellDCToSpell(int level, Spell spell) {
@@ -132,7 +158,7 @@ public class Spellcasting {
 		}
 	}
 	
-	public Spell getSpell(String spellName) {
+	private Spell getSpell(String spellName) {
 		for (Spell spell : spellsKnown) {
 			if (spell.name.equals(spellName)) {
 				return spell;
@@ -150,12 +176,14 @@ public class Spellcasting {
 	}
 
 	public String getName() {
-		return name;
+		return name.replaceAll("\\d", "").replaceAll("\\(Modified.*?\\)", "");
 	}
 
 	public String getTypeString() {
 		if (type == CastingType.PREPARED) {
 			return "Spells Prepared";
+		} else if (type == CastingType.SPONTANEOUS) {
+			return "Spells Known";
 		} else {
 			return "Unsupported casting type";
 		}
@@ -186,7 +214,7 @@ public class Spellcasting {
 	}
 
 	public List<Spell> getSpellsPreppedForLevel(int level) {
-		if (type == CastingType.PREPARED) {
+		if (type == CastingType.PREPARED || type == CastingType.SPONTANEOUS) {
 			List<Spell> preppedSpells = spellsPrepped.get(level);
 			if (preppedSpells == null) {
 				return Collections.emptyList();
@@ -220,9 +248,24 @@ public class Spellcasting {
 				
 			});
 			return castSpells;
+		} else if (type == CastingType.SPONTANEOUS) {
+			List<Spell> castSpells = spellsCast.get(level);
+			if (castSpells == null) {
+				return Collections.emptyList();
+			} else {
+				return castSpells; //No need to sort. Only the number matters
+			}
 		} else {
 			throw new InvalidParameterException("Spellcasting type not currently supported");
 		}
+	}
+
+	public CastingType getType() {
+		return type;
+	}
+
+	public int getId() {
+		return classId;
 	}
 
 }

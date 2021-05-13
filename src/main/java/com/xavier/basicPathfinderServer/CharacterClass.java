@@ -15,11 +15,12 @@ public class CharacterClass {
 	private String name;
 	private boolean hasSpellcasting;
 	private CastingType spellcastingType;
+	private int casterLevel;
 	private String spellcastingAbility;
 	private Map<Integer, Integer> baseSpellsPerDay;
 
 	public CharacterClass(int id, int level, int bab, int fort, int ref, int will, int baseSkillsPerLevel, int hitDice, String name, boolean hasSpellcasting,
-			CastingType spellcastingType, String spellcastingAbility, Map<Integer, Integer> baseSpellsPerDay) {
+			CastingType spellcastingType, int casterLevel, String spellcastingAbility, Map<Integer, Integer> baseSpellsPerDay) {
 		this.id = id;
 		this.level = level;
 		this.bab = bab;
@@ -31,6 +32,7 @@ public class CharacterClass {
 		this.name = name;
 		this.hasSpellcasting = hasSpellcasting;
 		this.spellcastingType = spellcastingType;
+		this.casterLevel = casterLevel;
 		this.spellcastingAbility = spellcastingAbility;
 		this.baseSpellsPerDay = baseSpellsPerDay;
 	}
@@ -73,6 +75,10 @@ public class CharacterClass {
 
 	public CastingType getSpellcastingType() {
 		return spellcastingType;
+	}
+	
+	public int getCasterLevel() {
+		return casterLevel;
 	}
 
 	public String getSpellcastingAbility() {
