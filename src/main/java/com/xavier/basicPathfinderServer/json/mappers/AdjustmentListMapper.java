@@ -9,7 +9,7 @@ public class AdjustmentListMapper {
 	public static List<String> map(List<Adjustment> allowedAdjustments) {
 		List<String> adjustments = new LinkedList<>();
 		for (Adjustment adj : allowedAdjustments) {
-			if (!adj.isEnabled()) {
+			if (adj != null && !adj.isEnabled()) {
 				adjustments.add(adj.getName());
 			}
 		}

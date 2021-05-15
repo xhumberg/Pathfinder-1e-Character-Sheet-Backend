@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AdjustmentStringConverter {
-	public static Adjustment convert(int id, String name, String adjustmentString) {
+	public static Adjustment convert(int id, String name, String adjustmentString, boolean allowEmpty) {
 		Adjustment newAdjustment = new Adjustment(id, name);
 		adjustmentString = adjustmentString.replaceAll("\\[T:.*?\\]", ""); //Only used in creating new resources.
 		adjustmentString = getTypesIfPresent(adjustmentString, newAdjustment);
@@ -16,7 +16,7 @@ public class AdjustmentStringConverter {
 		adjustmentString = getSpeedIfPresent(adjustmentString, newAdjustment);
 		adjustmentString = getSensesIfPresent(adjustmentString, newAdjustment);
 		if (adjustmentString.trim().equals("")) { //All effects of this adjustment are special or the adjustment is empty
-			if (newAdjustment.isEmpty()) {
+			if (newAdjustment.isEmpty() && !allowEmpty) {
 				return null;
 			} else {
 				return newAdjustment;

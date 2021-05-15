@@ -169,6 +169,11 @@ VALUES
 	,(3, 'Bonus Feat (5th level)', 'At 5th level, a wizard gains a bonus feat. At each such opportunity, he can choose a metamagic feat, an item creation, or Spell Mastery. The wizard must still meet all prerequisites for a bonus feat, including caster level minimums. These bonus feats are in addition to th efeats that a character of any class gets from advancing levels. The wizard is not limited to the categories of Item Creation Feats, Metamagic Feats, or Spell Mastery when choosing those feats.\r\nA wizard may also choose an Arcane Discovery that he qualifies for in place of a bonus feat at these levels.', '')
 	,(4, 'Dimensional Slide', 'The arcanist can spend 1 point from her arcane reservoir to create a dimensional crack that she can step through to reach another location. This ability is used as part of a move action or withdraw action, allowing her to move up to 10 feet per arcanist level to any location she can see. This counts as 5 feet of movement. She can only use this ability once per round. She does not provoke attacks of opportunity when moving in this way, but any other movement she attempts as part of her move action provokes as normal.', '')
 	,(5, 'Potent Magic', 'Whenever the arcanist expends 1 point from her arcane reservoir to increase the caster level of a spell, the caster level increases by 2 instead of 1. Whenever she expends 1 point from her arcane reservoir to increase the spell''s DC, it increases by 2 instead of 1.', '')
+	,(6, 'Blessing of the Harrow', 'Once per day, a harrower may perform a harrowing for herself and all allies within 20 feet of her. This harrowing takes 10 minutes, and all allies to be affected by it must remain within 20 feet of the harrower for the entire time. At the conclusion of the harrowing, count up the number of cards from each suit that were used in the reading. This harrowing provides a bonus based upon the suit with the most cards showing. The the case of a tie, choose one suit. The bonus lasts for 24 hours. The suit grants insight bonuses as follows. Strength +1 on attack rolls; Dexterity: +1 to AC; Constitution: +1 on weapon damage rolls; Intelligence: +1 on all skill checks; Wisdom: on all saving throws; Charisma: +1 on caster level and concentration checks.', '')
+	,(7, 'Harrow Casting', 'Beginning at 2nd level, a harrower may, as she casts a spell, draw three cards from her Harrow deck. This adds both a somatic component (if the spell does not already have one) and a focus component (the Harrow deck) to the spell, but does not increase the spell''s casting time. Depending on the harrower’s level, the cards she draws might change the parameters of her spell or grant her some other benefit, as described in each tower ability. The harrower gains all of the different tower abilities available to her. If she draws cards that she has not yet gained the use of, those cards provide no benefit. Each card the harrower draws that exactly matches her alignment counts as two cards of that suit. A spell may not be affected by both Harrow casting and a metamagic feat. The harrower may use this ability a number of times per day equal to her class level.', '')
+	,(8, 'Tower of Intelligence', 'Beginning at 2nd level, whenever a harrower uses her Harrow casting ability, for each card she draws from the suit of Intelligence, she gains a +1 bonus on caster level checks made to penetrate spell resistance.', '')
+	,(9, 'Tower of Strength', 'Beginning at 3rd level, whenever a harrower uses her Harrow casting ability to augment a spell that deals damage to hit points, the spell deals +1 point of damage per die for each card from the suit of Strength she draws.', '')
+	,(10, 'Tower of Charisma', 'Beginning at 4th level, whenever a harrower uses her Harrow casting ability, for each card she draws from the suit of Charisma, the save DC of the spell increases by +1.', '')
 	;
 
 CREATE TABLE Classes /*Done*/
@@ -237,6 +242,11 @@ VALUES
 	,(2, 3, -1)
 	,(2, 4, -1)
 	,(2, 5, -1)
+	,(2, 6, 13)
+	,(2, 7, 14)
+	,(2, 8, -1)
+	,(2, 9, -1)
+	,(2, 10, -1)
 	;
 	
 CREATE TABLE TrackedResources /*Done*/
@@ -263,6 +273,10 @@ VALUES
 	,(10, 'Wand of Mage Armor', 'Casts 1st level Mage Armor', 49, 50)
 	,(11, 'Wand of Infernal Healing', 'Casts 1st level Infernal Healing', 49, 50)
 	,(12, 'Harrowed', 'Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card''s suit. You may assign this roll after you make the roll, but you must do so before you know wheteher the roll was a success or not.', 1, 1)
+	,(13, 'Blessing of the Harrow', 'Once per day...', 1, 1)
+	,(14, 'Harrow Casting', 'As she casts a spell...', 4, 4)
+	,(15, 'Temp HP', 'This should be deleted once TempHP is truly implemented', 0, 50)
+	,(16, 'Mirror Image', 'Number of images', 0, 8)
 	;
 	
 /*This is for resources a character may have that are not given by class features or items, such as those given by specific feats (Like Harrowed) or bonuses from specific spells (like Lucky Number) as those things only rarely have tracked resources*/
@@ -276,6 +290,8 @@ INSERT INTO CharactersTrackedResources
 VALUES
 	 (0, 6)
 	,(2, 12)
+	,(2, 15)
+	,(2, 16)
 	;
 	
 CREATE TABLE Spells /*Done*/
@@ -292,7 +308,7 @@ CREATE TABLE Spells /*Done*/
 	SpellDuration varChar(255),
 	SpellSavingThrow varChar(255),
 	SpellSpellResistance varChar(255),
-	SpellDescription varChar(2000)
+	SpellDescription varChar(4000)
 );
 
 INSERT INTO Spells /*Done*/
@@ -312,6 +328,11 @@ VALUES
 	,(12, 'arcanist 4, sorcerer 4, summoner 4, summoner (unchained) 4, wizard 4', 'Acid Pit', 'Conjuration', 'creation, acid', '1 standard action', 'V, S, M (drop of acid), F (Fine shovel worth 10 gp)', 'medium (100 ft. + 10 ft./level)', '10-ft.-by-10-ft. hole, 10 ft. deep/2 levels', '1 round + 1 round/level', 'Reflex negates, see text', 'no', 'This spell functions as create pit, except that it places a 5-foot-deep pool of acid at the bottom of the pit. The pit has a maximum depth of 100 feet. Creatures who fall into the pit take falling damage as normal (the acid counts as a yielding surface), plus 2d6 points of acid damage per round spent in contact with the acid. In addition, exposed items carried by a creature in the pit may be harmed. Refer to Table 9–2: Items Affected by Magical Attacks (Core Rulebook 216). Items are affected one at a time in the order listed on the table, and must make Fortitude saves after 3 consecutive rounds in the acid or gain the broken condition. Objects with the broken condition (regardless of how they became broken) must make a Fortitude saving throw each round spent within the acid or be destroyed. The walls of the pit are quite slippery and have a Climb DC of 30.')
 	,(13, 'arcanist 4, bloodrager 4, psychic 4, sorcerer 4, spiritualist 4, wizard 4', 'Telekinetic Charge', 'Evocation', 'force', '1 standard action', 'V, S', 'close (25 ft. + 5 ft./2 levels)', 'one willing creature', 'instantaneous', 'Will negates (harmless)', 'yes (harmless)', 'You telekinetically launch an ally across the battlefield to anywhere within this spell’s range. While moving, your ally is flying just above the ground unless you wish otherwise. Movement from this spell provokes attacks of opportunity as normal, although you can lift your ally over objects or out of enemy reach, as long as your ally remains within this spell’s range. If your ally lands adjacent to an opponent, he can spend an immediate action to make a melee attack against that opponent with a +2 bonus on the attack roll.')
 	,(14, 'arcanist 5, sorcerer 5, summoner 5, summoner (unchained) 5, wizard 5', 'Hungry Pit', 'Conjuration', 'creation', '1 standard action', 'V, S, F (miniature shovel costing 10 gp)', 'medium (100 ft. + 10 ft./level)', '10-ft.-by-10-ft. hole, 10 ft. deep/2 levels', '1 round + 1 round/level', 'Reflex negates, Reflex half, see text', 'no', 'This spell functions as create pit, except that the pit has the ability to squeeze and crush any creature trapped within it and has a maximum depth of 100 feet. Creatures who fall into the hole take falling damage as normal. In addition, anyone within the pit, not just those on the bottom, takes 4d6 points of bludgeoning damage each round as the pit contracts and then returns to its normal size (a successful Reflex save halves this damage). The ever-shifting walls of the pit are quite difficult to scale and have a Climb DC of 35.')
+	,(15, 'alchemist 1, arcanist 1, bard 1, druid 1, hunter 1, inquisitor 1, investigator 1, medium 1, mesmerist 1, occultist 1, psychic 1, ranger 1, shaman 1, skald 1, sorcerer 1, wizard 1', 'Heightened Awareness', 'Divination', '', '1 standard action', 'V, M/DF (a coffee bean)', 'personal', 'you', '10 minutes/level (D)', 'none', 'no', 'You enter a heightened state of awareness that allows you to notice more about your surroundings and recall information effortlessly. You gain a +2 competence bonus on Perception checks and on all Knowledge checks that you are trained in.\r\n\r\nIf this spell is active when you have to make an initiative check, you can instantly dismiss this spell and gain a +4 bonus on that check.')
+	,(16, 'adept 3, arcanist 3, bloodrager 3, magus 3, occultist 3, sorcerer 3, witch 3, wizard 3', 'Lightning Bolt', 'Evocation', 'electricity', '1 standard action', 'V, S, M (fur and a glass rod)', '120 ft.', 'Area 120-ft. line', 'instantaneous', 'Reflex half', 'yes', 'You release a powerful stroke of electrical energy that deals 1d6 points of electricity damage per caster level (maximum 10d6) to each creature within its area. The bolt begins at your fingertips.\r\n\r\nThe lightning bolt sets fire to combustibles and damages objects in its path. It can melt metals with a low melting point, such as lead, gold, copper, silver, or bronze. If the damage caused to an interposing barrier shatters or breaks through it, the bolt may continue beyond the barrier if the spell''s range permits; otherwise, it stops at the barrier just as any other spell effect does.')
+	,(17, 'arcanist 4, cleric 5, oracle 5, sorcerer 4, warpriest 5, wizard 4', 'Boneshatter', 'Necromancy', '', '1 standard action', 'V, S, M (a broken bone)', 'close (25 ft. + 5 ft./2 levels)', 'one corporeal creature or object', 'instantaneous and 1 minute/level (see text)', 'Fortitude partial (see text)', 'yes', 'The target’s bones (or exoskeleton) splinter, dealing 1d6 points of damage per caster level (maximum 15d6) to the target, which is also exhausted for 1 minute per caster level from the pain and exertion of the transformation.\r\n\r\nIf the target succeeds at its save, it takes half damage and is fatigued rather than exhausted. Objects made of bone, chitin, or similar material take half again as much damage (+50%) from this spell. This spell has no effect on a creature that has neither a skeleton nor a hard carapace.')
+	,(18, 'arcanist 4, bard 4, magus 4, medium 3, mesmerist 4, occultist 4, psychic 4, skald 4, sorcerer 4, spiritualist 4, summoner 3, summoner (unchained) 4, witch 4, wizard 4', 'Dimension Door', 'Conjuration', 'teleportation', '1 standard action', 'V', 'long (400 ft. + 40 ft./level)', 'you and touched objects or other touched willing creatures', 'instantaneous', 'none and Will negates (object)', 'no and yes (object)', 'You instantly transfer yourself from your current location to any other spot within range. You always arrive at exactly the spot desired—whether by simply visualizing the area or by stating direction. After using this spell, you can''t take any other actions until your next turn. You can bring along objects as long as their weight doesn''t exceed your maximum load. You may also bring one additional willing Medium or smaller creature (carrying gear or objects up to its maximum load) or its equivalent per three caster levels. A Large creature counts as two Medium creatures, a Huge creature counts as two Large creatures, and so forth. All creatures to be transported must be in contact with one another, and at least one of those creatures must be in contact with you.\r\n\r\nIf you arrive in a place that is already occupied by a solid body, you and each creature traveling with you take 1d6 points of damage and are shunted to a random open space on a suitable surface within 100 feet of the intended location.\r\n\r\nIf there is no free space within 100 feet, you and each creature traveling with you take an additional 2d6 points of damage and are shunted to a free space within 1,000 feet. If there is no free space within 1,000 feet, you and each creature travelling with you take an additional 4d6 points of damage and the spell simply fails.')
+	,(19, 'arcanist 5, magus 5, occultist 5, psychic 4, sorcerer 5, spiritualist 5, wizard 5', 'Telekinesis', 'Transmutation', '', '1 standard action', 'V, S', 'long (400 ft. + 40 ft./level)', 'or Targets see text', 'concentration (up to 1 round/level) or instantaneous; see text', 'Will negates (object) or none', ' see text', 'You move objects or creatures by concentrating on them. Depending on the version selected, the spell can provide a gentle, sustained force, perform a variety of combat maneuvers, or exert a single short, violent thrust.\r\n\r\nSustained Force: A sustained force moves an object weighing no more than 25 pounds per caster level (maximum 375 pounds at 15th level) up to 20 feet per round. A creature can negate the effect on an object it possesses with a successful Will save or with spell resistance.\r\n\r\nThis version of the spell can last 1 round per caster level, but it ends if you cease concentration. The weight can be moved vertically, horizontally, or in both directions. An object cannot be moved beyond your range. The spell ends if the object is forced beyond the range. If you cease concentration for any reason, the object falls or stops.\r\n\r\nAn object can be telekinetically manipulated as if with one hand. For example, a lever or rope can be pulled, a key can be turned, an object rotated, and so on, if the force required is within the weight limitation. You might even be able to untie simple knots, though delicate activities such as these require DC 15 Intelligence checks.\r\n\r\nCombat Maneuver: Alternatively, once per round, you can use telekinesis to perform a bull rush, disarm, grapple (including pin), or trip. Resolve these attempts as normal, except that they don''t provoke attacks of opportunity, you use your caster level in place of your Combat Maneuver Bonus, and you add your Intelligence modifier (if a wizard) or Charisma modifier (if a sorcerer) in place of your Strength or Dexterity modifier. No save is allowed against these attempts, but spell resistance applies normally. This version of the spell can last 1 round per caster level, but it ends if you cease concentration.\r\n\r\nViolent Thrust: Alternatively, the spell energy can be spent in a single round. You can hurl one object or creature per caster level (maximum 15) that are within range and all within 10 feet of each other toward any target within 10 feet per level of all the objects. You can hurl up to a total weight of 25 pounds per caster level (maximum 375 pounds at 15th level).\r\n\r\nYou must succeed on attack rolls (one per creature or object thrown) to hit the target with the items, using your base attack bonus + your Intelligence modifier (if a wizard) or Charisma modifier (if a sorcerer). Weapons cause standard damage (with no Strength bonus; note that arrows or bolts deal damage as daggers of their size when used in this manner). Other objects cause damage ranging from 1 point per 25 pounds (for less dangerous objects) to 1d6 points of damage per 25 pounds (for hard, dense objects). Objects and creatures that miss their target land in a square adjacent to the target.\r\n\r\nCreatures who fall within the weight capacity of the spell can be hurled, but they are allowed Will saves (and spell resistance) to negate the effect, as are those whose held possessions are targeted by the spell.\r\n\r\nIf a telekinesed creature is hurled against a solid surface, it takes damage as if it had fallen 10 feet (1d6 points).')
 
 	;
 	
@@ -351,7 +372,7 @@ VALUES
 	,(2, 5, 2, 2)
 	,(2, 6, 2, 2)
 	,(2, 7, 2, 2)
-	,(2, 8, 2, 2)
+	,(2, 5, 2, 2)
 	,(2, 8, 2, 2)
 	,(2, 9, 3, 2)
 	,(2, 9, 3, 2)
@@ -365,6 +386,13 @@ VALUES
 	,(3, 5, 2, 4)
 	,(3, 7, 3, 4)
 	,(3, 14, 4, 4)
+	,(2, 15, 1, 2)
+	,(2, 7, 2, 2)
+	,(2, 16, 3, 2)
+	,(2, 17, 4, 2)
+	,(2, 18, 4, 2)
+	,(2, 19, 5, 2)
+	,(2, 19, 5, 2)
 	;
 	
 CREATE TABLE SpellsCast /*Done*/
@@ -424,6 +452,11 @@ VALUES
 	,(3, 5, 4)
 	,(3, 14, 4)
 	,(3, 7, 4)
+	,(2, 15, 2)
+	,(2, 16, 2)
+	,(2, 17, 2)
+	,(2, 18, 2)
+	,(2, 19, 2)
 	;
 	
 CREATE TABLE CharacterWealth /*Done*/
@@ -451,6 +484,19 @@ VALUES
 	 (0, 'Heroism', 'All Skills##Morale##2; All Saves##Morale##2; All Attacks##Morale##2')
 	,(1, 'Haste', 'AC##Dodge##1; Touch##Dodge##1; Reflex##Dodge##1; All Attacks##Haste##1')
 	,(2, 'Mage Armor', 'AC##Armor##4; Flat-Footed##Armor##4')
+	,(3, 'Blessing of the Harrow: Strength', 'All Attacks##Insight##1')
+	,(4, 'Blessing of the Harrow: Dexterity', 'All AC##Insight##1')
+	,(5, 'Blessing of the Harrow: Constitution', 'All Damage##Insight##1')
+	,(6, 'Blessing of the Harrow: Intelligence', 'All Skills##Insight##1')
+	,(7, 'Blessing of the Harrow: Wisdom', 'All Saves##Insight##1')
+	,(8, 'Blessing of the Harrow: Charisma', '') /*Todo: All caster level and concentration checks*/
+	,(9, 'Harrowed: Strength', '')
+	,(10, 'Harrowed: Dexterity', '')
+	,(11, 'Harrowed: Constitution', '')
+	,(12, 'Harrowed: Intelligence', '')
+	,(13, 'Harrowed: Wisdom', '')
+	,(14, 'Harrowed: Charisma', '')
+	,(15, 'Heightened Awareness', 'Perception##Competence##2') /*Todo: All knowledge checks that you are trained in
 	;
 	
 CREATE TABLE EnabledAdjustments /*Done*/
@@ -501,6 +547,20 @@ VALUES
 	,(0, 'Knowledge (Religion)', 7)
 	,(0, 'Perform', 5)
 	,(0, 'Spellcraft', 7)	
+	,(2, 'Bluff', 9)
+	,(2, 'Diplomacy', 9)
+	,(2, 'Knowledge (Arcana)', 9)
+	,(2, 'Knowledge (Dungeoneering)', 2)
+	,(2, 'Knowledge (Engineering)', 2)
+	,(2, 'Knowledge (Geography)', 2)
+	,(2, 'Knowledge (History)', 2)
+	,(2, 'Knowledge (Local)', 9)
+	,(2, 'Knowledge (Nature)', 2)
+	,(2, 'Knowledge (Nobility)', 2)
+	,(2, 'Knowledge (Planes)', 9)
+	,(2, 'Knowledge (Religion)', 9)
+	,(2, 'Perform', 5)
+	,(2, 'Spellcraft', 9)	
 	;
 	
 CREATE TABLE ClassSkills ( /*Done*/
@@ -531,6 +591,27 @@ VALUES
 	,(0, 'Diplomacy')
 	,(0, 'Perform')
 	,(0, 'UMD')
+	,(2, 'Appraise')
+	,(2, 'Craft A')
+	,(2, 'Craft B')
+	,(2, 'Fly')
+	,(2, 'Knowledge (Arcana)')
+	,(2, 'Knowledge (Dungeoneering)')
+	,(2, 'Knowledge (Engineering)')
+	,(2, 'Knowledge (Geography)')
+	,(2, 'Knowledge (History)')
+	,(2, 'Knowledge (Local)')
+	,(2, 'Knowledge (Nature)')
+	,(2, 'Knowledge (Nobility)')
+	,(2, 'Knowledge (Planes)')
+	,(2, 'Knowledge (Religion)')
+	,(2, 'Linguistics')
+	,(2, 'Profession')
+	,(2, 'Spellcraft')
+	,(2, 'Bluff')
+	,(2, 'Diplomacy')
+	,(2, 'Perform')
+	,(2, 'UMD')
 	;
 	
 CREATE TABLE CharacterHP (
@@ -543,7 +624,9 @@ CREATE TABLE CharacterHP (
 
 INSERT INTO CharacterHP
 VALUES
-	 (0, 5, 0, 0, 0);
+	 (0, 5, 0, 0, 0)
+	,(2, 5, 0, 0, 0)
+	;
 	 
 CREATE TABLE RacialTraits (
 	TraitID int,
@@ -579,6 +662,14 @@ VALUES
 	,(0, 5)
 	,(0, 6)
 	,(0, 7)
+	,(2, 0)
+	,(2, 1)
+	,(2, 2)
+	,(2, 3)
+	,(2, 4)
+	,(2, 5)
+	,(2, 6)
+	,(2, 7)
 	;
 	
 CREATE TABLE WeaponDefinitions (
@@ -614,6 +705,7 @@ CREATE TABLE CharacterWeapons (
 INSERT INTO CharacterWeapons
 VALUES
 	 (0, 0, 'Dexterity', '')
+	,(2, 0, 'Dexterity', '')
 	;
 ---------
 

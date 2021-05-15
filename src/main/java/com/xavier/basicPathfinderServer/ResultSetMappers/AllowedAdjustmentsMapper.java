@@ -18,7 +18,7 @@ public class AllowedAdjustmentsMapper implements ResultSetMapper<Object> {
 				int id = resultSet.getInt("AdjustmentID");
 				String name = resultSet.getString("AdjustmentName");
 				String effect = resultSet.getString("AdjustmentEffect");
-				adjustments.add(AdjustmentStringConverter.convert(id, name, effect));
+				adjustments.add(AdjustmentStringConverter.convert(id, name, effect, true));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

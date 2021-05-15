@@ -231,6 +231,9 @@ public class PathfinderCharacter {
 	}
 	
 	public void handleMiscAdjustmentFeatures(Adjustment adjustment) {
+		if (adjustment == null) {
+			return;
+		}
 		if (adjustment.isEnabled()) {
 			if (!adjustment.types.isEmpty())
 				typesAndSubtypes.addAll(adjustment.types);
@@ -489,7 +492,8 @@ public class PathfinderCharacter {
 	public void setAllowedAdjustments(List<Adjustment> adjustments) {
 		allowedAdjustments = adjustments;
 		for (Adjustment adjustment : adjustments) {
-			addAdjustment(adjustment);
+			if (adjustment != null)
+				addAdjustment(adjustment);
 		}
 	}
 
