@@ -12,7 +12,7 @@ import com.xavier.basicPathfinderServer.json.WeaponStats;
 
 public class PathfinderCharacter {
 	
-	public int characterId;
+	public String characterId;
 	public String name;
 	public String playerName;
 	public String imageUrl;
@@ -46,7 +46,7 @@ public class PathfinderCharacter {
 	private int totalEarnedGold;
 	private int spentGold;
 	
-	public PathfinderCharacter(int characterId, String name, String imageUrl) {
+	public PathfinderCharacter(String characterId, String name, String imageUrl) {
 		this.characterId = characterId;
 		this.name = name;
 		this.imageUrl = imageUrl;
@@ -718,7 +718,7 @@ public class PathfinderCharacter {
 		return null;
 	}
 
-	public int getCharacterId() {
+	public String getCharacterId() {
 		return characterId;
 	}
 

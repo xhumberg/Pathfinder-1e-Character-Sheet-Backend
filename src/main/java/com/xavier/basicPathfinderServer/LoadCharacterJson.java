@@ -3,9 +3,9 @@ package com.xavier.basicPathfinderServer;
 public class LoadCharacterJson {
 
 	private final String characterName;
-	private final int characterID;
+	private final String characterID;
 	
-	public LoadCharacterJson(String characterName, int characterID) {
+	public LoadCharacterJson(String characterName, String characterID) {
 		this.characterName = characterName;
 		this.characterID = characterID;
 	}
@@ -14,7 +14,7 @@ public class LoadCharacterJson {
 		return characterName;
 	}
 
-	public int getCharacterID() {
+	public String getCharacterID() {
 		return characterID;
 	}
 

@@ -40,15 +40,15 @@ public class CharacterFromDatabaseLoader {
 	private final static String GET_CHARACTER_QUERY = "select * from PathfinderCharacter where CharacterID = ?";
 	private final static String GET_ALLOWED_ADJUSTMENTS_QUERY = "select AllowedAdjustments.AdjustmentID, AdjustmentName, AdjustmentEffect from AllowedAdjustments inner join StandardAdjustments on AllowedAdjustments.AdjustmentID = StandardAdjustments.AdjustmentID where CharacterID = ?";
 	private final static String GET_ENABLED_ADJUSTMENTS_QUERY = "select AdjustmentName from EnabledAdjustments inner join StandardAdjustments on EnabledAdjustments.AdjustmentID = StandardAdjustments.AdjustmentID where CharacterID = ?";
-	private final static String GET_CLASSES_FOR_CHARACTER = "select * from Classes inner join CharacterClasses on Classes.ClassID = CharacterClasses.ClassID where CharacterClasses.CharacterID = ?";
+	private final static String GET_CLASSES_FOR_CHARACTER = "select * from AvailableClasses inner join CharacterClasses on AvailableClasses.ClassID = CharacterClasses.ClassID where CharacterClasses.CharacterID = ?";
 	private final static String GET_SKILL_RANKS = "select * from SkillRanks where CharacterID = ?";
 	private final static String GET_CLASS_SKILLS = "select * from ClassSkills where CharacterID = ?";
-	private final static String GET_KNOWN_SPELLS = "select * from SpellsKnown inner join Spells on SpellsKnown.SpellID = Spells.SpellID where CharacterID = ?";
-	private final static String GET_PREPPED_SPELLS_QUERY = "select ClassID, SpellsPrepped.SpellLevel, SpellName from SpellsPrepped inner join Spells on SpellsPrepped.SpellID = Spells.SpellID where CharacterID = ?";
-	private final static String GET_SPELLS_CAST = "select SpellName, SpellsCast.SpellLevel, ClassID from SpellsCast inner join Spells on Spells.SpellID = SpellsCast.SpellID where SpellsCast.CharacterID = ?";
-	private final static String GET_EQUIPMENT = "select * from Equipment inner join Items on Items.ItemID = Equipment.ItemID left join TrackedResources on TrackedResources.ResourceID = Equipment.TrackedResourceID where CharacterID = ?";
-	private final static String GET_FEATS = "select * from Feats inner join TakenFeats on Feats.FeatID = TakenFeats.FeatID where CharacterID = ?";
-	private final static String GET_CLASS_FEATURES = "select * from CharacterClassFeatures inner join ClassFeatures on CharacterClassFeatures.FeatureID = ClassFeatures.FeatureID left join TrackedResources on CharacterClassFeatures.TrackedResourceID = TrackedResources.ResourceID where CharacterID = ?";
+	private final static String GET_KNOWN_SPELLS = "select * from SpellsKnown inner join AvailableSpells on SpellsKnown.SpellID = AvailableSpells.SpellID where CharacterID = ?";
+	private final static String GET_PREPPED_SPELLS_QUERY = "select ClassID, SpellsPrepped.SpellLevel, SpellName from SpellsPrepped inner join AvailableSpells on SpellsPrepped.SpellID = AvailableSpells.SpellID where CharacterID = ?";
+	private final static String GET_SPELLS_CAST = "select SpellName, SpellsCast.SpellLevel, ClassID from SpellsCast inner join AvailableSpells on AvailableSpells.SpellID = SpellsCast.SpellID where SpellsCast.CharacterID = ?";
+	private final static String GET_EQUIPMENT = "select * from CharacterEquipment inner join AvailableItems on AvailableItems.ItemID = CharacterEquipment.ItemID left join TrackedResources on TrackedResources.ResourceID = CharacterEquipment.TrackedResourceID where CharacterID = ?";
+	private final static String GET_FEATS = "select * from AvailableFeats inner join CharacterFeats on AvailableFeats.FeatID = CharacterFeats.FeatID where CharacterID = ?";
+	private final static String GET_CLASS_FEATURES = "select * from CharacterClassFeatures inner join AvailableClassFeatures on CharacterClassFeatures.FeatureID = AvailableClassFeatures.FeatureID left join TrackedResources on CharacterClassFeatures.TrackedResourceID = TrackedResources.ResourceID where CharacterID = ?";
 	private final static String GET_MISC_TRACKED_RESOURCES = "select * from CharactersTrackedResources inner join TrackedResources on CharactersTrackedResources.TrackedResourceId = TrackedResources.ResourceID where CharacterID = ?";
 	private final static String GET_CHARACTER_WEALTH = "select * from CharacterWealth where CharacterID = ?";
 	private final static String GET_CHARACTER_HEALTH = "select * from CharacterHP where CharacterID = ?";
@@ -56,8 +56,7 @@ public class CharacterFromDatabaseLoader {
 	private final static String GET_WEAPONS = "select * from CharacterWeapons inner join WeaponDefinitions on CharacterWeapons.WeaponID = WeaponDefinitions.WeaponID where CharacterID = ?";
 	
 	@SuppressWarnings("unchecked")
-	public static PathfinderCharacter loadCharacter(String idString) {
-		int id = Integer.parseInt(idString);
+	public static PathfinderCharacter loadCharacter(String id) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		PathfinderCharacter character = (PathfinderCharacter)db.executeSelectQuery(new PathfinderCharacterMapper(), GET_CHARACTER_QUERY, id);
 		
@@ -142,6 +141,6 @@ public class CharacterFromDatabaseLoader {
 			return character;
 		}
 		db.close();
-		return new PathfinderCharacter(-1, "Error: Couldn't load character", "https://www.aautomate.com/images/easyblog_shared/November_2018/11-12-18/human_error_stop_400.png");
+		return new PathfinderCharacter("-1", "Error: Couldn't load character", "https://www.aautomate.com/images/easyblog_shared/November_2018/11-12-18/human_error_stop_400.png");
 	}
 }

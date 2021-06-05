@@ -17,7 +17,7 @@ public class AccessibleCharactersMapper implements ResultSetMapper<List<String>>
 		try {
 			while (resultSet.next()) {
 				String characterName = resultSet.getString("CharacterName");
-				int characterID = resultSet.getInt("CharacterID");
+				String characterID = resultSet.getString("CharacterID");
 				LoadCharacterJson loadCharacterJson = new LoadCharacterJson(characterName, characterID);
 				availableCharacters.add(gson.toJson(loadCharacterJson));
 			}

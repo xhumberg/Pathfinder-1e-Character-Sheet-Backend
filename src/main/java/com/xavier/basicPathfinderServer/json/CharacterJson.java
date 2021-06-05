@@ -19,7 +19,7 @@ import com.xavier.basicPathfinderServer.json.mappers.TrackedItemMapper;
 import com.xavier.basicPathfinderServer.json.mappers.WeaponsMapper;
 
 public class CharacterJson {
-	public final int characterId;
+	public final String characterId;
 	public final String name; //
 	public final String imageUrl; //
 	public final String alignment; //
@@ -161,7 +161,7 @@ public class CharacterJson {
 		return skills;
 	}
 
-	public int getCharacterId() {
+	public String getCharacterId() {
 		return characterId;
 	}
 

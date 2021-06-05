@@ -1,7 +1,7 @@
 CREATE TABLE UserIDToEmail
 (
-	UserID int,
-	UserEmail varchar(255)
+	UserID int UNIQUE,
+	UserEmail varchar(255) UNIQUE
 );
 
 INSERT INTO UserIDToEmail
@@ -10,15 +10,18 @@ VALUES (0, 'xavierhumberg@gmail.com'), (1, 'test@xpfs.xyz'), (-1, 'all');
 CREATE TABLE UserAccess
 (
 	UserID int,
-	CharacterID int
+	CharacterID varchar(10)
 );
 
 INSERT INTO UserAccess
-VALUES (-1, 0), (0, 1), (0, 2), (0, 3);
+VALUES (-1, 'awt6PHqLO0') /*Sample Prosopa*/
+	   ,(0, 'ajE4DpicPv') /*Test*/
+	   ,(0, 'Du0nzEj1wJ') /*Prosopa*/
+	   ,(0, 'LqyLgvHXd0'); /*Jordan*/
 
 CREATE TABLE PathfinderCharacter /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10) UNIQUE,
 	CharacterName varchar(255),
 	PlayerName varChar(255),
 	CharacterImageURL varchar(255),
@@ -38,14 +41,14 @@ CREATE TABLE PathfinderCharacter /*Done*/
 );
 
 INSERT INTO PathfinderCharacter
-VALUES (0, 'Prosopa (Sample)', 'Sample Character', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 'Female', '28', '140 lbs', '5'' 7"', 7, 16, 14, 22, 11, 5)
-	  ,(1, 'Testy McTestFace', 'Xavier', 'http://www.bobthebuilder.com/en-us/Images/btb_where_to_watch_background_Bob_tcm1239-232957.png', 'LG', 'Human', 'Medium', 'Male', 'Immortal', 'Average', 'Average', 16, 16, 14, 18, 7, 10)
-	  ,(2, 'Prosopa Dramatis', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 'Female', '28', '140 lbs', '5'' 7"', 7, 16, 14, 22, 11, 5)
-	  ,(3, 'Jordan Fenrir Wolfe', 'Xavier', 'https://db4sgowjqfwig.cloudfront.net/images/951266/Edwardface.jpg', 'CG', 'Human', 'Medium', 'Male', '35', '150 lbs', '5'' 8"', 14, 20, 14, 10, 7, 14);
+VALUES ('awt6PHqLO0', 'Prosopa (Sample)', 'Sample Character', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 'Female', '28', '140 lbs', '5'' 7"', 7, 16, 14, 22, 11, 5)
+	  ,('ajE4DpicPv', 'Testy McTestFace', 'Xavier', 'http://www.bobthebuilder.com/en-us/Images/btb_where_to_watch_background_Bob_tcm1239-232957.png', 'LG', 'Human', 'Medium', 'Male', 'Immortal', 'Average', 'Average', 16, 16, 14, 18, 7, 10)
+	  ,('Du0nzEj1wJ', 'Prosopa Dramatis', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 'Female', '28', '140 lbs', '5'' 7"', 7, 16, 14, 22, 11, 5)
+	  ,('LqyLgvHXd0', 'Jordan Fenrir Wolfe', 'Xavier', 'https://db4sgowjqfwig.cloudfront.net/images/951266/Edwardface.jpg', 'CG', 'Human', 'Medium', 'Male', '35', '150 lbs', '5'' 8"', 14, 20, 14, 10, 7, 14);
 	  
-CREATE TABLE Items /*Done*/
+CREATE TABLE AvailableItems /*Done*/
 (
-	ItemID int,
+	ItemID int UNIQUE,
 	ItemName varchar(255),
 	ItemCost int,
 	ItemSlot varchar(63),
@@ -53,7 +56,7 @@ CREATE TABLE Items /*Done*/
 	Adjustments varchar(1500)
 );
 
-INSERT INTO Items 
+INSERT INTO AvailableItems 
 VALUES  
 		 (0, 'Headband of Vast Intelligence +2', 4000, 'Headband', 'This intricate gold headband is decorated with several small blue and deep purple gemstones.\r\nThe headband grants the wearer an enhancement bonus to Intelligence of +2. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. A headband of vast intelligence +2 has one skill associated with it. After being worn for 24 hours, the headband grants a number of skill ranks in that skill equal to the wearer’s total Hit Dice. These ranks do not stack with the ranks a creature already possesses. This skill is chosen when the headband is created. If no skill is listed, the headband is assumed to grant skill ranks in a randomly determined Knowledge skill.', 'Intelligence##Enhancement##2') 
 		,(1, 'Harrow Deck (Common)', 10, 'None', 'Used by gamblers and seers alike, this deck of cards comes in several varieties. Simple harrow decks are made from low-quality paper and typically have only an icon and a number to signify the suit and alignment. These simple decks are mostly used for games of chance, as the actual image and significance of the cards are irrelevant for such games. Common harrow decks are made from higher-quality paper and feature illustrations—harrow readers typically use these decks. Fine harrow decks are made from a variety of materials, such as high-quality paper, woods, bone, ivory, or metal.', '')
@@ -70,57 +73,57 @@ VALUES
 		,(12, 'Headband of Vast Intelligence +6', 36000, 'Headband', 'This intricate gold headband is decorated with several small blue and deep purple gemstones.\r\nThe headband grants the wearer an enhancement bonus to Intelligence of +6. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. A headband of vast intelligence +6 has three skills associated with it. After being worn for 24 hours, the headband grants a number of skill ranks in those skills equal to the wearer’s total Hit Dice. These ranks do not stack with the ranks a creature already possesses. This skill is chosen when the headband is created. If no skill is listed, the headband is assumed to grant skill ranks in a randomly determined Knowledge skill.', 'Intelligence##Enhancement##6') 
 		;
 		
-CREATE TABLE Equipment /*Done*/
+CREATE TABLE CharacterEquipment /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10),
 	ItemID int,
 	TrackedResourceID int,
 	Cost int,
 	Equipped boolean
 );
 
-INSERT INTO Equipment
+INSERT INTO CharacterEquipment
 VALUES 
-		(0, 0, -1, 4000, true)
-       ,(0, 1, -1, 10, true)
-	   ,(0, 2, -1, 2000, true)
-	   ,(0, 3, -1, 50, false)
-	   ,(0, 4, 2, 0, false)
-	   ,(0, 5, -1, 1000, true)
-	   ,(0, 6, -1, 2015, true)
-	   ,(0, 7, 1, 9000, false)
-	   ,(0, 8, 3, 0, false)
-	   ,(0, 9, 4, 0, false)
-	   ,(0, 10, -1, 1000, true)
-	   ,(0, 11, -1, 25, false)
-	   ,(0, 11, -1, 25, false)
+		('awt6PHqLO0', 0, -1, 4000, true)
+       ,('awt6PHqLO0', 1, -1, 10, true)
+	   ,('awt6PHqLO0', 2, -1, 2000, true)
+	   ,('awt6PHqLO0', 3, -1, 50, false)
+	   ,('awt6PHqLO0', 4, 2, 0, false)
+	   ,('awt6PHqLO0', 5, -1, 1000, true)
+	   ,('awt6PHqLO0', 6, -1, 2015, true)
+	   ,('awt6PHqLO0', 7, 1, 9000, false)
+	   ,('awt6PHqLO0', 8, 3, 0, false)
+	   ,('awt6PHqLO0', 9, 4, 0, false)
+	   ,('awt6PHqLO0', 10, -1, 1000, true)
+	   ,('awt6PHqLO0', 11, -1, 25, false)
+	   ,('awt6PHqLO0', 11, -1, 25, false)
 	   
-	   ,(1, 2, -1, 2000, true)
+	   ,('ajE4DpicPv', 2, -1, 2000, true)
 	   
-	   ,(2, 12, -1, 36000, true)
-	   ,(2, 1, -1, 10, true)
-	   ,(2, 2, -1, 2000, true)
-	   ,(2, 3, -1, 50, false)
-	   ,(2, 4, 9, 0, false)
-	   ,(2, 5, -1, 1000, true)
-	   ,(2, 6, -1, 2015, true)
-	   ,(2, 7, 8, 9000, false)
-	   ,(2, 8, 10, 0, false)
-	   ,(2, 9, 11, 0, false)
-	   ,(2, 10, -1, 1000, true)
-	   ,(2, 11, -1, 25, false)
-	   ,(2, 11, -1, 25, false)
+	   ,('Du0nzEj1wJ', 12, -1, 36000, true)
+	   ,('Du0nzEj1wJ', 1, -1, 10, true)
+	   ,('Du0nzEj1wJ', 2, -1, 2000, true)
+	   ,('Du0nzEj1wJ', 3, -1, 50, false)
+	   ,('Du0nzEj1wJ', 4, 9, 0, false)
+	   ,('Du0nzEj1wJ', 5, -1, 1000, true)
+	   ,('Du0nzEj1wJ', 6, -1, 2015, true)
+	   ,('Du0nzEj1wJ', 7, 8, 9000, false)
+	   ,('Du0nzEj1wJ', 8, 10, 0, false)
+	   ,('Du0nzEj1wJ', 9, 11, 0, false)
+	   ,('Du0nzEj1wJ', 10, -1, 1000, true)
+	   ,('Du0nzEj1wJ', 11, -1, 25, false)
+	   ,('Du0nzEj1wJ', 11, -1, 25, false)
 	   ;
 	   
-CREATE TABLE Feats /*Done*/
+CREATE TABLE AvailableFeats /*Done*/
 (
-	FeatID int,
+	FeatID int UNIQUE,
 	FeatName varchar(255),
 	FeatDescription varchar(1500),
 	FeatEffect varchar(1500)
 );
 
-INSERT INTO Feats
+INSERT INTO AvailableFeats
 VALUES
 	 (0, 'Spell Focus (Conjuration)', 'Choose a school of magic. Any spells you cast of that school are more difficult to resist.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select.', 'Conjuration##Spell Focus##1')
 	,(1, 'Harrowed', 'You get a +1 bonus on all Will saves made to resist enchantment effects. Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card’s suit. For example, if you drew a card from the suit of Dexterity, you could apply this +2 bonus on an Initiative check, a Reflex save, a Dexterity-based skill check, or a ranged attack roll. You may assign this +2 bonus after you make the roll, but you must do so before you know whether the roll was a success or not.', '[T:1##Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card’s suit. You may assign this +2 bonus after you make the roll, but you must do so before you know whether the roll was a success or not.][Special Defense: +1 Will against enchantment effects]')
@@ -131,37 +134,37 @@ VALUES
 	,(6, 'Scribe Scroll (Item Creation)', 'You can create magic scrolls.\r\nPrerequisite: Caster level 1st.\r\nBenefit: You can create a scroll of any spell that you know. Scribing a scroll takes 2 hours if its base price is 250 gp or less, otherwise scribing a scroll takes 1 day for each 1,000 gp in its base price. To scribe a scroll, you must use up raw materials costing half of this base price.\r\nSee magic item creation rules for more information.', '')
     ;
 	
-CREATE TABLE TakenFeats /*Done*/
+CREATE TABLE CharacterFeats /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10),
 	FeatID int
 );
 
-INSERT INTO TakenFeats
+INSERT INTO CharacterFeats
 VALUES
-	 (0, 0)
-	,(0, 1)
-	,(0, 2)
-	,(0, 3)
-	,(0, 6)
-	,(2, 0)
-	,(2, 1)
-	,(2, 2)
-	,(2, 3)
-	,(2, 4)
-	,(2, 5)
-	,(2, 6)
+	 ('awt6PHqLO0', 0)
+	,('awt6PHqLO0', 1)
+	,('awt6PHqLO0', 2)
+	,('awt6PHqLO0', 3)
+	,('awt6PHqLO0', 6)
+	,('Du0nzEj1wJ', 0)
+	,('Du0nzEj1wJ', 1)
+	,('Du0nzEj1wJ', 2)
+	,('Du0nzEj1wJ', 3)
+	,('Du0nzEj1wJ', 4)
+	,('Du0nzEj1wJ', 5)
+	,('Du0nzEj1wJ', 6)
 	;
 
-CREATE TABLE ClassFeatures /*Done*/
+CREATE TABLE AvailableClassFeatures /*Done*/
 (
-	FeatureID int,
+	FeatureID int UNIQUE,
 	FeatureName varchar(255),
 	FeatureDescription varchar(1500),
 	FeatureEffect varchar(1500)
 );
 
-INSERT INTO ClassFeatures
+INSERT INTO AvailableClassFeatures
 VALUES
 	 (0, 'Arcane Reservoir (Level 5)', 'The exploiter wizard gains the arcanist''s arcane reservoir class feature. The exploiter wizard can use his wizard level as his arcanist level for determining how many arcanist reservoir points he gains at each level.', '[T:8]')
 	,(1, 'Exploiter Exploit', 'At 1st level and every 4 levels thereafter, the exploiter wizard gains a single arcanist exploit. The exploiter wizard uses his wizard level as his arcanist level for determining the effects and DCs of his arcanist exploits.\r\nThis ability replaces arcane school.', '')
@@ -176,9 +179,9 @@ VALUES
 	,(10, 'Tower of Charisma', 'Beginning at 4th level, whenever a harrower uses her Harrow casting ability, for each card she draws from the suit of Charisma, the save DC of the spell increases by +1.', '')
 	;
 
-CREATE TABLE Classes /*Done*/
+CREATE TABLE AvailableClasses /*Done*/
 (
-	ClassID int,
+	ClassID int UNIQUE,
 	ClassLevel int,
 	ClassBAB int,
 	ClassFort int,
@@ -195,7 +198,7 @@ CREATE TABLE Classes /*Done*/
 	SpellsKnown varchar(255)
 );
 
-INSERT INTO Classes
+INSERT INTO AvailableClasses
 VALUES
 	 (0, 5, 2, 1, 1, 4, 2, 6, 'Exploiter Wizard 5 (Modified: CL 8)', true, 'PREPARED', 8, 'Intelligence', '0-4 1-4 2-3 3-2 4-1', null)
 	,(1, 3, 1, 1, 1, 2, 2, 6, 'Harrower 3', false, null, -1, null, null, null)
@@ -206,17 +209,17 @@ VALUES
 	
 CREATE TABLE CharacterClasses /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10),
 	ClassID int
 );
 
 INSERT INTO CharacterClasses
 VALUES
-	 (0, 0)
-	,(0, 1)
-	,(2, 2)
-	,(2, 3)
-	,(3, 4)
+	 ('awt6PHqLO0', 0)
+	,('awt6PHqLO0', 1)
+	,('Du0nzEj1wJ', 2)
+	,('Du0nzEj1wJ', 3)
+	,('LqyLgvHXd0', 4)
 	;
 
 CREATE TABLE ClassesToClassFeatures /*To be implemented later, when adding classes and archetypes*/
@@ -227,31 +230,31 @@ CREATE TABLE ClassesToClassFeatures /*To be implemented later, when adding class
 	
 CREATE TABLE CharacterClassFeatures /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10),
 	FeatureID int,
 	TrackedResourceID int
 );
 
 INSERT INTO CharacterClassFeatures
 VALUES
-	 (0, 0, 0)
-	,(0, 1, -1)
-	,(2, 0, 7)
-	,(2, 1, -1)
-	,(2, 2, -1)
-	,(2, 3, -1)
-	,(2, 4, -1)
-	,(2, 5, -1)
-	,(2, 6, 13)
-	,(2, 7, 14)
-	,(2, 8, -1)
-	,(2, 9, -1)
-	,(2, 10, -1)
+	 ('awt6PHqLO0', 0, 0)
+	,('awt6PHqLO0', 1, -1)
+	,('Du0nzEj1wJ', 0, 7)
+	,('Du0nzEj1wJ', 1, -1)
+	,('Du0nzEj1wJ', 2, -1)
+	,('Du0nzEj1wJ', 3, -1)
+	,('Du0nzEj1wJ', 4, -1)
+	,('Du0nzEj1wJ', 5, -1)
+	,('Du0nzEj1wJ', 6, 13)
+	,('Du0nzEj1wJ', 7, 14)
+	,('Du0nzEj1wJ', 8, -1)
+	,('Du0nzEj1wJ', 9, -1)
+	,('Du0nzEj1wJ', 10, -1)
 	;
 	
 CREATE TABLE TrackedResources /*Done*/
 (
-	ResourceID int,
+	ResourceID int UNIQUE,
 	ResourceName varchar(255),
 	ResourceDescription varchar(1500),
 	ResourceRemaining int,
@@ -282,21 +285,21 @@ VALUES
 /*This is for resources a character may have that are not given by class features or items, such as those given by specific feats (Like Harrowed) or bonuses from specific spells (like Lucky Number) as those things only rarely have tracked resources*/
 CREATE TABLE CharactersTrackedResources /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10),
 	TrackedResourceID int
 );
 
 INSERT INTO CharactersTrackedResources
 VALUES
-	 (0, 6)
-	,(2, 12)
-	,(2, 15)
-	,(2, 16)
+	 ('awt6PHqLO0', 6)
+	,('Du0nzEj1wJ', 12)
+	,('Du0nzEj1wJ', 15)
+	,('Du0nzEj1wJ', 16)
 	;
 	
-CREATE TABLE Spells /*Done*/
+CREATE TABLE AvailableSpells /*Done*/
 (
-	SpellID int,
+	SpellID int UNIQUE,
 	SpellLevel varchar(500),
 	SpellName varchar(255),
 	SpellSchool varChar(255),
@@ -311,7 +314,7 @@ CREATE TABLE Spells /*Done*/
 	SpellDescription varChar(4000)
 );
 
-INSERT INTO Spells /*Done*/
+INSERT INTO AvailableSpells /*Done*/
 VALUES
 	 (0, 'arcanist 1, bloodrager 1, occultist 1, psychic 1, sorcerer 1, spiritualist 1, summoner 1, summoner (unchained) 1, witch 1, wizard 1', 'Mage Armor', 'Conjuration', 'Creation, Force', '1 standard action', 'V, S, F (a piece of cured leather)', 'touch', 'creature touched', '1 hour/level (D)', 'Will negates (harmless)', 'no', 'An invisible but tangible field of force surrounds the subject of a mage armor spell, providing a +4 armor bonus to AC.\r\n\r\nUnlike mundane armor, mage armor entails no armor check penalty, arcane spell failure chance, or speed reduction. Since mage armor is made of force, incorporeal creatures can''t bypass it the way they do normal armor.')
 	,(1, 'arcanist 1, bard 1, bloodrager 1, inquisitor 1, medium 1, psychic 1, skald 1, sorcerer 1, witch 1, wizard 1', 'Ear-Piercing Scream', 'Evocation', 'Sonic', '1 standard action', 'V, S', 'close (25 ft. + 5 ft./2 levels)', 'one creature', 'instantaneous; see text', 'Fortitude partial (see text)', 'yes', 'You unleash a powerful scream, inaudible to all but a single target. The target is dazed for 1 round and takes 1d6 points of sonic damage per two caster levels (maximum 5d6). A successful save negates the daze effect and halves the damage.')
@@ -338,7 +341,7 @@ VALUES
 	
 CREATE TABLE SpellsPrepped /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10),
 	SpellID int,
 	SpellLevel int,
 	ClassID int
@@ -346,58 +349,58 @@ CREATE TABLE SpellsPrepped /*Done*/
 
 INSERT INTO SpellsPrepped
 VALUES
-	 (0, 0, 1, 0)
-	,(0, 1, 1, 0)
-	,(0, 2, 1, 0)
-	,(0, 2, 1, 0)
-	,(0, 3, 1, 0)
-	,(0, 4, 1, 0)
-	,(0, 5, 2, 0)
-	,(0, 6, 2, 0)
-	,(0, 7, 2, 0)
-	,(0, 8, 2, 0)
-	,(0, 8, 2, 0)
-	,(0, 9, 3, 0)
-	,(0, 9, 3, 0)
-	,(0, 10, 3, 0)
-	,(0, 11, 3, 0)
-	,(0, 12, 4, 0)
-	,(0, 13, 4, 0)
-	,(2, 0, 1, 2)
-	,(2, 1, 1, 2)
-	,(2, 2, 1, 2)
-	,(2, 2, 1, 2)
-	,(2, 3, 1, 2)
-	,(2, 4, 1, 2)
-	,(2, 5, 2, 2)
-	,(2, 6, 2, 2)
-	,(2, 7, 2, 2)
-	,(2, 5, 2, 2)
-	,(2, 8, 2, 2)
-	,(2, 9, 3, 2)
-	,(2, 9, 3, 2)
-	,(2, 10, 3, 2)
-	,(2, 11, 3, 2)
-	,(2, 12, 4, 2)
-	,(2, 13, 4, 2)
-	,(2, 14, 5, 2)
-	,(3, 2, 1, 4)
-	,(3, 1, 1, 4)
-	,(3, 5, 2, 4)
-	,(3, 7, 3, 4)
-	,(3, 14, 4, 4)
-	,(2, 15, 1, 2)
-	,(2, 7, 2, 2)
-	,(2, 16, 3, 2)
-	,(2, 17, 4, 2)
-	,(2, 18, 4, 2)
-	,(2, 19, 5, 2)
-	,(2, 19, 5, 2)
+	 ('awt6PHqLO0', 0, 1, 0)
+	,('awt6PHqLO0', 1, 1, 0)
+	,('awt6PHqLO0', 2, 1, 0)
+	,('awt6PHqLO0', 2, 1, 0)
+	,('awt6PHqLO0', 3, 1, 0)
+	,('awt6PHqLO0', 4, 1, 0)
+	,('awt6PHqLO0', 5, 2, 0)
+	,('awt6PHqLO0', 6, 2, 0)
+	,('awt6PHqLO0', 7, 2, 0)
+	,('awt6PHqLO0', 8, 2, 0)
+	,('awt6PHqLO0', 8, 2, 0)
+	,('awt6PHqLO0', 9, 3, 0)
+	,('awt6PHqLO0', 9, 3, 0)
+	,('awt6PHqLO0', 10, 3, 0)
+	,('awt6PHqLO0', 11, 3, 0)
+	,('awt6PHqLO0', 12, 4, 0)
+	,('awt6PHqLO0', 13, 4, 0)
+	,('Du0nzEj1wJ', 0, 1, 2)
+	,('Du0nzEj1wJ', 1, 1, 2)
+	,('Du0nzEj1wJ', 2, 1, 2)
+	,('Du0nzEj1wJ', 2, 1, 2)
+	,('Du0nzEj1wJ', 3, 1, 2)
+	,('Du0nzEj1wJ', 4, 1, 2)
+	,('Du0nzEj1wJ', 5, 2, 2)
+	,('Du0nzEj1wJ', 6, 2, 2)
+	,('Du0nzEj1wJ', 7, 2, 2)
+	,('Du0nzEj1wJ', 5, 2, 2)
+	,('Du0nzEj1wJ', 8, 2, 2)
+	,('Du0nzEj1wJ', 9, 3, 2)
+	,('Du0nzEj1wJ', 9, 3, 2)
+	,('Du0nzEj1wJ', 10, 3, 2)
+	,('Du0nzEj1wJ', 11, 3, 2)
+	,('Du0nzEj1wJ', 12, 4, 2)
+	,('Du0nzEj1wJ', 13, 4, 2)
+	,('Du0nzEj1wJ', 14, 5, 2)
+	,('LqyLgvHXd0', 2, 1, 4)
+	,('LqyLgvHXd0', 1, 1, 4)
+	,('LqyLgvHXd0', 5, 2, 4)
+	,('LqyLgvHXd0', 7, 3, 4)
+	,('LqyLgvHXd0', 14, 4, 4)
+	,('Du0nzEj1wJ', 15, 1, 2)
+	,('Du0nzEj1wJ', 7, 2, 2)
+	,('Du0nzEj1wJ', 16, 3, 2)
+	,('Du0nzEj1wJ', 17, 4, 2)
+	,('Du0nzEj1wJ', 18, 4, 2)
+	,('Du0nzEj1wJ', 19, 5, 2)
+	,('Du0nzEj1wJ', 19, 5, 2)
 	;
 	
 CREATE TABLE SpellsCast /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10),
 	SpellID int,
 	SpellLevel int,
 	ClassID int
@@ -405,76 +408,76 @@ CREATE TABLE SpellsCast /*Done*/
 
 INSERT INTO SpellsCast
 VALUES
-	 (0, 0, 1, 0)
-	,(0, 9, 3, 0)
+	 ('awt6PHqLO0', 0, 1, 0)
+	,('awt6PHqLO0', 9, 3, 0)
 	;
 	
 CREATE TABLE SpellsKnown /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10),
 	SpellID int,
 	ClassID int
 );
 
 INSERT INTO SpellsKnown
 VALUES
-	 (0, 0, 0)
-	,(0, 1, 0)
-	,(0, 2, 0)
-	,(0, 3, 0)
-	,(0, 4, 0)
-	,(0, 5, 0)
-	,(0, 6, 0)
-	,(0, 7, 0)
-	,(0, 8, 0)
-	,(0, 9, 0)
-	,(0, 10, 0)
-	,(0, 11, 0)
-	,(0, 12, 0)
-	,(0, 13, 0)
-	,(2, 0, 2)
-	,(2, 1, 2)
-	,(2, 2, 2)
-	,(2, 3, 2)
-	,(2, 4, 2)
-	,(2, 5, 2)
-	,(2, 6, 2)
-	,(2, 7, 2)
-	,(2, 8, 2)
-	,(2, 9, 2)
-	,(2, 10, 2)
-	,(2, 11, 2)
-	,(2, 12, 2)
-	,(2, 13, 2)
-	,(2, 14, 2)
-	,(3, 2, 4)
-	,(3, 1, 4)
-	,(3, 5, 4)
-	,(3, 14, 4)
-	,(3, 7, 4)
-	,(2, 15, 2)
-	,(2, 16, 2)
-	,(2, 17, 2)
-	,(2, 18, 2)
-	,(2, 19, 2)
+	 ('awt6PHqLO0', 0, 0)
+	,('awt6PHqLO0', 1, 0)
+	,('awt6PHqLO0', 2, 0)
+	,('awt6PHqLO0', 3, 0)
+	,('awt6PHqLO0', 4, 0)
+	,('awt6PHqLO0', 5, 0)
+	,('awt6PHqLO0', 6, 0)
+	,('awt6PHqLO0', 7, 0)
+	,('awt6PHqLO0', 8, 0)
+	,('awt6PHqLO0', 9, 0)
+	,('awt6PHqLO0', 10, 0)
+	,('awt6PHqLO0', 11, 0)
+	,('awt6PHqLO0', 12, 0)
+	,('awt6PHqLO0', 13, 0)
+	,('Du0nzEj1wJ', 0, 2)
+	,('Du0nzEj1wJ', 1, 2)
+	,('Du0nzEj1wJ', 2, 2)
+	,('Du0nzEj1wJ', 3, 2)
+	,('Du0nzEj1wJ', 4, 2)
+	,('Du0nzEj1wJ', 5, 2)
+	,('Du0nzEj1wJ', 6, 2)
+	,('Du0nzEj1wJ', 7, 2)
+	,('Du0nzEj1wJ', 8, 2)
+	,('Du0nzEj1wJ', 9, 2)
+	,('Du0nzEj1wJ', 10, 2)
+	,('Du0nzEj1wJ', 11, 2)
+	,('Du0nzEj1wJ', 12, 2)
+	,('Du0nzEj1wJ', 13, 2)
+	,('Du0nzEj1wJ', 14, 2)
+	,('LqyLgvHXd0', 2, 4)
+	,('LqyLgvHXd0', 1, 4)
+	,('LqyLgvHXd0', 5, 4)
+	,('LqyLgvHXd0', 14, 4)
+	,('LqyLgvHXd0', 7, 4)
+	,('Du0nzEj1wJ', 15, 2)
+	,('Du0nzEj1wJ', 16, 2)
+	,('Du0nzEj1wJ', 17, 2)
+	,('Du0nzEj1wJ', 18, 2)
+	,('Du0nzEj1wJ', 19, 2)
 	;
 	
 CREATE TABLE CharacterWealth /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10) UNIQUE,
 	EarnedGold int,
 	SpentGold int
 );
 
 INSERT INTO CharacterWealth
 VALUES
-	(0, 33220, 0)
-	,(2, 51311, 0)
+	('awt6PHqLO0', 33220, 0)
+	,('Du0nzEj1wJ', 51311, 0)
 	;
 	
 CREATE TABLE StandardAdjustments /*Done*/
 (
-	AdjustmentID int,
+	AdjustmentID int UNIQUE,
 	AdjustmentName varchar(255),
 	AdjustmentEffect varchar(1500)
 );
@@ -496,126 +499,142 @@ VALUES
 	,(12, 'Harrowed: Intelligence', '')
 	,(13, 'Harrowed: Wisdom', '')
 	,(14, 'Harrowed: Charisma', '')
-	,(15, 'Heightened Awareness', 'Perception##Competence##2') /*Todo: All knowledge checks that you are trained in
+	,(15, 'Heightened Awareness', 'Perception##Competence##2') /*Todo: All knowledge checks that you are trained in*/
 	;
 	
 CREATE TABLE EnabledAdjustments /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10),
 	AdjustmentID int
 );
 
 INSERT INTO EnabledAdjustments
 VALUES
-	 (0, 0)
-	,(0, 2)
+	 ('awt6PHqLO0', 0)
+	,('awt6PHqLO0', 2)
 	;
 	
 CREATE TABLE AllowedAdjustments /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10),
 	AdjustmentID int
 );
 
 INSERT INTO AllowedAdjustments
 VALUES
-	 (0, 0)
-	,(0, 1)
-	,(0, 2)
+	 ('awt6PHqLO0', 0)
+	,('awt6PHqLO0', 1)
+	,('awt6PHqLO0', 2)
+	,('Du0nzEj1wJ', 0)
+	,('Du0nzEj1wJ', 1)
+	,('Du0nzEj1wJ', 2)
+	,('Du0nzEj1wJ', 3)
+	,('Du0nzEj1wJ', 4)
+	,('Du0nzEj1wJ', 5)
+	,('Du0nzEj1wJ', 6)
+	,('Du0nzEj1wJ', 7)
+	,('Du0nzEj1wJ', 8)
+	,('Du0nzEj1wJ', 9)
+	,('Du0nzEj1wJ', 10)
+	,('Du0nzEj1wJ', 11)
+	,('Du0nzEj1wJ', 12)
+	,('Du0nzEj1wJ', 13)
+	,('Du0nzEj1wJ', 14)
+	,('Du0nzEj1wJ', 15)
 	;
 	
 CREATE TABLE SkillRanks /*Done*/
 (
-	CharacterID int,
+	CharacterID varchar(10),
 	SkillName varchar(255),
 	SkillRanks int
 );
 
 INSERT INTO SkillRanks
 VALUES
-	 (0, 'Bluff', 7)
-	,(0, 'Diplomacy', 7)
-	,(0, 'Knowledge (Arcana)', 7)
-	,(0, 'Knowledge (Dungeoneering)', 2)
-	,(0, 'Knowledge (Engineering)', 2)
-	,(0, 'Knowledge (Geography)', 2)
-	,(0, 'Knowledge (History)', 2)
-	,(0, 'Knowledge (Local)', 7)
-	,(0, 'Knowledge (Nature)', 2)
-	,(0, 'Knowledge (Nobility)', 2)
-	,(0, 'Knowledge (Planes)', 4)
-	,(0, 'Knowledge (Religion)', 7)
-	,(0, 'Perform', 5)
-	,(0, 'Spellcraft', 7)	
-	,(2, 'Bluff', 9)
-	,(2, 'Diplomacy', 9)
-	,(2, 'Knowledge (Arcana)', 9)
-	,(2, 'Knowledge (Dungeoneering)', 2)
-	,(2, 'Knowledge (Engineering)', 2)
-	,(2, 'Knowledge (Geography)', 2)
-	,(2, 'Knowledge (History)', 2)
-	,(2, 'Knowledge (Local)', 9)
-	,(2, 'Knowledge (Nature)', 2)
-	,(2, 'Knowledge (Nobility)', 2)
-	,(2, 'Knowledge (Planes)', 9)
-	,(2, 'Knowledge (Religion)', 9)
-	,(2, 'Perform', 5)
-	,(2, 'Spellcraft', 9)	
+	 ('awt6PHqLO0', 'Bluff', 7)
+	,('awt6PHqLO0', 'Diplomacy', 7)
+	,('awt6PHqLO0', 'Knowledge (Arcana)', 7)
+	,('awt6PHqLO0', 'Knowledge (Dungeoneering)', 2)
+	,('awt6PHqLO0', 'Knowledge (Engineering)', 2)
+	,('awt6PHqLO0', 'Knowledge (Geography)', 2)
+	,('awt6PHqLO0', 'Knowledge (History)', 2)
+	,('awt6PHqLO0', 'Knowledge (Local)', 7)
+	,('awt6PHqLO0', 'Knowledge (Nature)', 2)
+	,('awt6PHqLO0', 'Knowledge (Nobility)', 2)
+	,('awt6PHqLO0', 'Knowledge (Planes)', 4)
+	,('awt6PHqLO0', 'Knowledge (Religion)', 7)
+	,('awt6PHqLO0', 'Perform', 5)
+	,('awt6PHqLO0', 'Spellcraft', 7)	
+	,('Du0nzEj1wJ', 'Bluff', 9)
+	,('Du0nzEj1wJ', 'Diplomacy', 9)
+	,('Du0nzEj1wJ', 'Knowledge (Arcana)', 9)
+	,('Du0nzEj1wJ', 'Knowledge (Dungeoneering)', 2)
+	,('Du0nzEj1wJ', 'Knowledge (Engineering)', 2)
+	,('Du0nzEj1wJ', 'Knowledge (Geography)', 2)
+	,('Du0nzEj1wJ', 'Knowledge (History)', 2)
+	,('Du0nzEj1wJ', 'Knowledge (Local)', 9)
+	,('Du0nzEj1wJ', 'Knowledge (Nature)', 2)
+	,('Du0nzEj1wJ', 'Knowledge (Nobility)', 2)
+	,('Du0nzEj1wJ', 'Knowledge (Planes)', 9)
+	,('Du0nzEj1wJ', 'Knowledge (Religion)', 9)
+	,('Du0nzEj1wJ', 'Perform', 5)
+	,('Du0nzEj1wJ', 'Spellcraft', 9)	
 	;
 	
 CREATE TABLE ClassSkills ( /*Done*/
-	CharacterID int,
+	CharacterID varchar(10),
 	SkillName varchar(255)
 );
 
 INSERT INTO ClassSkills
 VALUES
-	 (0, 'Appraise')
-	,(0, 'Craft A')
-	,(0, 'Craft B')
-	,(0, 'Fly')
-	,(0, 'Knowledge (Arcana)')
-	,(0, 'Knowledge (Dungeoneering)')
-	,(0, 'Knowledge (Engineering)')
-	,(0, 'Knowledge (Geography)')
-	,(0, 'Knowledge (History)')
-	,(0, 'Knowledge (Local)')
-	,(0, 'Knowledge (Nature)')
-	,(0, 'Knowledge (Nobility)')
-	,(0, 'Knowledge (Planes)')
-	,(0, 'Knowledge (Religion)')
-	,(0, 'Linguistics')
-	,(0, 'Profession')
-	,(0, 'Spellcraft')
-	,(0, 'Bluff')
-	,(0, 'Diplomacy')
-	,(0, 'Perform')
-	,(0, 'UMD')
-	,(2, 'Appraise')
-	,(2, 'Craft A')
-	,(2, 'Craft B')
-	,(2, 'Fly')
-	,(2, 'Knowledge (Arcana)')
-	,(2, 'Knowledge (Dungeoneering)')
-	,(2, 'Knowledge (Engineering)')
-	,(2, 'Knowledge (Geography)')
-	,(2, 'Knowledge (History)')
-	,(2, 'Knowledge (Local)')
-	,(2, 'Knowledge (Nature)')
-	,(2, 'Knowledge (Nobility)')
-	,(2, 'Knowledge (Planes)')
-	,(2, 'Knowledge (Religion)')
-	,(2, 'Linguistics')
-	,(2, 'Profession')
-	,(2, 'Spellcraft')
-	,(2, 'Bluff')
-	,(2, 'Diplomacy')
-	,(2, 'Perform')
-	,(2, 'UMD')
+	 ('awt6PHqLO0', 'Appraise')
+	,('awt6PHqLO0', 'Craft A')
+	,('awt6PHqLO0', 'Craft B')
+	,('awt6PHqLO0', 'Fly')
+	,('awt6PHqLO0', 'Knowledge (Arcana)')
+	,('awt6PHqLO0', 'Knowledge (Dungeoneering)')
+	,('awt6PHqLO0', 'Knowledge (Engineering)')
+	,('awt6PHqLO0', 'Knowledge (Geography)')
+	,('awt6PHqLO0', 'Knowledge (History)')
+	,('awt6PHqLO0', 'Knowledge (Local)')
+	,('awt6PHqLO0', 'Knowledge (Nature)')
+	,('awt6PHqLO0', 'Knowledge (Nobility)')
+	,('awt6PHqLO0', 'Knowledge (Planes)')
+	,('awt6PHqLO0', 'Knowledge (Religion)')
+	,('awt6PHqLO0', 'Linguistics')
+	,('awt6PHqLO0', 'Profession')
+	,('awt6PHqLO0', 'Spellcraft')
+	,('awt6PHqLO0', 'Bluff')
+	,('awt6PHqLO0', 'Diplomacy')
+	,('awt6PHqLO0', 'Perform')
+	,('awt6PHqLO0', 'UMD')
+	,('Du0nzEj1wJ', 'Appraise')
+	,('Du0nzEj1wJ', 'Craft A')
+	,('Du0nzEj1wJ', 'Craft B')
+	,('Du0nzEj1wJ', 'Fly')
+	,('Du0nzEj1wJ', 'Knowledge (Arcana)')
+	,('Du0nzEj1wJ', 'Knowledge (Dungeoneering)')
+	,('Du0nzEj1wJ', 'Knowledge (Engineering)')
+	,('Du0nzEj1wJ', 'Knowledge (Geography)')
+	,('Du0nzEj1wJ', 'Knowledge (History)')
+	,('Du0nzEj1wJ', 'Knowledge (Local)')
+	,('Du0nzEj1wJ', 'Knowledge (Nature)')
+	,('Du0nzEj1wJ', 'Knowledge (Nobility)')
+	,('Du0nzEj1wJ', 'Knowledge (Planes)')
+	,('Du0nzEj1wJ', 'Knowledge (Religion)')
+	,('Du0nzEj1wJ', 'Linguistics')
+	,('Du0nzEj1wJ', 'Profession')
+	,('Du0nzEj1wJ', 'Spellcraft')
+	,('Du0nzEj1wJ', 'Bluff')
+	,('Du0nzEj1wJ', 'Diplomacy')
+	,('Du0nzEj1wJ', 'Perform')
+	,('Du0nzEj1wJ', 'UMD')
 	;
 	
 CREATE TABLE CharacterHP (
-	CharacterID int,
+	CharacterID varchar(10) UNIQUE,
 	FavoredClassBonusHP int,
 	DamageTaken int,
 	NonLethalDamateTaken int, /*TODO: add to code*/
@@ -624,12 +643,12 @@ CREATE TABLE CharacterHP (
 
 INSERT INTO CharacterHP
 VALUES
-	 (0, 5, 0, 0, 0)
-	,(2, 5, 0, 0, 0)
+	 ('awt6PHqLO0', 5, 0, 0, 0)
+	,('Du0nzEj1wJ', 5, 0, 0, 0)
 	;
 	 
 CREATE TABLE RacialTraits (
-	TraitID int,
+	TraitID int UNIQUE,
 	TraitName varchar(255),
 	TraitDescription varchar(1500),
 	TraitEffect varchar(1500)
@@ -648,32 +667,32 @@ VALUES
 	;
 	
 CREATE TABLE CharacterRacialTraits (
-	CharacterID int,
+	CharacterID varchar(10),
 	TraitID int
 );
 
 INSERT INTO CharacterRacialTraits
 VALUES
-	 (0, 0)
-	,(0, 1)
-	,(0, 2)
-	,(0, 3)
-	,(0, 4)
-	,(0, 5)
-	,(0, 6)
-	,(0, 7)
-	,(2, 0)
-	,(2, 1)
-	,(2, 2)
-	,(2, 3)
-	,(2, 4)
-	,(2, 5)
-	,(2, 6)
-	,(2, 7)
+	 ('awt6PHqLO0', 0)
+	,('awt6PHqLO0', 1)
+	,('awt6PHqLO0', 2)
+	,('awt6PHqLO0', 3)
+	,('awt6PHqLO0', 4)
+	,('awt6PHqLO0', 5)
+	,('awt6PHqLO0', 6)
+	,('awt6PHqLO0', 7)
+	,('Du0nzEj1wJ', 0)
+	,('Du0nzEj1wJ', 1)
+	,('Du0nzEj1wJ', 2)
+	,('Du0nzEj1wJ', 3)
+	,('Du0nzEj1wJ', 4)
+	,('Du0nzEj1wJ', 5)
+	,('Du0nzEj1wJ', 6)
+	,('Du0nzEj1wJ', 7)
 	;
 	
 CREATE TABLE WeaponDefinitions (
-	WeaponID int,
+	WeaponID int UNIQUE,
 	WeaponName varchar(255),
 	DamageDice varchar(255),
 	DamageType varchar(255),
@@ -696,7 +715,7 @@ VALUES
 	;
 	
 CREATE TABLE CharacterWeapons (
-	CharacterID int,
+	CharacterID varchar(10),
 	WeaponID int,
 	WeaponAttackStat varchar(255),
 	WeaponDamageStat varchar(255)
@@ -704,8 +723,8 @@ CREATE TABLE CharacterWeapons (
 
 INSERT INTO CharacterWeapons
 VALUES
-	 (0, 0, 'Dexterity', '')
-	,(2, 0, 'Dexterity', '')
+	 ('awt6PHqLO0', 0, 'Dexterity', '')
+	,('Du0nzEj1wJ', 0, 'Dexterity', '')
 	;
 ---------
 

@@ -24,7 +24,7 @@ class ComprehensiveCharacterJsonTest {
 
 	@BeforeAll
 	static void setup() {
-		johnDoe = new PathfinderCharacter(123, "John Doe", "abc.xyz");
+		johnDoe = new PathfinderCharacter("123", "John Doe", "abc.xyz");
 		johnDoe.setAbility("Strength", 14);
 		johnDoe.setAbility("Dexterity", 12);
 		johnDoe.setAbility("Intelligence", 14);

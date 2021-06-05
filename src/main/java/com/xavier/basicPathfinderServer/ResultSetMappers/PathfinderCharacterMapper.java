@@ -11,7 +11,7 @@ public class PathfinderCharacterMapper implements ResultSetMapper<Object> {
 	public PathfinderCharacter map(ResultSet resultSet) {
 		try {
 			if (resultSet.next()) {
-				int characterId = resultSet.getInt("CharacterID");
+				String characterId = resultSet.getString("CharacterID");
 				String characterName = resultSet.getString("CharacterName");
 				String playerName = resultSet.getString("PlayerName");
 				String characterImageUrl = resultSet.getString("CharacterImageURL");
@@ -49,7 +49,7 @@ public class PathfinderCharacterMapper implements ResultSetMapper<Object> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return new PathfinderCharacter(-1, "Error: couldn't find character", "");
+		return new PathfinderCharacter("-1", "Error: couldn't find character", "");
 	}
 
 }
