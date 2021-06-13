@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import com.xavier.basicPathfinderServer.Weapon.WeaponType;
+import com.xavier.basicPathfinderServer.json.WeaponStats;
+
 class PathfinderCharacterTest {
 
 	@Test
@@ -381,6 +384,29 @@ class PathfinderCharacterTest {
 		prosopa.increaseUsesForItem(2);
 		
 		assertEquals(45, wandOfCool.getTrackedResourceRemaining());
+	}
+	
+	@Test
+	public void divineFavorIncreasesDamageTest() {
+		PathfinderCharacter manu = new PathfinderCharacter("asdf", "Manu", null);
+		manu.setAbility("Strength", 18);
+		
+		Weapon sword = new Weapon("Masterwork Bastard Sword", "1d10", "S", "", 1, 0, 19, 2, "Sword", "Melee", "Exotic", "", 6, "swords");
+		
+		manu.giveWeapon(sword, "Strength", "Strength", WeaponType.MELEE);
+		
+		WeaponStats swordStats = manu.getWeapons().get(sword);
+		
+		assertEquals(4, swordStats.attackStat.getValue());
+		assertEquals(4, swordStats.damageStat.getValue());
+		
+		Adjustment divineFavor = new Adjustment(100, "Divine Favor 2", true);
+		divineFavor.addEffect("All Attacks", "Luck", 2);
+		divineFavor.addEffect("All Damage", "Luck", 2);
+		manu.addAdjustment(divineFavor);
+		
+		assertEquals(6, swordStats.attackStat.getValue());
+		assertEquals(6, swordStats.damageStat.getValue());
 	}
 	
 	private Adjustment buildAndAddAdjustment(PathfinderCharacter character, String adjName, boolean enabled, String... effectStrings) {

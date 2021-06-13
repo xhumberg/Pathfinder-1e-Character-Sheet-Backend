@@ -262,6 +262,11 @@ public class PathfinderCharacter {
 	private void addAdjustmentToApplicableStats(Adjustment adjustment) {
 		for (String adjustedStatName : adjustment.getAdjustedStats()) {
 			Stat adjustedStat = allStats.get(adjustedStatName);
+			if (adjustedStat == null) {
+				adjustedStat = new Stat(adjustedStatName);
+				allStats.put(adjustedStatName, adjustedStat);
+				System.out.println("Tried to adjust stat '" + adjustedStatName + "' which does not exist. It has been created, but the adjustment is likely to not behave as intended");
+			}
 			adjustedStat.addAdjustment(adjustment);
 		}
 	}
@@ -315,7 +320,7 @@ public class PathfinderCharacter {
 		Adjustment weaponDamageAdjustment = new Adjustment(-1, damageStat, true);
 		if (damageStat != null && !damageStat.isBlank())
 			weaponDamageAdjustment.addEffect(damageModString, damageStat, getStat(damageStat));
-		weaponDamageAdjustment.addEffect(weapon.getTitle(), "All Damage", getStat("All Damage"));
+		weaponDamageAdjustment.addEffect(damageModString, "All Damage", getStat("All Damage"));
 		if (type == Weapon.WeaponType.MELEE) {
 			weaponDamageAdjustment.addEffect(damageModString, "Melee Specific", getStat("Melee Damage"));
 		} else {

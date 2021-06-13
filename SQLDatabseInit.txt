@@ -17,7 +17,8 @@ INSERT INTO UserAccess
 VALUES (-1, 'awt6PHqLO0') /*Sample Prosopa*/
 	   ,(0, 'ajE4DpicPv') /*Test*/
 	   ,(0, 'Du0nzEj1wJ') /*Prosopa*/
-	   ,(0, 'LqyLgvHXd0'); /*Jordan*/
+	   ,(0, 'LqyLgvHXd0') /*Jordan*/
+	   ,(0, 'eVbBMI8yjs'); /*Manu*/
 
 CREATE TABLE PathfinderCharacter /*Done*/
 (
@@ -44,7 +45,9 @@ INSERT INTO PathfinderCharacter
 VALUES ('awt6PHqLO0', 'Prosopa (Sample)', 'Sample Character', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 'Female', '28', '140 lbs', '5'' 7"', 7, 16, 14, 22, 11, 5)
 	  ,('ajE4DpicPv', 'Testy McTestFace', 'Xavier', 'http://www.bobthebuilder.com/en-us/Images/btb_where_to_watch_background_Bob_tcm1239-232957.png', 'LG', 'Human', 'Medium', 'Male', 'Immortal', 'Average', 'Average', 16, 16, 14, 18, 7, 10)
 	  ,('Du0nzEj1wJ', 'Prosopa Dramatis', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 'Female', '28', '140 lbs', '5'' 7"', 7, 16, 14, 22, 11, 5)
-	  ,('LqyLgvHXd0', 'Jordan Fenrir Wolfe', 'Xavier', 'https://db4sgowjqfwig.cloudfront.net/images/951266/Edwardface.jpg', 'CG', 'Human', 'Medium', 'Male', '35', '150 lbs', '5'' 8"', 14, 20, 14, 10, 7, 14);
+	  ,('LqyLgvHXd0', 'Jordan Fenrir Wolfe', 'Xavier', 'https://db4sgowjqfwig.cloudfront.net/images/951266/Edwardface.jpg', 'CG', 'Human', 'Medium', 'Male', '35', '150 lbs', '5'' 8"', 14, 20, 14, 10, 7, 14)
+	  ,('eVbBMI8yjs', 'Manu Tuskmaw', 'Xavier', 'https://scontent-den4-1.xx.fbcdn.net/v/t1.15752-9/117758872_643426016299184_6686303671536000062_n.png?_nc_cat=102&ccb=1-3&_nc_sid=ae9488&_nc_ohc=-lRv8YwjIeEAX-1GDvm&_nc_ht=scontent-den4-1.xx&oh=8c0bd370ab96e56b02486a6d7329d974&oe=60C9F4D6', 'NG', 'Half-Orc', 'Medium', 'Male', '32', '200 lbs', '5'' 1"', 18, 10, 14, 12, 14, 11)
+	  ;
 	  
 CREATE TABLE AvailableItems /*Done*/
 (
@@ -71,7 +74,9 @@ VALUES
 		,(10, 'Cloak of Resistance +1', 1000, 'Shoulders', 'This garment offers magic protection in the form of a +1 resistance bonus on all saving throws (Fortitude, Reflex, and Will).', 'All Saves##Enhancement##1')
 		,(11, 'Scroll of Touch of the Sea', 25, 'Scroll', 'Scroll of first level Touch of the Sea', '')
 		,(12, 'Headband of Vast Intelligence +6', 36000, 'Headband', 'This intricate gold headband is decorated with several small blue and deep purple gemstones.\r\nThe headband grants the wearer an enhancement bonus to Intelligence of +6. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. A headband of vast intelligence +6 has three skills associated with it. After being worn for 24 hours, the headband grants a number of skill ranks in those skills equal to the wearer’s total Hit Dice. These ranks do not stack with the ranks a creature already possesses. This skill is chosen when the headband is created. If no skill is listed, the headband is assumed to grant skill ranks in a randomly determined Knowledge skill.', 'Intelligence##Enhancement##6') 
-		;
+		,(13, 'Masterwork Bastard Sword', 335, 'Weapon', 'A bastard sword is about 4 feet in length, making it too large to use in one hand without special training; thus it is an exotic weapon. A character can use a bastard sword two-handed as a martial weapon.', '')
+		,(14, 'Full Plate', 1500, 'Armor', 'This metal suit comprises multiple pieces of interconnected and overlaying metal plates, incorporating the benefits of numerous types of lesser armor. A complete suit of full plate (or platemail, as it is often called) includes gauntlets, heavy leather boots, a visored helmet, and a thick layer of padding that is worn underneath the armor. Each suit of full plate must be individually fitted to its owner by a master armorsmith, although a captured suit can be resized to fit a new owner at a cost of 200 to 800 (2d4 100) gold pieces.', 'AC##Armor##9; Flat-Footed##Armor##9;') /*Todo, max dex, ACP, Spell Failure, and Speed reduction*/
+		,(15, '+1 Tower Shield (with shield focus)', 1180, 'Shield', 'In most situations, a tower shield provides the indicated shield bonus to your Armor Class. As a standard action, however, you can use a tower shield to grant you total cover until the beginning of your next turn. When using a tower shield in this way, you must choose one edge of your space. That edge is treated as a solid wall for attacks targeting you only. You gain total cover for attacks that pass through this edge and no cover for attacks that do not pass through this edge (see Combat). The shield does not, however, provide cover against targeted spells; a spellcaster can cast a spell on you by targeting the shield you are holding. You cannot bash with a tower shield, nor can you use your shield hand for anything else.\r\nWhen employing a tower shield in combat, you take a –2 penalty on attack rolls because of the shield’s encumbrance.', 'All Attacks##Penalty##-2; AC##Shield##6; Flat-Footed##Shield##6');
 		
 CREATE TABLE CharacterEquipment /*Done*/
 (
@@ -113,6 +118,11 @@ VALUES
 	   ,('Du0nzEj1wJ', 10, -1, 1000, true)
 	   ,('Du0nzEj1wJ', 11, -1, 25, false)
 	   ,('Du0nzEj1wJ', 11, -1, 25, false)
+	   
+	   ,('eVbBMI8yjs', 13, -1, 335, true)
+	   ,('eVbBMI8yjs', 14, -1, 1500, true)
+	   ,('eVbBMI8yjs', 15, -1, 1180, true)
+	   ,('eVbBMI8yjs', 10, -1, 1000, true)
 	   ;
 	   
 CREATE TABLE AvailableFeats /*Done*/
@@ -125,13 +135,17 @@ CREATE TABLE AvailableFeats /*Done*/
 
 INSERT INTO AvailableFeats
 VALUES
-	 (0, 'Spell Focus (Conjuration)', 'Choose a school of magic. Any spells you cast of that school are more difficult to resist.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select.', 'Conjuration##Spell Focus##1')
+	 (0, 'Spell Focus (Conjuration)', 'Choose a school of magic. Any spells you cast of that school are more difficult to resist.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select.', 'conjuration##Spell Focus##1')
 	,(1, 'Harrowed', 'You get a +1 bonus on all Will saves made to resist enchantment effects. Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card’s suit. For example, if you drew a card from the suit of Dexterity, you could apply this +2 bonus on an Initiative check, a Reflex save, a Dexterity-based skill check, or a ranged attack roll. You may assign this +2 bonus after you make the roll, but you must do so before you know whether the roll was a success or not.', '[T:1##Once per day, you may draw a card from a Harrow deck you own. At any one time for the rest of that day, you may apply a +2 bonus on any d20 roll modified by the card’s suit. You may assign this +2 bonus after you make the roll, but you must do so before you know whether the roll was a success or not.][Special Defense: +1 Will against enchantment effects]')
-    ,(2, 'Spell Focus (Evocation)', 'Choose a school of magic. Any spells you cast of that school are more difficult to resist.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select.', 'Evocation##Spell Focus##1')
+    ,(2, 'Spell Focus (Evocation)', 'Choose a school of magic. Any spells you cast of that school are more difficult to resist.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select.', 'evocation##Spell Focus##1')
     ,(3, 'Extra Arcane Reservoir', 'You gain three more points in your arcane reservoir, and the maximum number of points in your arcane reservoir increases by that amount. (Apply by modifying the Arcane Reservoir uses per day)', '')
-	,(4, 'Greater Spell Focus (Conjuration)', 'Choose a school of magic to which you have already applied the Spell Focus feat. Any spells you cast of this school are very hard to resist.\r\nPrerequisites: Spell Focus.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select. This bonus stacks with the bonus from Spell Focus.', 'Conjuration##Greater Spell Focus##1')
+	,(4, 'Greater Spell Focus (Conjuration)', 'Choose a school of magic to which you have already applied the Spell Focus feat. Any spells you cast of this school are very hard to resist.\r\nPrerequisites: Spell Focus.\r\nBenefit: Add +1 to the Difficulty Class for all saving throws against spells from the school of magic you select. This bonus stacks with the bonus from Spell Focus.', 'conjuration##Greater Spell Focus##1')
 	,(5, 'Spell Penetration', 'Your spells break through spell resistance more easily than most.\r\nBenefit: You get a +2 bonus on caster level checks (1d20 + caster level) made to overcome a creature''s spell resistance. (Not applied in this sheet)', '')
 	,(6, 'Scribe Scroll (Item Creation)', 'You can create magic scrolls.\r\nPrerequisite: Caster level 1st.\r\nBenefit: You can create a scroll of any spell that you know. Scribing a scroll takes 2 hours if its base price is 250 gp or less, otherwise scribing a scroll takes 1 day for each 1,000 gp in its base price. To scribe a scroll, you must use up raw materials costing half of this base price.\r\nSee magic item creation rules for more information.', '')
+	,(7, 'Endurance', 'You gain a +4 bonus on the following checks and saves: Swim checks made to resist nonlethal damage from exhaustion; Constitution checks made to continue running; Constitution checks made to avoid nonlethal damage from a forced march; Constitution checks made to hold your breath; Constitution checks made to avoid nonlethal damage from starvation or thirst; Fortitude saves made to avoid nonlethal damage from hot or cold environments; and Fortitude saves made to resist damage from suffocation.\r\nYou may sleep in light or medium armor without becoming fatigued.', '[Special Defense: +4 Fortitude against hot or cold environments and against suffocation][Special Defense: +4 Fortitude to resist starvation or thirst]')
+	,(8, 'Shield Focus', 'You are skilled at deflecting blows with your shield.\r\nPrerequisites: Shield Proficiency, base attack bonus +1.\r\nBenefit: Increase the AC bonus granted by any shield you are using by 1. (currently applied on a per shield basis)', '')
+	,(9, 'Saving Shield', 'You deflect attacks that could mean your ally’s death.\r\nPrerequisite: Shield Proficiency.\r\nBenefits: Whenever an adjacent ally is the target of an attack, you can, as an immediate action, grant that adjacent ally a +2 shield bonus to AC. You must be wielding a light shield, heavy shield, or tower shield to use this feat.', '')
+	,(10, 'Mobile Bulwark Style', 'You are able to swing your tower shield around quickly.\r\nPrerequisite(s): Str 13, Shield Focus, Tower Shield Proficiency, base attack bonus +1.\r\nBenefit(s): While using a tower shield, add the shield’s bonus to AC (including its enhancement bonus) to your CMD against bull rush and overrun combat maneuvers. While using this style, you can use a tower shield to grant you total cover along one edge of your space as a move action. (currently not applied)', '')
     ;
 	
 CREATE TABLE CharacterFeats /*Done*/
@@ -154,13 +168,17 @@ VALUES
 	,('Du0nzEj1wJ', 4)
 	,('Du0nzEj1wJ', 5)
 	,('Du0nzEj1wJ', 6)
+	,('eVbBMI8yjs', 7)
+	,('eVbBMI8yjs', 8)
+	,('eVbBMI8yjs', 9)
+	,('eVbBMI8yjs', 10)
 	;
 
 CREATE TABLE AvailableClassFeatures /*Done*/
 (
 	FeatureID int UNIQUE,
 	FeatureName varchar(255),
-	FeatureDescription varchar(1500),
+	FeatureDescription varchar(2500),
 	FeatureEffect varchar(1500)
 );
 
@@ -177,6 +195,18 @@ VALUES
 	,(8, 'Tower of Intelligence', 'Beginning at 2nd level, whenever a harrower uses her Harrow casting ability, for each card she draws from the suit of Intelligence, she gains a +1 bonus on caster level checks made to penetrate spell resistance.', '')
 	,(9, 'Tower of Strength', 'Beginning at 3rd level, whenever a harrower uses her Harrow casting ability to augment a spell that deals damage to hit points, the spell deals +1 point of damage per die for each card from the suit of Strength she draws.', '')
 	,(10, 'Tower of Charisma', 'Beginning at 4th level, whenever a harrower uses her Harrow casting ability, for each card she draws from the suit of Charisma, the save DC of the spell increases by +1.', '')
+	,(11, 'Sacred Shield', 'Dedicated training and divine grace allow a Sixth Wing bulwark to lessen the burden of a shield’s weight. As long as a Sixth Wing bulwark is wielding a shield, she reduces her total armor check penalty by 1. This reduction improves by 1 for every 5 warpriest levels she has, to a maximum reduction of 5 at 20th level.\r\nAt 4th level, a Sixth Wing bulwark can call upon Ragathiel’s might to bless her shield as a swift action. As long as she is wielding a shield, she gains DR 1/— and fire resistance 5. For every 4 levels beyond 4th, this DR increases by 1 (to a maximum of DR 5/— at 20th level) and her fire resistance increases by 5 (becoming immunity to fire at 20th level). A Sixth Wing bulwark can use this ability a number of rounds per day equal to her warpriest level; these rounds need not be consecutive.\r\nAs a swift action while her shield is benefitting from Ragathiel’s blessing (or as part of the action to activate the blessing), a Sixth Wing bulwark can direct her shield to protect an ally within 60 feet. The shield sprouts burning wings and flies to defend the ally, providing its shield bonus, damage reduction, and fire resistance to that ally instead of the Sixth Wing bulwark. Rounds in which she uses her shield in this manner count normally against the rounds per day in which she can use this ability. As long as she has rounds of sacred shield remaining, she can recall her shield to her arm as a swift action and regain its benefits. A Sixth Wing bulwark must maintain one hand free to direct the shield; if she no longer has a hand free or if the duration of her sacred shield ability ends, the shield drops to the ground and ceases providing any benefit.\r\nThis replaces sacred weapon.', '[T:Level]')
+	,(12, 'Sixth Wing Sworn', 'A Sixth Wing Bulwark must be a worshiper of Ragathiel. If they ever change their deity, they lose this archetype, cannot regain it, and become a normal warpriest', '')
+	,(13, 'Lawful Good Aura', 'A warpriest of a chaotic, evil, good, or lawful deity has a particularly powerful aura (as a cleric) corresponding to the deity’s alignment (see detect evil on page 266 of the Core Rulebook for details).', '')
+	,(14, 'Blessings', 'A warpriest’s deity influences his alignment, what magic he can perform, his values, and how others see him. Each warpriest can select two blessings from among those granted by his deity (each deity grants the blessings tied to its domains). A warpriest can select an alignment blessing (Chaos, Evil, Good, or Law) only if his alignment matches that domain. If a warpriest isn’t devoted to a particular deity, he still selects two blessings to represent his spiritual inclinations and abilities, subject to GM approval. The restriction on alignment domains still applies.\r\nEach blessing grants a minor power at 1st level and a major power at 10th level. A warpriest can call upon the power of his blessings a number of times per day (in any combination) equal to 3 + 1/2 his warpriest level (to a maximum of 13 times per day at 20th level). Each time he calls upon any one of his blessings, it counts against his daily limit. The save DC for these blessings is equal to 10 + 1/2 the warpriest’s level + the warpriest’s Wisdom modifier.\r\nIf a warpriest also has levels in a class that grants cleric domains, the blessings chosen must match the domains selected by that class. Subject to GM discretion, the warpriest can change his former blessings or domains to make them conform.', '[T:3 + Half Level]')
+	,(15, 'Spontaneous Casting (Cure)', 'A good warpriest (or a neutral warpriest of a good deity) can channel stored spell energy into healing spells that he did not prepare ahead of time. The warpriest can expend any prepared spell that isn’t an orison to cast any cure spell of the same spell level or lower. A cure spell is any spell with “cure” in its name.', '')
+	,(16, 'Lawful Good Spells', 'A warpriest cannot cast spells of an alignment opposed to his own or his deity’s (if he has a deity). Spells associated with particular alignments are indicated by the chaotic, evil, good, and lawful descriptors in their spell descriptions.', '')
+	,(17, 'Fervor (Good)', 'At 2nd level, a warpriest can draw upon the power of his faith to heal wounds or harm foes. He can also use this ability to quickly cast spells that aid in his struggles. This ability can be used a number of times per day equal to 1/2 his warpriest level + his Wisdom modifier.\r\nBy expending one use of this ability, a good warpriest (or one who worships a good deity) can touch a creature to heal it of 1d6 points of damage, plus an additional 1d6 points of damage for every 3 warpriest levels he possesses above 2nd (to a maximum of 7d6 at 20th level). Using this ability is a standard action (unless the warpriest targets himself, in which case it’s a swift action). Alternatively, the warpriest can use this ability to harm an undead creature, dealing the same amount of damage he would otherwise heal with a melee touch attack. Using fervor in this way is a standard action that provokes an attack of opportunity. Undead do not receive a saving throw against this damage. This counts as positive energy.\r\nAs a swift action, a warpriest can expend one use of this ability to cast any one warpriest spell he has prepared with a casting time of 1 round or shorter. When cast in this way, the spell can target only the warpriest, even if it could normally affect other or multiple targets. Spells cast in this way ignore somatic components and do not provoke attacks of opportunity. The warpriest does not need to have a free hand to cast a spell in this way.', '[T:Half Level + Wisdom]')
+	,(18, 'Bonus Feats', 'At 3rd level and every 3 levels thereafter, a warpriest gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat feats. The warpriest must meet the prerequisites for these feats, but he treats his warpriest level as his base attack bonus (in addition to base attack bonuses gained from other classes and Hit Dice) for the purpose of qualifying for these feats. Finally, for the purposes of these feats, the warpriest can select feats that have a minimum number of fighter levels as a prerequisite, treating his warpriest level as his fighter level.', '')
+	,(19, 'Channel Energy (Warpriest)', 'Starting at 4th level, a warpriest can release a wave of energy by channeling the power of his faith through his holy (or unholy) symbol. This energy can be used to deal or heal damage, depending on the type of energy channeled and the creatures targeted. Using this ability is a standard action that expends two uses of his fervor ability and doesn’t provoke an attack of opportunity. The warpriest must present a holy (or unholy) symbol to use this ability.\r\nA good warpriest (or one who worships a good deity) channels positive energy and can choose to heal living creatures or to deal damage to undead creatures. An evil cleric (or one who worships an evil deity) channels negative energy and can choose to deal damage to living creatures or heal undead creatures. A neutral cleric who worships a neutral deity (or one who is not devoted to a particular deity) channels positive energy if he chose to spontaneously cast cure spells or negative energy if he chose to spontaneously cast inflict spells.\r\nChanneling energy causes a burst that affects all creatures of one type (either undead or living) in a 30-foot radius centered on the warpriest. The amount of damage dealt or healed is equal to the amount listed in the fervor ability. Creatures that take damage from channeled energy must succeed at a Will saving throw to halve the damage. The save DC is 10 + 1/2 the warpriest’s level + the warpriest’s Wisdom modifier. Creatures healed by channeled energy cannot exceed their maximum hit point total—all excess healing is lost. A warpriest can choose whether or not to include himself in this effect.', '')
+	,(20, 'VMC Barbarian: Rage', 'At 3rd level, she gains the rage class feature for a number of rounds per day equal to her Constitution modifier + her character level.', '[T: Constitution + Character Level]')
+	,(21, 'Destruction Blessing', 'Destructive Attacks (minor): At 1st level, you can touch an ally and bless it with the power of destruction. For 1 minute, the ally gains a morale bonus on weapon damage rolls equal to half your level (minimum 1).\r\nHeart of Carnage (major): At 10th level, you can touch an ally and bless it with even greater destructive power. For 1 minute, the ally gains a +4 insight bonus on attack rolls made to confirm critical hits and has a 50% chance to treat any critical hit or sneak attack against it as a normal hit.', '')
+	,(22, 'War Blessing', 'War Mind (minor): At 1st level, you can touch an ally and grant it a tactical advantage for 1 minute. At the start of its turn each round, it can select one of the following bonuses: +10 feet to base land speed, +1 dodge bonus to AC, +1 insight bonus on attack rolls, or a +1 luck bonus on saving throws. Each bonus selected lasts for 1 round.\r\nBattle Lust (major): At 10th level, you can touch an ally and grant it a thirst for battle. All of the ally’s melee attacks are treated as if they had the vicious weapon special ability, but the additional damage dealt to the ally from that special ability is nonlethal. In addition, the ally receives a +4 insight bonus on attack rolls made to confirm critical hits. These benefits last for 1 minute.', '')
 	;
 
 CREATE TABLE AvailableClasses /*Done*/
@@ -205,6 +235,7 @@ VALUES
 	,(2, 5, 2, 1, 1, 4, 2, 6, 'Exploiter Wizard 5 (Modified: CL 9)', true, 'PREPARED', 9, 'Intelligence', '0-4 1-4 2-4 3-3 4-2 5-1', null)
 	,(3, 4, 2, 1, 1, 2, 2, 6, 'Harrower 4', false, null, -1, null, null, null)
 	,(4, 14, 10, 4, 9, 9, 6, 8, 'Arrowsong Minstrel 14', true, 'SPONTANEOUS', 14, 'Charisma', '1-4 2-4 3-3 4-3 5-1', '0-6 1-6 2-6 3-5 4-4 5-3')
+	,(5, 4, 3, 4, 1, 4, 2, 8, 'Sixth Wing Bulwark 4', true, 'PREPARED', 4, 'Wisdom', '0-4 1-3 2-1', null)
 	; 
 	
 CREATE TABLE CharacterClasses /*Done*/
@@ -220,6 +251,7 @@ VALUES
 	,('Du0nzEj1wJ', 2)
 	,('Du0nzEj1wJ', 3)
 	,('LqyLgvHXd0', 4)
+	,('eVbBMI8yjs', 5)
 	;
 
 CREATE TABLE ClassesToClassFeatures /*To be implemented later, when adding classes and archetypes*/
@@ -250,6 +282,18 @@ VALUES
 	,('Du0nzEj1wJ', 8, -1)
 	,('Du0nzEj1wJ', 9, -1)
 	,('Du0nzEj1wJ', 10, -1)
+	,('eVbBMI8yjs', 11, 17)
+	,('eVbBMI8yjs', 12, -1)
+	,('eVbBMI8yjs', 13, -1)
+	,('eVbBMI8yjs', 14, 18)
+	,('eVbBMI8yjs', 15, -1)
+	,('eVbBMI8yjs', 16, -1)
+	,('eVbBMI8yjs', 17, 19)
+	,('eVbBMI8yjs', 18, -1)
+	,('eVbBMI8yjs', 19, -1)
+	,('eVbBMI8yjs', 20, 20)
+	,('eVbBMI8yjs', 21, -1)
+	,('eVbBMI8yjs', 22, -1)
 	;
 	
 CREATE TABLE TrackedResources /*Done*/
@@ -280,6 +324,10 @@ VALUES
 	,(14, 'Harrow Casting', 'As she casts a spell...', 4, 4)
 	,(15, 'Temp HP', 'This should be deleted once TempHP is truly implemented', 0, 50)
 	,(16, 'Mirror Image', 'Number of images', 0, 8)
+	,(17, 'Sacred Shield', 'Round of the Sacred Shield ability', 4, 4)
+	,(18, 'Blessings', 'Remaining uses of Blessings', 5, 5)
+	,(19, 'Fervor', 'Remaining uses of Fervor', 4, 4)
+	,(20, 'Rage', 'Remaining rounds of rage', 6, 6)
 	;
 	
 /*This is for resources a character may have that are not given by class features or items, such as those given by specific feats (Like Harrowed) or bonuses from specific spells (like Lucky Number) as those things only rarely have tracked resources*/
@@ -311,10 +359,10 @@ CREATE TABLE AvailableSpells /*Done*/
 	SpellDuration varChar(255),
 	SpellSavingThrow varChar(255),
 	SpellSpellResistance varChar(255),
-	SpellDescription varChar(4000)
+	SpellDescription varChar(10000)
 );
 
-INSERT INTO AvailableSpells /*Done*/
+/*INSERT INTO AvailableSpells (This is now done via the SheetScraper class)
 VALUES
 	 (0, 'arcanist 1, bloodrager 1, occultist 1, psychic 1, sorcerer 1, spiritualist 1, summoner 1, summoner (unchained) 1, witch 1, wizard 1', 'Mage Armor', 'Conjuration', 'Creation, Force', '1 standard action', 'V, S, F (a piece of cured leather)', 'touch', 'creature touched', '1 hour/level (D)', 'Will negates (harmless)', 'no', 'An invisible but tangible field of force surrounds the subject of a mage armor spell, providing a +4 armor bonus to AC.\r\n\r\nUnlike mundane armor, mage armor entails no armor check penalty, arcane spell failure chance, or speed reduction. Since mage armor is made of force, incorporeal creatures can''t bypass it the way they do normal armor.')
 	,(1, 'arcanist 1, bard 1, bloodrager 1, inquisitor 1, medium 1, psychic 1, skald 1, sorcerer 1, witch 1, wizard 1', 'Ear-Piercing Scream', 'Evocation', 'Sonic', '1 standard action', 'V, S', 'close (25 ft. + 5 ft./2 levels)', 'one creature', 'instantaneous; see text', 'Fortitude partial (see text)', 'yes', 'You unleash a powerful scream, inaudible to all but a single target. The target is dazed for 1 round and takes 1d6 points of sonic damage per two caster levels (maximum 5d6). A successful save negates the daze effect and halves the damage.')
@@ -324,7 +372,7 @@ VALUES
 	,(5, 'adept 2, arcanist 2, bard 2, bloodrager 2, magus 2, medium 2, mesmerist 2, occultist 2, psychic 2, redmantisassassin 2, skald 2, sorcerer 2, wizard 2', 'Mirror Image', 'Illusion', 'figment', '1 standard action', 'V, S', 'personal', 'you', '1 min./level', 'none', 'no', 'This spell creates a number of illusory doubles of you that inhabit your square. These doubles make it difficult for enemies to precisely locate and attack you.\r\n\r\nWhen mirror image is cast, 1d4 images plus one image per three caster levels (maximum eight images total) are created. These images remain in your space and move with you, mimicking your movements, sounds, and actions exactly. Whenever you are attacked or are the target of a spell that requires an attack roll, there is a possibility that the attack targets one of your images instead. If the attack is a hit, roll randomly to see whether the selected target is real or a figment. If it is a figment, the figment is destroyed. If the attack misses by 5 or less, one of your figments is destroyed by the near miss. Area spells affect you normally and do not destroy any of your figments. Spells and effects that do not require an attack roll affect you normally and do not destroy any of your figments. Spells that require a touch attack are harmlessly discharged if used to destroy a figment.\r\n\r\nAn attacker must be able to see the figments to be fooled. If you are invisible or the attacker is blind, the spell has no effect (although the normal miss chances still apply).')
 	,(6, 'antipaladin 1, arcanist 2, cleric 2, inquisitor 2, oracle 2, sorcerer 2, spiritualist 2, warpriest 2, witch 2, wizard 2', 'Boneshaker', 'Necromancy', '', '1 standard action', 'V, S, F (a human-shaped fetish made of bone)', 'medium (100 ft. + 10 ft./level)', 'one living creature or undead creature with a skeleton', 'instantaneous', 'Fortitude negates or partial (see text)', 'yes', 'By using a bone fetish like a marionette, you take control of a target creature’s skeleton. This has a variety of effects depending on whether the target is living or undead.\r\n\r\nA living creature has its skeleton rattle within its flesh, causing it grievous harm. The target takes 3d6 points of damage, plus 1d6 additional points of damage per 2 caster levels you have.In addition, you can move the target 5 feet. This movement doesn’t provoke attacks of opportunity. A successful saving throw halves the damage and negates the movement.\r\n\r\nAn undead creature takes no damage. Instead, you manipulate the undead, forcing it to take an immediate action to either move up to its speed (provoking attacks of opportunity as normal) or make a single attack against a creature of your choice in its reach. Either of these is the most basic version of the action the creature can take (it doesn’t activate any special abilities that it could apply to the movement or attack, such as grab). A successful saving throw negates this effect. A mindless undead creature doesn’t receive a save against this effect.')
 	,(7, 'alchemist 2, arcanist 2, bloodrager 2, investigator 2, medium 2, mesmerist 2, occultist 2, psychic 2, shaman 2, sorcerer 2, spiritualist 2, witch 2, wizard 2', 'False Life', 'Necromancy', '', '1 standard action', 'V, S, M (a drop of blood)', 'personal', 'you', '1 hour/level or until discharged; see text', 'none', 'no', 'You harness the power of unlife to grant yourself a limited ability to avoid death. While this spell is in effect, you gain temporary hit points equal to 1d10 + 1 per caster level (maximum +10).')
-	,(8, 'arcanist 2, sorcerer 2, wizard 2', 'Burning Arc (Keleshite)', 'Evocation', 'fire', '1 standard action', 'V, S', 'close (25 ft. + 5 ft./2 levels)', 'one primary target plus one additional target/3 levels (each of which must be within 15 ft. of the primary target)', 'instantaneous', 'Reflex half', 'yes', 'Keleshites brag that they stole this spell from genie-kind thousands of years ago while other civilizations struggled without fire.\r\n\r\nThis spell causes an arc of flame to leap from your fingers, burning a number of enemies nearby. It deals 1d6 points of fire damage per caster level (maximum 10d6). For every additional target the discharge arcs to, reduce the number of damage dice by half (rounded down). Therefore, at 9th level, your burning arc deals 9d6 points of fire damage to the primary target, then 4d6 points of fire damage to a secondary target, then 2d6 points of fire damage to an additional target.\r\n\r\nEach target can attempt a Reflex saving throw for half damage. The Reflex DC to halve the damage of the secondary bolts is 2 lower than the DC to halve the damage of the primary bolt. You may choose secondary targets as you like, but they must all be within 15 feet of the primary target, and no target can be struck more than once. You can choose to affect fewer secondary targets than the maximum.')
+	,(8, 'arcanist 2, sorcerer 2, wizard 2', 'Burning Arc', 'Evocation', 'fire', '1 standard action', 'V, S', 'close (25 ft. + 5 ft./2 levels)', 'one primary target plus one additional target/3 levels (each of which must be within 15 ft. of the primary target)', 'instantaneous', 'Reflex half', 'yes', '')
 	,(9, 'alchemist 3, arcanist 3, bard 3, bloodrager 3, investigator 3, magus 3, medium 2, occultist 3, psychic 3, redmantisassassin 3, skald 3, sorcerer 3, spiritualist 3, summoner 2, summoner (unchained) 3, wizard 3', 'Haste', 'Transmutation', '', '1 standard action', 'V, S, M (a shaving of licorice root)', 'close (25 ft. + 5 ft./2 levels)', 'Targets one creature/level, no two of which can be more than 30 ft. apart', '1 round/level', 'Fortitude negates (harmless)', 'yes (harmless)', 'The transmuted creatures move and act more quickly than normal. This extra speed has several effects.\r\n\r\nWhen making a full attack action, a hasted creature may make one extra attack with one natural or manufactured weapon. The attack is made using the creature''s full base attack bonus, plus any modifiers appropriate to the situation. (This effect is not cumulative with similar effects, such as that provided by a speed weapon, nor does it actually grant an extra action, so you can''t use it to cast a second spell or otherwise take an extra action in the round.)\r\n\r\nA hasted creature gains a +1 bonus on attack rolls and a +1 dodge bonus to AC and Reflex saves. Any condition that makes you lose your Dexterity bonus to Armor Class (if any) also makes you lose dodge bonuses.\r\n\r\nAll of the hasted creature''s modes of movement (including land movement, burrow, climb, fly, and swim) increase by 30 feet, to a maximum of twice the subject''s normal speed using that form of movement. This increase counts as an enhancement bonus, and it affects the creature''s jumping distance as normal for increased speed. Multiple haste effects don''t stack. Haste dispels and counters slow.')
 	,(10, 'arcanist 3, sorcerer 3, summoner 3, summoner (unchained) 3, wizard 3', 'Spiked Pit', 'Conjuration', 'creation', '1 standard action', 'V, S, F (miniature shovel costing 10 gp)', 'medium (100 ft. + 10 ft./level)', '10-ft.-by-10-ft. hole, 10 ft. deep/2 levels', '1 round + 1 round/level', 'Reflex negates', 'no', 'This spell functions as create pit, except that the pit is lined with wickedly sharp spikes along its bottom and walls and has a maximum depth of 50 feet. Creatures who fall into the pit take falling damage as normal, plus 2d6 points of piercing damage from the spikes. Any creature or object coming into contact with the spikes along the walls, such as a creature trying to climb out, or rope or other typical aids to climbing, takes 1d6 points of piercing damage each round they are in contact with the walls. For those willing to accept the damage incurred while climbing, the pit’s walls have a Climb DC of 20.')
 	,(11, 'arcanist 3, bard 2, cleric 3, oracle 3, skald 2, sorcerer 3, warpriest 3, witch 3, wizard 3', 'Charitable Impulse', 'Enchantment', 'compulsion, mind-affecting', '1 standard action', 'V, S, F/DF (a miniature collection plate)', 'close (25 ft. + 5 ft./2 levels)', 'one humanoid creature', '1 round/level', 'Will negates', 'yes', 'This spell makes a creature more charitable, compelling it to aid others rather than use violence. An affected creature practices nonviolent combat behaviors according to the following list of priorities, beginning with the first priority. The subject continues to perform a priority until he can no longer fulfill its demands (at which point he moves to the next priority) or until the spell ends, whichever comes first.\r\n\r\n1st Priority: Heal injured creatures within 30 feet, beginning with the closest creatures and using whatever methods the subject has at hand (including potions, spells, and so on).\r\n\r\n2nd Priority: The subject gives his weapon away to the nearest creature within 30 feet who will accept it. If no creature accepts the weapon, the subject drops the weapon on the ground.\r\n\r\n3rd Priority: Cast beneficial spells and/or use beneficial magic items (including potions, wands, and so on) on creatures within 30 feet, starting with the closest creatures.\r\n\r\n4th Priority: The subject gives away his non-worn possessions—the contents of a backpack or similar item count as one item each, as does the container itself—to creatures within 30 feet. If no creature accepts the items, the subject drops the items on the ground.\r\n\r\n5th Priority: The subject gives away his remaining possessions (including his armor, boots, cloak, and so on) to creatures within 30 feet. If no creature accepts the items, the subject drops them on the ground.\r\n\r\nIf the subject fulfills all five priorities, the spell effect ends. The subject cannot attack or take attacks of opportunity, but can defend himself as normal. If the subject is attacked, the spell’s effect immediately ends.')
@@ -337,7 +385,7 @@ VALUES
 	,(18, 'arcanist 4, bard 4, magus 4, medium 3, mesmerist 4, occultist 4, psychic 4, skald 4, sorcerer 4, spiritualist 4, summoner 3, summoner (unchained) 4, witch 4, wizard 4', 'Dimension Door', 'Conjuration', 'teleportation', '1 standard action', 'V', 'long (400 ft. + 40 ft./level)', 'you and touched objects or other touched willing creatures', 'instantaneous', 'none and Will negates (object)', 'no and yes (object)', 'You instantly transfer yourself from your current location to any other spot within range. You always arrive at exactly the spot desired—whether by simply visualizing the area or by stating direction. After using this spell, you can''t take any other actions until your next turn. You can bring along objects as long as their weight doesn''t exceed your maximum load. You may also bring one additional willing Medium or smaller creature (carrying gear or objects up to its maximum load) or its equivalent per three caster levels. A Large creature counts as two Medium creatures, a Huge creature counts as two Large creatures, and so forth. All creatures to be transported must be in contact with one another, and at least one of those creatures must be in contact with you.\r\n\r\nIf you arrive in a place that is already occupied by a solid body, you and each creature traveling with you take 1d6 points of damage and are shunted to a random open space on a suitable surface within 100 feet of the intended location.\r\n\r\nIf there is no free space within 100 feet, you and each creature traveling with you take an additional 2d6 points of damage and are shunted to a free space within 1,000 feet. If there is no free space within 1,000 feet, you and each creature travelling with you take an additional 4d6 points of damage and the spell simply fails.')
 	,(19, 'arcanist 5, magus 5, occultist 5, psychic 4, sorcerer 5, spiritualist 5, wizard 5', 'Telekinesis', 'Transmutation', '', '1 standard action', 'V, S', 'long (400 ft. + 40 ft./level)', 'or Targets see text', 'concentration (up to 1 round/level) or instantaneous; see text', 'Will negates (object) or none', ' see text', 'You move objects or creatures by concentrating on them. Depending on the version selected, the spell can provide a gentle, sustained force, perform a variety of combat maneuvers, or exert a single short, violent thrust.\r\n\r\nSustained Force: A sustained force moves an object weighing no more than 25 pounds per caster level (maximum 375 pounds at 15th level) up to 20 feet per round. A creature can negate the effect on an object it possesses with a successful Will save or with spell resistance.\r\n\r\nThis version of the spell can last 1 round per caster level, but it ends if you cease concentration. The weight can be moved vertically, horizontally, or in both directions. An object cannot be moved beyond your range. The spell ends if the object is forced beyond the range. If you cease concentration for any reason, the object falls or stops.\r\n\r\nAn object can be telekinetically manipulated as if with one hand. For example, a lever or rope can be pulled, a key can be turned, an object rotated, and so on, if the force required is within the weight limitation. You might even be able to untie simple knots, though delicate activities such as these require DC 15 Intelligence checks.\r\n\r\nCombat Maneuver: Alternatively, once per round, you can use telekinesis to perform a bull rush, disarm, grapple (including pin), or trip. Resolve these attempts as normal, except that they don''t provoke attacks of opportunity, you use your caster level in place of your Combat Maneuver Bonus, and you add your Intelligence modifier (if a wizard) or Charisma modifier (if a sorcerer) in place of your Strength or Dexterity modifier. No save is allowed against these attempts, but spell resistance applies normally. This version of the spell can last 1 round per caster level, but it ends if you cease concentration.\r\n\r\nViolent Thrust: Alternatively, the spell energy can be spent in a single round. You can hurl one object or creature per caster level (maximum 15) that are within range and all within 10 feet of each other toward any target within 10 feet per level of all the objects. You can hurl up to a total weight of 25 pounds per caster level (maximum 375 pounds at 15th level).\r\n\r\nYou must succeed on attack rolls (one per creature or object thrown) to hit the target with the items, using your base attack bonus + your Intelligence modifier (if a wizard) or Charisma modifier (if a sorcerer). Weapons cause standard damage (with no Strength bonus; note that arrows or bolts deal damage as daggers of their size when used in this manner). Other objects cause damage ranging from 1 point per 25 pounds (for less dangerous objects) to 1d6 points of damage per 25 pounds (for hard, dense objects). Objects and creatures that miss their target land in a square adjacent to the target.\r\n\r\nCreatures who fall within the weight capacity of the spell can be hurled, but they are allowed Will saves (and spell resistance) to negate the effect, as are those whose held possessions are targeted by the spell.\r\n\r\nIf a telekinesed creature is hurled against a solid surface, it takes damage as if it had fallen 10 feet (1d6 points).')
 
-	;
+	;*/
 	
 CREATE TABLE SpellsPrepped /*Done*/
 (
@@ -349,53 +397,54 @@ CREATE TABLE SpellsPrepped /*Done*/
 
 INSERT INTO SpellsPrepped
 VALUES
-	 ('awt6PHqLO0', 0, 1, 0)
-	,('awt6PHqLO0', 1, 1, 0)
-	,('awt6PHqLO0', 2, 1, 0)
-	,('awt6PHqLO0', 2, 1, 0)
-	,('awt6PHqLO0', 3, 1, 0)
-	,('awt6PHqLO0', 4, 1, 0)
-	,('awt6PHqLO0', 5, 2, 0)
-	,('awt6PHqLO0', 6, 2, 0)
-	,('awt6PHqLO0', 7, 2, 0)
-	,('awt6PHqLO0', 8, 2, 0)
-	,('awt6PHqLO0', 8, 2, 0)
-	,('awt6PHqLO0', 9, 3, 0)
-	,('awt6PHqLO0', 9, 3, 0)
-	,('awt6PHqLO0', 10, 3, 0)
-	,('awt6PHqLO0', 11, 3, 0)
-	,('awt6PHqLO0', 12, 4, 0)
-	,('awt6PHqLO0', 13, 4, 0)
-	,('Du0nzEj1wJ', 0, 1, 2)
-	,('Du0nzEj1wJ', 1, 1, 2)
-	,('Du0nzEj1wJ', 2, 1, 2)
-	,('Du0nzEj1wJ', 2, 1, 2)
-	,('Du0nzEj1wJ', 3, 1, 2)
-	,('Du0nzEj1wJ', 4, 1, 2)
-	,('Du0nzEj1wJ', 5, 2, 2)
-	,('Du0nzEj1wJ', 6, 2, 2)
-	,('Du0nzEj1wJ', 7, 2, 2)
-	,('Du0nzEj1wJ', 5, 2, 2)
-	,('Du0nzEj1wJ', 8, 2, 2)
-	,('Du0nzEj1wJ', 9, 3, 2)
-	,('Du0nzEj1wJ', 9, 3, 2)
-	,('Du0nzEj1wJ', 10, 3, 2)
-	,('Du0nzEj1wJ', 11, 3, 2)
-	,('Du0nzEj1wJ', 12, 4, 2)
-	,('Du0nzEj1wJ', 13, 4, 2)
-	,('Du0nzEj1wJ', 14, 5, 2)
-	,('LqyLgvHXd0', 2, 1, 4)
-	,('LqyLgvHXd0', 1, 1, 4)
-	,('LqyLgvHXd0', 5, 2, 4)
-	,('LqyLgvHXd0', 7, 3, 4)
-	,('LqyLgvHXd0', 14, 4, 4)
-	,('Du0nzEj1wJ', 15, 1, 2)
-	,('Du0nzEj1wJ', 7, 2, 2)
-	,('Du0nzEj1wJ', 16, 3, 2)
-	,('Du0nzEj1wJ', 17, 4, 2)
-	,('Du0nzEj1wJ', 18, 4, 2)
-	,('Du0nzEj1wJ', 19, 5, 2)
-	,('Du0nzEj1wJ', 19, 5, 2)
+	 ('awt6PHqLO0', 319, 1, 0)
+	,('awt6PHqLO0', 1001, 1, 0)
+	,('awt6PHqLO0', 898, 1, 0)
+	,('awt6PHqLO0', 898, 1, 0)
+	,('awt6PHqLO0', 489, 1, 0)
+	,('awt6PHqLO0', 617, 1, 0)
+	,('awt6PHqLO0', 356, 2, 0)
+	,('awt6PHqLO0', 2498, 2, 0)
+	,('awt6PHqLO0', 195, 2, 0)
+	,('awt6PHqLO0', 1174, 2, 0)
+	,('awt6PHqLO0', 1174, 2, 0)
+	,('awt6PHqLO0', 255, 3, 0)
+	,('awt6PHqLO0', 255, 3, 0)
+	,('awt6PHqLO0', 865, 3, 0)
+	,('awt6PHqLO0', 1555, 3, 0)
+	,('awt6PHqLO0', 659, 4, 0)
+	,('awt6PHqLO0', 1367, 4, 0)
+	,('Du0nzEj1wJ', 319, 1, 2)
+	,('Du0nzEj1wJ', 1001, 1, 2)
+	,('Du0nzEj1wJ', 898, 1, 2)
+	,('Du0nzEj1wJ', 898, 1, 2)
+	,('Du0nzEj1wJ', 489, 1, 2)
+	,('Du0nzEj1wJ', 617, 1, 2)
+	,('Du0nzEj1wJ', 356, 2, 2)
+	,('Du0nzEj1wJ', 2498, 2, 2)
+	,('Du0nzEj1wJ', 195, 2, 2)
+	,('Du0nzEj1wJ', 356, 2, 2)
+	,('Du0nzEj1wJ', 1174, 2, 2)
+	,('Du0nzEj1wJ', 255, 3, 2)
+	,('Du0nzEj1wJ', 255, 3, 2)
+	,('Du0nzEj1wJ', 865, 3, 2)
+	,('Du0nzEj1wJ', 1555, 3, 2)
+	,('Du0nzEj1wJ', 659, 4, 2)
+	,('Du0nzEj1wJ', 1367, 4, 2)
+	,('Du0nzEj1wJ', 787, 5, 2)
+	,('Du0nzEj1wJ', 1822, 1, 2)
+	,('Du0nzEj1wJ', 195, 2, 2)
+	,('Du0nzEj1wJ', 312, 3, 2)
+	,('Du0nzEj1wJ', 1734, 4, 2)
+	,('Du0nzEj1wJ', 147, 4, 2)
+	,('Du0nzEj1wJ', 557, 5, 2)
+	,('Du0nzEj1wJ', 557, 5, 2)
+	,('eVbBMI8yjs', 164, 1, 5)
+	,('eVbBMI8yjs', 164, 1, 5)
+	,('eVbBMI8yjs', 413, 1, 5)
+	,('eVbBMI8yjs', 480, 1, 5)
+	,('eVbBMI8yjs', 54, 2, 5)
+	,('eVbBMI8yjs', 1914, 2, 5)
 	;
 	
 CREATE TABLE SpellsCast /*Done*/
@@ -408,8 +457,8 @@ CREATE TABLE SpellsCast /*Done*/
 
 INSERT INTO SpellsCast
 VALUES
-	 ('awt6PHqLO0', 0, 1, 0)
-	,('awt6PHqLO0', 9, 3, 0)
+	 ('awt6PHqLO0', 319, 1, 0)
+	,('awt6PHqLO0', 255, 3, 0)
 	;
 	
 CREATE TABLE SpellsKnown /*Done*/
@@ -421,45 +470,45 @@ CREATE TABLE SpellsKnown /*Done*/
 
 INSERT INTO SpellsKnown
 VALUES
-	 ('awt6PHqLO0', 0, 0)
-	,('awt6PHqLO0', 1, 0)
-	,('awt6PHqLO0', 2, 0)
-	,('awt6PHqLO0', 3, 0)
-	,('awt6PHqLO0', 4, 0)
-	,('awt6PHqLO0', 5, 0)
-	,('awt6PHqLO0', 6, 0)
-	,('awt6PHqLO0', 7, 0)
-	,('awt6PHqLO0', 8, 0)
-	,('awt6PHqLO0', 9, 0)
-	,('awt6PHqLO0', 10, 0)
-	,('awt6PHqLO0', 11, 0)
-	,('awt6PHqLO0', 12, 0)
-	,('awt6PHqLO0', 13, 0)
-	,('Du0nzEj1wJ', 0, 2)
-	,('Du0nzEj1wJ', 1, 2)
-	,('Du0nzEj1wJ', 2, 2)
-	,('Du0nzEj1wJ', 3, 2)
-	,('Du0nzEj1wJ', 4, 2)
-	,('Du0nzEj1wJ', 5, 2)
-	,('Du0nzEj1wJ', 6, 2)
-	,('Du0nzEj1wJ', 7, 2)
-	,('Du0nzEj1wJ', 8, 2)
-	,('Du0nzEj1wJ', 9, 2)
-	,('Du0nzEj1wJ', 10, 2)
-	,('Du0nzEj1wJ', 11, 2)
-	,('Du0nzEj1wJ', 12, 2)
-	,('Du0nzEj1wJ', 13, 2)
-	,('Du0nzEj1wJ', 14, 2)
-	,('LqyLgvHXd0', 2, 4)
-	,('LqyLgvHXd0', 1, 4)
-	,('LqyLgvHXd0', 5, 4)
-	,('LqyLgvHXd0', 14, 4)
-	,('LqyLgvHXd0', 7, 4)
-	,('Du0nzEj1wJ', 15, 2)
-	,('Du0nzEj1wJ', 16, 2)
-	,('Du0nzEj1wJ', 17, 2)
-	,('Du0nzEj1wJ', 18, 2)
-	,('Du0nzEj1wJ', 19, 2)
+	 ('awt6PHqLO0', 319, 0)
+	,('awt6PHqLO0', 1001, 0)
+	,('awt6PHqLO0', 898, 0)
+	,('awt6PHqLO0', 489, 0)
+	,('awt6PHqLO0', 617, 0)
+	,('awt6PHqLO0', 356, 0)
+	,('awt6PHqLO0', 2498, 0)
+	,('awt6PHqLO0', 195, 0)
+	,('awt6PHqLO0', 1174, 0)
+	,('awt6PHqLO0', 255, 0)
+	,('awt6PHqLO0', 865, 0)
+	,('awt6PHqLO0', 1555, 0)
+	,('awt6PHqLO0', 659, 0)
+	,('awt6PHqLO0', 1367, 0)
+	,('Du0nzEj1wJ', 319, 2)
+	,('Du0nzEj1wJ', 1001, 2)
+	,('Du0nzEj1wJ', 898, 2)
+	,('Du0nzEj1wJ', 489, 2)
+	,('Du0nzEj1wJ', 617, 2)
+	,('Du0nzEj1wJ', 356, 2)
+	,('Du0nzEj1wJ', 2498, 2)
+	,('Du0nzEj1wJ', 195, 2)
+	,('Du0nzEj1wJ', 1174, 2)
+	,('Du0nzEj1wJ', 255, 2)
+	,('Du0nzEj1wJ', 865, 2)
+	,('Du0nzEj1wJ', 1555, 2)
+	,('Du0nzEj1wJ', 659, 2)
+	,('Du0nzEj1wJ', 1367, 2)
+	,('Du0nzEj1wJ', 787, 2)
+	,('Du0nzEj1wJ', 1822, 2)
+	,('Du0nzEj1wJ', 312, 2)
+	,('Du0nzEj1wJ', 1734, 2)
+	,('Du0nzEj1wJ', 147, 2)
+	,('Du0nzEj1wJ', 557, 2)
+	,('eVbBMI8yjs', 164, 5)
+	,('eVbBMI8yjs', 413, 5)
+	,('eVbBMI8yjs', 480, 5)
+	,('eVbBMI8yjs', 54, 5)
+	,('eVbBMI8yjs', 1914, 5)
 	;
 	
 CREATE TABLE CharacterWealth /*Done*/
@@ -473,6 +522,7 @@ INSERT INTO CharacterWealth
 VALUES
 	('awt6PHqLO0', 33220, 0)
 	,('Du0nzEj1wJ', 51311, 0)
+	,('eVbBMI8yjs', 6000, 0)
 	;
 	
 CREATE TABLE StandardAdjustments /*Done*/
@@ -500,6 +550,12 @@ VALUES
 	,(13, 'Harrowed: Wisdom', '')
 	,(14, 'Harrowed: Charisma', '')
 	,(15, 'Heightened Awareness', 'Perception##Competence##2') /*Todo: All knowledge checks that you are trained in*/
+	,(16, 'Rage', 'Strength##Morale##4; Constitution##Morale##4; Will##Morale##2; All AC##Penalty##-2')
+	,(17, 'Divine Favor 2', 'All Attacks##Luck##2; All Damage##Luck##2')
+	,(18, 'Protection from Evil', '')
+	,(19, 'Shield of Faith 2', 'All AC##Deflection##2')
+	,(20, 'Bull''s Strength', 'Strength##Enhancement##4')
+	,(21, 'Ironskin 4', 'AC##Enhancement Bonus to Natural Armor##4; Flat-Footed##Enhancement Bonus To Natural Armor##4')
 	;
 	
 CREATE TABLE EnabledAdjustments /*Done*/
@@ -541,6 +597,14 @@ VALUES
 	,('Du0nzEj1wJ', 13)
 	,('Du0nzEj1wJ', 14)
 	,('Du0nzEj1wJ', 15)
+	,('eVbBMI8yjs', 0)
+	,('eVbBMI8yjs', 1)
+	,('eVbBMI8yjs', 16)
+	,('eVbBMI8yjs', 17)
+	,('eVbBMI8yjs', 18)
+	,('eVbBMI8yjs', 19)
+	,('eVbBMI8yjs', 20)
+	,('eVbBMI8yjs', 21)
 	;
 	
 CREATE TABLE SkillRanks /*Done*/
@@ -580,6 +644,11 @@ VALUES
 	,('Du0nzEj1wJ', 'Knowledge (Religion)', 9)
 	,('Du0nzEj1wJ', 'Perform', 5)
 	,('Du0nzEj1wJ', 'Spellcraft', 9)	
+	,('eVbBMI8yjs', 'Profession', 4)
+	,('eVbBMI8yjs', 'Swim', 2)
+	,('eVbBMI8yjs', 'Survival', 2)
+	,('eVbBMI8yjs', 'Sense Motive', 4)
+	,('eVbBMI8yjs', 'Knowledge (Local)', 4)
 	;
 	
 CREATE TABLE ClassSkills ( /*Done*/
@@ -631,6 +700,22 @@ VALUES
 	,('Du0nzEj1wJ', 'Diplomacy')
 	,('Du0nzEj1wJ', 'Perform')
 	,('Du0nzEj1wJ', 'UMD')
+	,('eVbBMI8yjs', 'Climb')
+	,('eVbBMI8yjs', 'Craft A')
+	,('eVbBMI8yjs', 'Craft B')
+	,('eVbBMI8yjs', 'Diplomacy')
+	,('eVbBMI8yjs', 'Handle Animal')
+	,('eVbBMI8yjs', 'Heal')
+	,('eVbBMI8yjs', 'Intimidate')
+	,('eVbBMI8yjs', 'Knowledge (Engineering)')
+	,('eVbBMI8yjs', 'Knowledge (Religion)')
+	,('eVbBMI8yjs', 'Profession')
+	,('eVbBMI8yjs', 'Ride')
+	,('eVbBMI8yjs', 'Sense Motive')
+	,('eVbBMI8yjs', 'Spellcraft')
+	,('eVbBMI8yjs', 'Survival')
+	,('eVbBMI8yjs', 'Swim')
+	,('eVbBMI8yjs', 'Knowledge (Local)')
 	;
 	
 CREATE TABLE CharacterHP (
@@ -645,6 +730,7 @@ INSERT INTO CharacterHP
 VALUES
 	 ('awt6PHqLO0', 5, 0, 0, 0)
 	,('Du0nzEj1wJ', 5, 0, 0, 0)
+	,('eVbBMI8yjs', 4, 0, 0, 0)
 	;
 	 
 CREATE TABLE RacialTraits (
@@ -664,6 +750,11 @@ VALUES
 	,(5, 'Darkvision 60', 'Can see perfectly in the dark for up to 60 ft.', '[Sense: Darkvision 60 ft.]')
 	,(6, 'Tiefling: Maw', 'Some tieflings take on the more bestial aspects of their fiendish ancestors. These tieflings exhibit either powerful, toothy maws, or dangerous claws. This tiefling gains a bite attack that deals 1d6 points of damage. These attacks are primary natural attacks. This racial trait replaces the spell-like ability racial trait. (Add as a weapon if planning to use for more than threatening)', '')
 	,(7, 'Tiefling: Prehensile Tail', 'Many tieflings have tails, but some have long, flexible tails that can be used to carry items. While they cannot wield weapons with their tails, they can use them to retrieve small, stowed objects carried on their persons as a swift action. This racial trait replaces fiendish sorcery.', '')
+	,(8, 'Sacred Tattoo (with Fate''s Favored)', 'Many half-orcs decorate themselves with tattoos, piercings, and ritual scarification, which they consider sacred markings. Half-orcs with this racial trait gain a +1 luck bonus on all saving throws. This racial trait replaces orc ferocity', 'All Saves##Luck##2')
+	,(9, 'Skilled', 'Second- and third-generation half-orcs often favor their human heritage more than their orc heritage. Half-orcs with this trait gain 1 additional skill rank per level. This racial trait replaces darkvision', '') /*TODO: implement this somehow?*/
+	,(10, 'Shaman''s Apprentice', 'Only the most stalwart survive the years of harsh treatment that an apprenticeship to an orc shaman entails. Half-orcs with this trait gain Endurance as a bonus feat. This racial trait replaces the intimidating trait.', '')
+	,(11, 'City-Raised', 'Half-orcs with this trait know little of their orc ancestry and were raised among humans and other half-orcs in a large city. City-raised half-orcs are proficient with whips and longswords, and receive a +2 racial bonus on Knowledge (local) checks. This racial trait replaces weapon familiarity', '')
+	,(12, 'Orc Blood', 'Half-orcs count as both humans and orcs for any effect related to race', '[Type: Humanoid (human, orc)]')
 	;
 	
 CREATE TABLE CharacterRacialTraits (
@@ -689,6 +780,13 @@ VALUES
 	,('Du0nzEj1wJ', 5)
 	,('Du0nzEj1wJ', 6)
 	,('Du0nzEj1wJ', 7)
+	,('eVbBMI8yjs', 8)
+	,('eVbBMI8yjs', 9)
+	,('eVbBMI8yjs', 10)
+	,('eVbBMI8yjs', 11)
+	,('eVbBMI8yjs', 12)
+	,('eVbBMI8yjs', 1)
+	,('eVbBMI8yjs', 2)
 	;
 	
 CREATE TABLE WeaponDefinitions (
@@ -712,6 +810,7 @@ CREATE TABLE WeaponDefinitions (
 INSERT INTO WeaponDefinitions
 VALUES
 	 (0, 'Heavy Crossbow', '1d10', 'P', '', 0, -1, 19, 2, 'You draw a heavy crossbow back by turning a small winch. Loading a heavy crossbow is a full-round action that provokes attacks of opportunity. A heavy crossbow fires crossbow bolts.\r\nNormally, operating a heavy crossbow requires two hands. However, you can shoot, but not load, a heavy crossbow with one hand at a –4 penalty on attack rolls. You can shoot a heavy crossbow with each hand, but you take a penalty on attack rolls as if attacking with two one-handed weapons. This penalty is cumulative with the penalty for one-handed firing.', 'Ranged', 'Simple', 'Range 120 ft.', 8, 'Crossbows')
+	,(1, 'Masterwork Bastard Sword', '1d10', 'S', '', 1, 0, 19, 2, 'A bastard sword is about 4 feet in length, making it too large to use in one hand without special training; thus, it is an exotic weapon. A character can use a bastard sword two-handed as a martial weapon.', 'Melee', 'Exotic', '', 6, 'Heavy blades')
 	;
 	
 CREATE TABLE CharacterWeapons (
@@ -725,6 +824,7 @@ INSERT INTO CharacterWeapons
 VALUES
 	 ('awt6PHqLO0', 0, 'Dexterity', '')
 	,('Du0nzEj1wJ', 0, 'Dexterity', '')
+	,('eVbBMI8yjs', 1, 'Strength', 'Strength')
 	;
 ---------
 

@@ -53,7 +53,7 @@ public class Stat {
 	
 	@Override
 	public String toString() {
-		return "[name=" + name + ", baseValue=" + baseValue + ", adjustments=" + adjustments + "]";
+		return "[Stat: name=" + name + ", baseValue=" + baseValue + ", hasAdjustments=" + !adjustments.isEmpty() + "]";
 	}
 
 	protected Set<String> getAllBonusTypes() {
