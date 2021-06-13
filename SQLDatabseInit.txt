@@ -46,7 +46,7 @@ VALUES ('awt6PHqLO0', 'Prosopa (Sample)', 'Sample Character', 'https://media.dis
 	  ,('ajE4DpicPv', 'Testy McTestFace', 'Xavier', 'http://www.bobthebuilder.com/en-us/Images/btb_where_to_watch_background_Bob_tcm1239-232957.png', 'LG', 'Human', 'Medium', 'Male', 'Immortal', 'Average', 'Average', 16, 16, 14, 18, 7, 10)
 	  ,('Du0nzEj1wJ', 'Prosopa Dramatis', 'Xavier', 'https://media.discordapp.net/attachments/526680690218106891/828048428248465458/image_4.png', 'NG', 'Tiefling', 'Medium', 'Female', '28', '140 lbs', '5'' 7"', 7, 16, 14, 22, 11, 5)
 	  ,('LqyLgvHXd0', 'Jordan Fenrir Wolfe', 'Xavier', 'https://db4sgowjqfwig.cloudfront.net/images/951266/Edwardface.jpg', 'CG', 'Human', 'Medium', 'Male', '35', '150 lbs', '5'' 8"', 14, 20, 14, 10, 7, 14)
-	  ,('eVbBMI8yjs', 'Manu Tuskmaw', 'Xavier', 'https://scontent-den4-1.xx.fbcdn.net/v/t1.15752-9/117758872_643426016299184_6686303671536000062_n.png?_nc_cat=102&ccb=1-3&_nc_sid=ae9488&_nc_ohc=-lRv8YwjIeEAX-1GDvm&_nc_ht=scontent-den4-1.xx&oh=8c0bd370ab96e56b02486a6d7329d974&oe=60C9F4D6', 'NG', 'Half-Orc', 'Medium', 'Male', '32', '200 lbs', '5'' 1"', 18, 10, 14, 12, 14, 11)
+	  ,('eVbBMI8yjs', 'Manu Tuskmaw', 'Xavier', 'https://scontent-den4-1.xx.fbcdn.net/v/t1.15752-9/117758872_643426016299184_6686303671536000062_n.png?_nc_cat=102&ccb=1-3&_nc_sid=ae9488&_nc_ohc=-lRv8YwjIeEAX-1GDvm&_nc_ht=scontent-den4-1.xx&oh=8c0bd370ab96e56b02486a6d7329d974&oe=60C9F4D6', 'NG', 'Half-Orc', 'Medium', 'Male', '32', '200 lbs', '5'' 11"', 18, 10, 14, 12, 14, 11)
 	  ;
 	  
 CREATE TABLE AvailableItems /*Done*/

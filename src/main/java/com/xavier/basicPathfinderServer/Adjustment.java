@@ -1,6 +1,7 @@
 package com.xavier.basicPathfinderServer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -116,5 +117,16 @@ public class Adjustment {
 
 	public int getId() {
 		return id;
+	}
+
+	public boolean hasEffectNotOfTypes(String... adjustmentTypesToIgnore) {
+		HashSet<String> filters = new HashSet<String>(Arrays.asList(adjustmentTypesToIgnore));
+		for (String type : valuesToAdjust.keySet()) {
+			if (filters.contains(type)) {
+				continue;
+			}
+			return true;
+		}
+		return false;
 	}
 }

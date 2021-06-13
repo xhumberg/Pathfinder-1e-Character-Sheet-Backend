@@ -308,6 +308,7 @@ public class PathfinderCharacter {
 		weaponAttackAdjustment.addEffect(attackModString, attackStat, getStat(attackStat));
 		weaponAttackAdjustment.addEffect(attackModString, "All Attacks", getStat("All Attacks"));
 		weaponAttackAdjustment.addEffect(attackModString , "BAB", getStat("BAB"));
+		weaponAttackAdjustment.addEffect(attackModString, "Weapon Attack Bonus", weapon.attackMod);
 		if (type == Weapon.WeaponType.MELEE) {
 			weaponAttackAdjustment.addEffect(attackModString, "Melee Specific", getStat("Melee Attacks"));
 		} else {
@@ -321,6 +322,7 @@ public class PathfinderCharacter {
 		if (damageStat != null && !damageStat.isBlank())
 			weaponDamageAdjustment.addEffect(damageModString, damageStat, getStat(damageStat));
 		weaponDamageAdjustment.addEffect(damageModString, "All Damage", getStat("All Damage"));
+		weaponDamageAdjustment.addEffect(damageModString, "Weapon Damage Bonus", weapon.damageMod);
 		if (type == Weapon.WeaponType.MELEE) {
 			weaponDamageAdjustment.addEffect(damageModString, "Melee Specific", getStat("Melee Damage"));
 		} else {

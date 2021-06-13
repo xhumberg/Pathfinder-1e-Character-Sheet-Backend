@@ -86,4 +86,18 @@ public class Stat {
 		return baseValue;
 	}
 
+	public boolean hasModifiers(String... adjustmentTypesToIgnore) {
+		
+		if (baseValue != 0) {
+			return true;
+		}
+		
+		for (Adjustment adjustment: adjustments) {
+			if (adjustment.isEnabled() && adjustment.hasEffectNotOfTypes(adjustmentTypesToIgnore)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
