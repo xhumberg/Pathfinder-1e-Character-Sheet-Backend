@@ -6,9 +6,25 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.xavier.basicPathfinderServer.Weapon.WeaponType;
+import com.xavier.basicPathfinderServer.characterOwned.CastingType;
+import com.xavier.basicPathfinderServer.characterOwned.CharacterClass;
+import com.xavier.basicPathfinderServer.characterOwned.ClassFeature;
+import com.xavier.basicPathfinderServer.characterOwned.Feat;
+import com.xavier.basicPathfinderServer.characterOwned.Item;
+import com.xavier.basicPathfinderServer.characterOwned.RacialTrait;
+import com.xavier.basicPathfinderServer.characterOwned.Spell;
+import com.xavier.basicPathfinderServer.characterOwned.Spellcasting;
+import com.xavier.basicPathfinderServer.characterOwned.Weapon;
+import com.xavier.basicPathfinderServer.characterOwned.Weapon.WeaponType;
 import com.xavier.basicPathfinderServer.json.CharacterJson;
 import com.xavier.basicPathfinderServer.json.WeaponStats;
+import com.xavier.basicPathfinderServer.numericals.Ability;
+import com.xavier.basicPathfinderServer.numericals.Adjustment;
+import com.xavier.basicPathfinderServer.numericals.HP;
+import com.xavier.basicPathfinderServer.numericals.Skill;
+import com.xavier.basicPathfinderServer.numericals.SkillRanks;
+import com.xavier.basicPathfinderServer.numericals.Stat;
+import com.xavier.basicPathfinderServer.numericals.TrackedResource;
 
 public class PathfinderCharacter {
 	
@@ -287,11 +303,11 @@ public class PathfinderCharacter {
 		return ((Ability)allStats.get(abilityName)).getMod();
 	}
 	
-	Stat getStat(String statName) {
+	public Stat getStat(String statName) {
 		return allStats.get(statName);
 	}
 	
-	void addStat(String statName) {
+	public void addStat(String statName) {
 		allStats.put(statName, new Stat(statName));
 	}
 

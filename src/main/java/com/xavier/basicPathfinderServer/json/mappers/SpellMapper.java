@@ -1,6 +1,6 @@
 package com.xavier.basicPathfinderServer.json.mappers;
 
-import com.xavier.basicPathfinderServer.Spell;
+import com.xavier.basicPathfinderServer.characterOwned.Spell;
 import com.xavier.basicPathfinderServer.json.SpellJson;
 
 public class SpellMapper {

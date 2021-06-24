@@ -7,8 +7,14 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.xavier.basicPathfinderServer.Weapon.WeaponType;
+import com.xavier.basicPathfinderServer.characterOwned.CastingType;
+import com.xavier.basicPathfinderServer.characterOwned.Item;
+import com.xavier.basicPathfinderServer.characterOwned.Spell;
+import com.xavier.basicPathfinderServer.characterOwned.Weapon;
+import com.xavier.basicPathfinderServer.characterOwned.Weapon.WeaponType;
 import com.xavier.basicPathfinderServer.json.WeaponStats;
+import com.xavier.basicPathfinderServer.numericals.Adjustment;
+import com.xavier.basicPathfinderServer.numericals.TrackedResource;
 
 class PathfinderCharacterTest {
 

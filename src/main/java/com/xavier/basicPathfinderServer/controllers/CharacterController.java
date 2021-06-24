@@ -16,12 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
-import com.xavier.basicPathfinderServer.Adjustment;
-import com.xavier.basicPathfinderServer.GoogleAuthenticationResponseJson;
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
 import com.xavier.basicPathfinderServer.Prosopa;
-import com.xavier.basicPathfinderServer.Spell;
-import com.xavier.basicPathfinderServer.ResultSetMappers.AccessibleCharactersMapper;
+import com.xavier.basicPathfinderServer.characterOwned.Spell;
 import com.xavier.basicPathfinderServer.databaseLayer.AdjustmentDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.CharacterFromDatabaseLoader;
 import com.xavier.basicPathfinderServer.databaseLayer.DatabaseAccess;
@@ -29,6 +26,9 @@ import com.xavier.basicPathfinderServer.databaseLayer.HealthDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.SpellDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.TrackedResourceDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.UserAccessDatabaseChecker;
+import com.xavier.basicPathfinderServer.databaseLayer.ResultSetMappers.AccessibleCharactersMapper;
+import com.xavier.basicPathfinderServer.google.GoogleAuthenticationResponseJson;
+import com.xavier.basicPathfinderServer.numericals.Adjustment;
 
 @RestController
 public class CharacterController {

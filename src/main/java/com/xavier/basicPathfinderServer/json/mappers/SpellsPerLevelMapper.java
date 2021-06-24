@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.xavier.basicPathfinderServer.CastingType;
-import com.xavier.basicPathfinderServer.Spellcasting;
+import com.xavier.basicPathfinderServer.characterOwned.CastingType;
+import com.xavier.basicPathfinderServer.characterOwned.Spellcasting;
 import com.xavier.basicPathfinderServer.json.SpellJson;
 import com.xavier.basicPathfinderServer.json.SpellsPerLevelJson;
 

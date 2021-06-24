@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.xavier.basicPathfinderServer.ResultSetMappers.ResultSetMapper;
+import com.xavier.basicPathfinderServer.databaseLayer.ResultSetMappers.ResultSetMapper;
 
 public class DatabaseAccess<T> {
 	

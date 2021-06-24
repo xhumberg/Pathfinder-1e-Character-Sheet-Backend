@@ -3,7 +3,7 @@ package com.xavier.basicPathfinderServer.json.mappers;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.xavier.basicPathfinderServer.Item;
+import com.xavier.basicPathfinderServer.characterOwned.Item;
 import com.xavier.basicPathfinderServer.json.ItemJson;
 
 public class ItemMapper {

@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import com.xavier.basicPathfinderServer.numericals.Adjustment;
+import com.xavier.basicPathfinderServer.numericals.Stat;
+
 class StatTest {
 
 	@Test

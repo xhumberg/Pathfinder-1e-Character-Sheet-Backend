@@ -4,18 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Collections;
 
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.xavier.basicPathfinderServer.Adjustment;
-import com.xavier.basicPathfinderServer.AdjustmentStringConverter;
-import com.xavier.basicPathfinderServer.CastingType;
-import com.xavier.basicPathfinderServer.CharacterClass;
-import com.xavier.basicPathfinderServer.Feat;
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
-import com.xavier.basicPathfinderServer.RacialTrait;
-import com.xavier.basicPathfinderServer.ResultSetMappers.PathfinderCharacterMapper;
+import com.xavier.basicPathfinderServer.characterOwned.CastingType;
+import com.xavier.basicPathfinderServer.characterOwned.CharacterClass;
+import com.xavier.basicPathfinderServer.characterOwned.Feat;
+import com.xavier.basicPathfinderServer.characterOwned.RacialTrait;
+import com.xavier.basicPathfinderServer.numericals.Adjustment;
+import com.xavier.basicPathfinderServer.numericals.AdjustmentStringConverter;
 
 class ComprehensiveCharacterJsonTest {
 	

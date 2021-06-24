@@ -129,20 +129,4 @@ public class SheetScraper {
 			return subschool + ", " + descriptor;
 		}
 	}
-
-	private static boolean shouldFilterOut(String name) {
-		String[] filterTheFollowing = new String[] {"Mage Armor", "Ear-Piercing Scream", "Vanish", "Silent Image", "Burning Disarm", "Mirror Image", "Boneshaker", 
-			"False Life", "Burning Arc", "Haste", "Spiked Pit", "Charitable Impulse", "Acid Pit", "Telekinetic Charge", "Hungry Pit", "Lightning Bolt", 
-			"Heightened Awareness", "Boneshatter", "Dimension Door", "Telekinesis"
-		};
-		
-		for (String filter : filterTheFollowing) {
-			if (name.equals(filter)) {
-				System.out.println("Should filter " + name);
-				return true;
-			}
-		}
-		
-		return false;
-	}
 }

@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.xavier.basicPathfinderServer.Spellcasting;
-import com.xavier.basicPathfinderServer.json.SpellJson;
+import com.xavier.basicPathfinderServer.characterOwned.Spellcasting;
 import com.xavier.basicPathfinderServer.json.SpellcastingJson;
 import com.xavier.basicPathfinderServer.json.SpellsPerLevelJson;
 

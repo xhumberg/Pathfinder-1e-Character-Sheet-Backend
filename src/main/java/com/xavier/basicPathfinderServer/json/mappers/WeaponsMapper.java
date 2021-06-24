@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.xavier.basicPathfinderServer.Weapon;
+import com.xavier.basicPathfinderServer.characterOwned.Weapon;
 import com.xavier.basicPathfinderServer.json.WeaponJson;
 import com.xavier.basicPathfinderServer.json.WeaponStats;
 

@@ -1,6 +1,6 @@
 package com.xavier.basicPathfinderServer.json;
 
-import com.xavier.basicPathfinderServer.Stat;
+import com.xavier.basicPathfinderServer.numericals.Stat;
 
 public class WeaponStats {
 	public Stat attackStat;

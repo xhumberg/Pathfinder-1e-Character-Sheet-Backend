@@ -3,7 +3,7 @@ package com.xavier.basicPathfinderServer.json.mappers;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.xavier.basicPathfinderServer.RacialTrait;
+import com.xavier.basicPathfinderServer.characterOwned.RacialTrait;
 import com.xavier.basicPathfinderServer.json.RacialTraitJson;
 
 public class RacialTraitMapper {

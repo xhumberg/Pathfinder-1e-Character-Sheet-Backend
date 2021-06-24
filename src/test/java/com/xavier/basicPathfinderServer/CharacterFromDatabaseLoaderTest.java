@@ -7,7 +7,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import com.xavier.basicPathfinderServer.characterOwned.Item;
 import com.xavier.basicPathfinderServer.databaseLayer.CharacterFromDatabaseLoader;
+import com.xavier.basicPathfinderServer.numericals.Adjustment;
 
 class CharacterFromDatabaseLoaderTest {
 

@@ -3,10 +3,8 @@ package com.xavier.basicPathfinderServer.json.mappers;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.xavier.basicPathfinderServer.ClassFeature;
-import com.xavier.basicPathfinderServer.Feat;
+import com.xavier.basicPathfinderServer.characterOwned.ClassFeature;
 import com.xavier.basicPathfinderServer.json.ClassTrackedFeatureJson;
-import com.xavier.basicPathfinderServer.json.FeatJson;
 
 public class ClassTrackedFeatureMapper {
 	public static List<ClassTrackedFeatureJson> map(List<ClassFeature> features) {

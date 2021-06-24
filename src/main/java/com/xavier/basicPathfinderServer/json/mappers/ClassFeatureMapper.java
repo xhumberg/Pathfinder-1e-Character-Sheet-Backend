@@ -3,7 +3,7 @@ package com.xavier.basicPathfinderServer.json.mappers;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.xavier.basicPathfinderServer.ClassFeature;
+import com.xavier.basicPathfinderServer.characterOwned.ClassFeature;
 import com.xavier.basicPathfinderServer.json.ClassFeatureJson;
 
 public class ClassFeatureMapper {

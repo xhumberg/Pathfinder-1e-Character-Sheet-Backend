@@ -3,7 +3,7 @@ package com.xavier.basicPathfinderServer.json.mappers;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.xavier.basicPathfinderServer.Spell;
+import com.xavier.basicPathfinderServer.characterOwned.Spell;
 import com.xavier.basicPathfinderServer.json.SpellJson;
 
 public class SpellListMapper {

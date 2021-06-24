@@ -3,7 +3,7 @@ package com.xavier.basicPathfinderServer.json.mappers;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.xavier.basicPathfinderServer.Adjustment;
+import com.xavier.basicPathfinderServer.numericals.Adjustment;
 
 public class AdjustmentListMapper {
 	public static List<String> map(List<Adjustment> allowedAdjustments) {

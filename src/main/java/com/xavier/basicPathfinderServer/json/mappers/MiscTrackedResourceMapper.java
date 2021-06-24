@@ -3,8 +3,8 @@ package com.xavier.basicPathfinderServer.json.mappers;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.xavier.basicPathfinderServer.TrackedResource;
 import com.xavier.basicPathfinderServer.json.MiscTrackedResourceJson;
+import com.xavier.basicPathfinderServer.numericals.TrackedResource;
 
 public class MiscTrackedResourceMapper {
 	public static List<MiscTrackedResourceJson> map(List<TrackedResource> resources) {
