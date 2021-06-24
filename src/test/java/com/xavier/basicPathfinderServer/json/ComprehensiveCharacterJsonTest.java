@@ -65,7 +65,7 @@ class ComprehensiveCharacterJsonTest {
 	
 	@Test
 	void basicValuesTest() {
-		assertEquals(123, json.getCharacterId());
+		assertEquals("123", json.getCharacterId());
 		assertEquals("John Doe", json.getName());
 		assertEquals("abc.xyz", json.getImageUrl());
 		assertEquals("LN", json.getAlignment());
