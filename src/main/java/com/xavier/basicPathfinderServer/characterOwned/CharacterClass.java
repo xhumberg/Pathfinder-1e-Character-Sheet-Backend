@@ -2,6 +2,8 @@ package com.xavier.basicPathfinderServer.characterOwned;
 
 import java.util.Map;
 
+import com.xavier.basicPathfinderServer.numericals.StatName;
+
 public class CharacterClass {
 
 	private int id;
@@ -16,11 +18,11 @@ public class CharacterClass {
 	private boolean hasSpellcasting;
 	private CastingType spellcastingType;
 	private int casterLevel;
-	private String spellcastingAbility;
+	private StatName spellcastingAbility;
 	private Map<Integer, Integer> baseSpellsPerDay;
 
 	public CharacterClass(int id, int level, int bab, int fort, int ref, int will, int baseSkillsPerLevel, int hitDice, String name, boolean hasSpellcasting,
-			CastingType spellcastingType, int casterLevel, String spellcastingAbility, Map<Integer, Integer> baseSpellsPerDay) {
+			CastingType spellcastingType, int casterLevel, StatName spellcastingAbility, Map<Integer, Integer> baseSpellsPerDay) {
 		this.id = id;
 		this.level = level;
 		this.bab = bab;
@@ -81,7 +83,7 @@ public class CharacterClass {
 		return casterLevel;
 	}
 
-	public String getSpellcastingAbility() {
+	public StatName getSpellcastingAbility() {
 		return spellcastingAbility;
 	}
 

@@ -17,6 +17,7 @@ import com.xavier.basicPathfinderServer.json.mappers.SkillListMapper;
 import com.xavier.basicPathfinderServer.json.mappers.SpellcastingListMapper;
 import com.xavier.basicPathfinderServer.json.mappers.TrackedItemMapper;
 import com.xavier.basicPathfinderServer.json.mappers.WeaponsMapper;
+import com.xavier.basicPathfinderServer.numericals.StatName;
 
 public class CharacterJson {
 	public final String characterId;
@@ -89,16 +90,16 @@ public class CharacterJson {
 		this.swimSpeed = character.getSwimSpeed();
 		this.flySpeed = character.getFlySpeed();
 		this.unspentSkillRanks = character.getRemainingSkillRanks();
-		this.ac = character.getStatValue("AC");
-		this.flatFooted = character.getStatValue("Flat-Footed");
-		this.touch = character.getStatValue("Touch");
+		this.ac = character.getStatValue(StatName.AC);
+		this.flatFooted = character.getStatValue(StatName.FLAT_FOOTED);
+		this.touch = character.getStatValue(StatName.TOUCH);
 		this.cmb = -1;
 		this.cmd = -1;
-		this.fortitude = "+" + character.getStatValue("Fortitude"); //TODO: could be negative
-		this.reflex = "+" + character.getStatValue("Reflex"); //TODO: could be negative
-		this.will = "+" + character.getStatValue("Will"); //TODO: could be negative
-		this.initiative = "+" + character.getStatValue("Initiative");
-		this.bab = character.getStatValue("BAB");
+		this.fortitude = "+" + character.getStatValue(StatName.FORTITUDE); //TODO: could be negative
+		this.reflex = "+" + character.getStatValue(StatName.REFLEX); //TODO: could be negative
+		this.will = "+" + character.getStatValue(StatName.WILL); //TODO: could be negative
+		this.initiative = "+" + character.getStatValue(StatName.INITIATIVE);
+		this.bab = character.getStatValue(StatName.BAB);
 		this.maxHp = character.getMaxHealth();
 		this.currentHp = character.getCurrentHealth();
 		
@@ -117,7 +118,7 @@ public class CharacterJson {
 		this.trackedItems = TrackedItemMapper.map(character.getItems());
 		this.items = ItemMapper.map(character.getItems());
 		this.gold = GoldMapper.map(character);
-		this.weapons = WeaponsMapper.map(character.getWeapons(), character.getStatValue("BAB"));
+		this.weapons = WeaponsMapper.map(character.getWeapons(), character.getStatValue(StatName.BAB));
 		
 	}
 

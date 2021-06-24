@@ -17,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
-import com.xavier.basicPathfinderServer.Prosopa;
 import com.xavier.basicPathfinderServer.characterOwned.Spell;
 import com.xavier.basicPathfinderServer.databaseLayer.AdjustmentDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.CharacterFromDatabaseLoader;
@@ -32,8 +31,6 @@ import com.xavier.basicPathfinderServer.numericals.Adjustment;
 
 @RestController
 public class CharacterController {
-
-	PathfinderCharacter defaultProsopa;
 	Map<String, PathfinderCharacter> loadedCharacters; //TODO: Make this a cache
 	Map<String, List<String>> cachedCharacterAccess; //TODO: Make this a cache
 	Gson gson;
@@ -42,7 +39,6 @@ public class CharacterController {
 	
 	@Autowired
 	public CharacterController() {
-		defaultProsopa = Prosopa.get();
 		gson = new Gson();
 		loadedCharacters = new HashMap<>();
 		cachedCharacterAccess = new HashMap<>();
@@ -51,11 +47,7 @@ public class CharacterController {
 	@GetMapping("/character/{id}")
 	public String getProsopa(@PathVariable String id, @RequestParam(required = false) String token) {
 		assertStringsAreSanitized(id);
-		if (id.equals("prosopa")) {
-			System.out.println("Fetching default Prosopa");
-			Gson gson = new Gson();
-			return gson.toJson(defaultProsopa.convertToJson());
-		} else if (token == null){
+		if (token == null){
 			PathfinderCharacter character = new PathfinderCharacter("-1", "Error: cannot access character without logging in", "");
 			return gson.toJson(character.convertToJson());
 		} else {
@@ -123,20 +115,16 @@ public class CharacterController {
 	public void toggleAdjustment(@PathVariable String id, @PathVariable String adjustmentName, @RequestParam(required = false) String token) {
 		assertStringsAreSanitized(id, adjustmentName);
 		System.out.println("Time to toggle " + adjustmentName);
-		if (id.equals("prosopa")) {
-			defaultProsopa.toggleAdjustment(adjustmentName);
+		PathfinderCharacter character = loadCharacterID(id, token);
+		if (character.isAdjustmentEnabled(adjustmentName)) {
+			System.out.println("Disabling " + adjustmentName + " for character id " + id);
+			Adjustment adjustment = character.toggleAdjustment(adjustmentName);
+			AdjustmentDatabaseModifier.disableAdjustment(adjustment.getId(), id);
+			
 		} else {
-			PathfinderCharacter character = loadCharacterID(id, token);
-			if (character.isAdjustmentEnabled(adjustmentName)) {
-				System.out.println("Disabling " + adjustmentName + " for character id " + id);
-				Adjustment adjustment = character.toggleAdjustment(adjustmentName);
-				AdjustmentDatabaseModifier.disableAdjustment(adjustment.getId(), id);
-				
-			} else {
-				System.out.println("Enabling " + adjustmentName + " for character id " + id);
-				Adjustment adjustment = character.toggleAdjustment(adjustmentName);
-				AdjustmentDatabaseModifier.enableAdjustment(adjustment.getId(), id);
-			}
+			System.out.println("Enabling " + adjustmentName + " for character id " + id);
+			Adjustment adjustment = character.toggleAdjustment(adjustmentName);
+			AdjustmentDatabaseModifier.enableAdjustment(adjustment.getId(), id);
 		}
 	}
 	

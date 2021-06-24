@@ -24,6 +24,7 @@ import com.xavier.basicPathfinderServer.numericals.HP;
 import com.xavier.basicPathfinderServer.numericals.Skill;
 import com.xavier.basicPathfinderServer.numericals.SkillRanks;
 import com.xavier.basicPathfinderServer.numericals.Stat;
+import com.xavier.basicPathfinderServer.numericals.StatName;
 import com.xavier.basicPathfinderServer.numericals.TrackedResource;
 
 public class PathfinderCharacter {
@@ -48,9 +49,8 @@ public class PathfinderCharacter {
 	public final List<String> specialOffenses;
 	public final List<String> speed;
 	public final List<CharacterClass> classes;
-	public final HashMap<String, Stat> allStats;
+	public final HashMap<StatName, Stat> allStats;
 	public final HashMap<Weapon.WeaponType, HashMap<Weapon, WeaponStats>> weapons;
-	//Weapon damage.........
 	public final HashMap<Integer, Spellcasting> spellcastingByClass;
 	public HP hp;
 	public SkillRanks skillRanks;
@@ -79,8 +79,8 @@ public class PathfinderCharacter {
 		classes = new ArrayList<>();
 		weapons = new HashMap<>();
 		spellcastingByClass = new HashMap<>();
-		hp = new HP(getAbility("Constitution"));
-		skillRanks = new SkillRanks(getAbility("Intelligence"));
+		hp = new HP(getAbility(StatName.CONSTITUTION));
+		skillRanks = new SkillRanks(getAbility(StatName.INTELLIGENCE));
 		items = new LinkedList<>();
 		feats = new LinkedList<>();
 		racialTraits = new LinkedList<>();
@@ -93,12 +93,12 @@ public class PathfinderCharacter {
 
 	private void initAbilities() {
 		abilities = new ArrayList<Ability>(6);
-		abilities.add(new Ability("Strength"));
-		abilities.add(new Ability("Dexterity"));
-		abilities.add(new Ability("Constitution"));
-		abilities.add(new Ability("Intelligence"));
-		abilities.add(new Ability("Wisdom"));
-		abilities.add(new Ability("Charisma"));
+		abilities.add(new Ability(StatName.STRENGTH));
+		abilities.add(new Ability(StatName.DEXTERITY));
+		abilities.add(new Ability(StatName.CONSTITUTION));
+		abilities.add(new Ability(StatName.INTELLIGENCE));
+		abilities.add(new Ability(StatName.WISDOM));
+		abilities.add(new Ability(StatName.CHARISMA));
 		addAbilitiesToStats();
 	}
 	
@@ -113,79 +113,79 @@ public class PathfinderCharacter {
 		initSaves();
 		initAC();
 		initSkills();
-		initNewStat("Level");
-		initStatWithStats("Initiative", getAbility("Dexterity"));
+		initNewStat(StatName.LEVEL);
+		initStatWithStats(StatName.INITIATIVE, getAbility(StatName.DEXTERITY));
 	}
 
 	private void initAttackMods() {
-		initNewStat("BAB");
-		initNewStat("All Attacks");
-		initNewStat("Melee Attacks");
-		initNewStat("Ranged attacks");
-		initNewStat("All Damage");
-		initNewStat("Melee Damage");
-		initNewStat("Ranged Damage");
+		initNewStat(StatName.BAB);
+		initNewStat(StatName.ALL_ATTACKS);
+		initNewStat(StatName.MELEE_ATTACKS);
+		initNewStat(StatName.RANGED_ATTACKS);
+		initNewStat(StatName.ALL_DAMAGE);
+		initNewStat(StatName.MELEE_DAMAGE);
+		initNewStat(StatName.RANGED_DAMAGE);
 	}
 
 	private void initSaves() {
-		Stat allSaves = initNewStat("All Saves");
-		initStatWithStats("Will", getAbility("Wisdom"), allSaves);
-		initStatWithStats("Fortitude", getAbility("Constitution"), allSaves);
-		initStatWithStats("Reflex", getAbility("Dexterity"), allSaves);
+		Stat allSaves = initNewStat(StatName.ALL_SAVES);
+		initStatWithStats(StatName.WILL, getAbility(StatName.WISDOM), allSaves);
+		initStatWithStats(StatName.FORTITUDE, getAbility(StatName.CONSTITUTION), allSaves);
+		initStatWithStats(StatName.REFLEX, getAbility(StatName.DEXTERITY), allSaves);
 	}
 	
 	private void initAC() {
-		Stat allAC = initNewStat("All AC");
-		initStatWithStats("AC", getAbility("Dexterity"), allAC);
-		initStatWithStats("Flat-Footed", allAC);
-		initStatWithStats("Touch", getAbility("Dexterity"), allAC);
-		setStatBase("AC", 10);
-		setStatBase("Flat-Footed", 10);
-		setStatBase("Touch", 10);
+		Stat allAC = initNewStat(StatName.ALL_AC);
+		initStatWithStats(StatName.AC, getAbility(StatName.DEXTERITY), allAC);
+		initStatWithStats(StatName.FLAT_FOOTED, allAC);
+		initStatWithStats(StatName.TOUCH, getAbility(StatName.DEXTERITY), allAC);
+		setStatBase(StatName.AC, 10);
+		setStatBase(StatName.FLAT_FOOTED, 10);
+		setStatBase(StatName.TOUCH, 10);
 	}
 	
 	private void initSkills() {
-		Stat allSkills = initNewStat("All Skills");
+		Stat allSkills = initNewStat(StatName.ALL_SKILLS);
 		
-		initSkillWithStats("Acrobatics", getAbility("Dexterity"), allSkills);
-		initSkillWithStats("Appraise", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Bluff", getAbility("Charisma"), allSkills);
-		initSkillWithStats("Climb", getAbility("Strength"), allSkills);
-		initSkillWithStats("Craft A", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Craft B", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Diplomacy", getAbility("Charisma"), allSkills);
-		initSkillWithStats("Disable Device", getAbility("Dexterity"), allSkills);
-		initSkillWithStats("Disguise", getAbility("Charisma"), allSkills);
-		initSkillWithStats("Escape Artist", getAbility("Dexterity"), allSkills);
-		initSkillWithStats("Fly", getAbility("Dexterity"), allSkills);
-		initSkillWithStats("Handle Animal", getAbility("Charisma"), allSkills);
-		initSkillWithStats("Heal", getAbility("Wisdom"), allSkills);
-		initSkillWithStats("Intimidate", getAbility("Charisma"), allSkills);
-		initSkillWithStats("Knowledge (Arcana)", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Knowledge (Dungeoneering)", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Knowledge (Engineering)", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Knowledge (Geography)", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Knowledge (History)", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Knowledge (Local)", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Knowledge (Nature)", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Knowledge (Nobility)", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Knowledge (Planes)", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Knowledge (Religion)", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Linguistics", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Perception", getAbility("Wisdom"), allSkills);
-		initSkillWithStats("Perform", getAbility("Charisma"), allSkills);
-		initSkillWithStats("Profession", getAbility("Wisdom"), allSkills);
-		initSkillWithStats("Ride", getAbility("Dexterity"), allSkills);
-		initSkillWithStats("Sense Motive", getAbility("Wisdom"), allSkills);
-		initSkillWithStats("Sleight of Hand", getAbility("Dexterity"), allSkills);
-		initSkillWithStats("Spellcraft", getAbility("Intelligence"), allSkills);
-		initSkillWithStats("Stealth", getAbility("Dexterity"), allSkills);
-		initSkillWithStats("Survival", getAbility("Wisdom"), allSkills);
-		initSkillWithStats("Swim", getAbility("Strength"), allSkills);
-		initSkillWithStats("UMD", getAbility("Charisma"), allSkills);
+		initSkillWithStats(StatName.ACROBATICS, getAbility(StatName.DEXTERITY), allSkills);
+		initSkillWithStats(StatName.APPRAISE, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.BLUFF, getAbility(StatName.CHARISMA), allSkills);
+		initSkillWithStats(StatName.CLIMB, getAbility(StatName.STRENGTH), allSkills);
+		initSkillWithStats(StatName.CRAFT_A, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.CRAFT_B, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.DIPLOMACY, getAbility(StatName.CHARISMA), allSkills);
+		initSkillWithStats(StatName.DISABLE_DEVICE, getAbility(StatName.DEXTERITY), allSkills);
+		initSkillWithStats(StatName.DISGUISE, getAbility(StatName.CHARISMA), allSkills);
+		initSkillWithStats(StatName.ESCAPE_ARTIST, getAbility(StatName.DEXTERITY), allSkills);
+		initSkillWithStats(StatName.FLY, getAbility(StatName.DEXTERITY), allSkills);
+		initSkillWithStats(StatName.HANDLE_ANIMAL, getAbility(StatName.CHARISMA), allSkills);
+		initSkillWithStats(StatName.HEAL, getAbility(StatName.WISDOM), allSkills);
+		initSkillWithStats(StatName.INTIMIDATE, getAbility(StatName.CHARISMA), allSkills);
+		initSkillWithStats(StatName.KNOWLEDGE_ARCANA, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.KNOWLEDGE_DUNGEONEERING, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.KNOWLEDGE_ENGINEERING, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.KNOWLEDGE_GEOGRAPHY, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.KNOWLEDGE_HISTORY, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.KNOWLEDGE_LOCAL, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.KNOWLEDGE_NATURE, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.KNOWLEDGE_NOBILITY, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.KNOWLEDGE_PLANES, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.KNOWLEDGE_RELIGION, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.LINGUISTICS, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.PERCEPTION, getAbility(StatName.WISDOM), allSkills);
+		initSkillWithStats(StatName.PERFORM, getAbility(StatName.CHARISMA), allSkills);
+		initSkillWithStats(StatName.PROFESSION, getAbility(StatName.WISDOM), allSkills);
+		initSkillWithStats(StatName.RIDE, getAbility(StatName.DEXTERITY), allSkills);
+		initSkillWithStats(StatName.SENSE_MOTIVE, getAbility(StatName.WISDOM), allSkills);
+		initSkillWithStats(StatName.SLEIGHT_OF_HAND, getAbility(StatName.DEXTERITY), allSkills);
+		initSkillWithStats(StatName.SPELLCRAFT, getAbility(StatName.INTELLIGENCE), allSkills);
+		initSkillWithStats(StatName.STEALTH, getAbility(StatName.DEXTERITY), allSkills);
+		initSkillWithStats(StatName.SURVIVAL, getAbility(StatName.WISDOM), allSkills);
+		initSkillWithStats(StatName.SWIM, getAbility(StatName.STRENGTH), allSkills);
+		initSkillWithStats(StatName.UMD, getAbility(StatName.CHARISMA), allSkills);
 	}
 
-	private Stat initStatWithStats(String statName, Stat... otherStatsToAdd) {
+	private Stat initStatWithStats(StatName statName, Stat... otherStatsToAdd) {
 		Stat stat = initNewStat(statName);
 		for (Stat otherStat : otherStatsToAdd) {
 			stat.addStat(otherStat);
@@ -193,13 +193,13 @@ public class PathfinderCharacter {
 		return stat;
 	}
 
-	private Stat initNewStat(String statName) {
+	private Stat initNewStat(StatName statName) {
 		Stat newStat = new Stat(statName);
 		allStats.put(statName, newStat);
 		return newStat;
 	}
 
-	private Skill initSkillWithStats(String statName, Stat... otherStatsToAdd) {
+	private Skill initSkillWithStats(StatName statName, Stat... otherStatsToAdd) {
 		Skill skill = initNewSkill(statName);
 		for (Stat otherStat : otherStatsToAdd) {
 			skill.addStat(otherStat);
@@ -207,18 +207,18 @@ public class PathfinderCharacter {
 		return skill;
 	}
 
-	private Skill initNewSkill(String statName) {
+	private Skill initNewSkill(StatName statName) {
 		Skill newSkill = new Skill(statName);
 		allStats.put(statName, newSkill);
 		return newSkill;
 	}
 	
-	private void setStatBase(String statName, int newBase) {
+	private void setStatBase(StatName statName, int newBase) {
 		Stat stat = allStats.get(statName);
 		stat.setBaseValue(newBase);
 	}
 	
-	public void setAbility(String abilityName, int baseValue) {
+	public void setAbility(StatName abilityName, int baseValue) {
 		for (Ability ability : abilities) {
 			if (ability.getName().equals(abilityName)) {
 				ability.setBaseValue(baseValue);
@@ -276,7 +276,7 @@ public class PathfinderCharacter {
 	}
 
 	private void addAdjustmentToApplicableStats(Adjustment adjustment) {
-		for (String adjustedStatName : adjustment.getAdjustedStats()) {
+		for (StatName adjustedStatName : adjustment.getAdjustedStats()) {
 			Stat adjustedStat = allStats.get(adjustedStatName);
 			if (adjustedStat == null) {
 				adjustedStat = new Stat(adjustedStatName);
@@ -287,64 +287,64 @@ public class PathfinderCharacter {
 		}
 	}
 
-	public int getStatValue(String statName) {
+	public int getStatValue(StatName statName) {
 		return allStats.get(statName).getValue();
 	}
 
-	private int getBaseStatValue(String statName) {
+	private int getBaseStatValue(StatName statName) {
 		return allStats.get(statName).getBase();
 	}
 	
-	public int getAbilityValue(String abilityName) {
+	public int getAbilityValue(StatName abilityName) {
 		return ((Ability)allStats.get(abilityName)).getFullValue();
 	}
 
-	public int getAbilityMod(String abilityName) {
+	public int getAbilityMod(StatName abilityName) {
 		return ((Ability)allStats.get(abilityName)).getMod();
 	}
 	
-	public Stat getStat(String statName) {
+	public Stat getStat(StatName statName) {
 		return allStats.get(statName);
 	}
 	
-	public void addStat(String statName) {
+	public void addStat(StatName statName) {
 		allStats.put(statName, new Stat(statName));
 	}
 
-	public void giveWeapon(Weapon weapon, String attackStat, String damageStat, WeaponType type) {
+	public void giveWeapon(Weapon weapon, StatName attackStat, StatName damageStat, WeaponType type) {
+		//TODO: Weapons need to be redone to use specific weapon stats that don't require the StatName enum
 		HashMap<Weapon, WeaponStats> weaponsOfType = weapons.get(type);
 		if (weaponsOfType == null) {
 			weaponsOfType = new HashMap<Weapon, WeaponStats>();
 			weapons.put(type, weaponsOfType);
 		}
 		
-		String attackModString = weapon.getTitle() + " attack mod";
-		Stat weaponAttackStat = new Stat(attackModString);
-		Adjustment weaponAttackAdjustment = new Adjustment(-1, attackStat, true);
-		weaponAttackAdjustment.addEffect(attackModString, attackStat, getStat(attackStat));
-		weaponAttackAdjustment.addEffect(attackModString, "All Attacks", getStat("All Attacks"));
-		weaponAttackAdjustment.addEffect(attackModString , "BAB", getStat("BAB"));
-		weaponAttackAdjustment.addEffect(attackModString, "Weapon Attack Bonus", weapon.attackMod);
+		Stat weaponAttackStat = new Stat(StatName.WEAPON_ATTACK);
+		Adjustment weaponAttackAdjustment = new Adjustment(-1, attackStat.displayStrings[0], true);
+		weaponAttackAdjustment.addEffect(StatName.WEAPON_ATTACK, attackStat.displayStrings[0], getStat(attackStat));
+		weaponAttackAdjustment.addEffect(StatName.WEAPON_ATTACK, "All Attacks", getStat(StatName.ALL_ATTACKS));
+		weaponAttackAdjustment.addEffect(StatName.WEAPON_ATTACK , "BAB", getStat(StatName.BAB));
+		weaponAttackAdjustment.addEffect(StatName.WEAPON_ATTACK, "Weapon Attack Bonus", weapon.attackMod);
 		if (type == Weapon.WeaponType.MELEE) {
-			weaponAttackAdjustment.addEffect(attackModString, "Melee Specific", getStat("Melee Attacks"));
+			weaponAttackAdjustment.addEffect(StatName.WEAPON_ATTACK, "Melee Specific", getStat(StatName.MELEE_ATTACKS));
 		} else {
-			weaponAttackAdjustment.addEffect(attackModString, "Ranged Specific", getStat("Ranged Attacks"));
+			weaponAttackAdjustment.addEffect(StatName.WEAPON_ATTACK, "Ranged Specific", getStat(StatName.RANGED_ATTACKS));
 		}
 		weaponAttackStat.addAdjustment(weaponAttackAdjustment);
 		
-		String damageModString = weapon.getTitle() + " damage mod";
-		Stat weaponDamageStat = new Stat(damageModString);
-		Adjustment weaponDamageAdjustment = new Adjustment(-1, damageStat, true);
-		if (damageStat != null && !damageStat.isBlank())
-			weaponDamageAdjustment.addEffect(damageModString, damageStat, getStat(damageStat));
-		weaponDamageAdjustment.addEffect(damageModString, "All Damage", getStat("All Damage"));
-		weaponDamageAdjustment.addEffect(damageModString, "Weapon Damage Bonus", weapon.damageMod);
-		if (type == Weapon.WeaponType.MELEE) {
-			weaponDamageAdjustment.addEffect(damageModString, "Melee Specific", getStat("Melee Damage"));
-		} else {
-			weaponDamageAdjustment.addEffect(damageModString, "Ranged Specific", getStat("Ranged Damage"));
+		Stat weaponDamageStat = new Stat(StatName.WEAPON_DAMAGE);
+		if (damageStat != null) {
+			Adjustment weaponDamageAdjustment = new Adjustment(-1, damageStat.displayStrings[0], true);
+			weaponDamageAdjustment.addEffect(StatName.WEAPON_DAMAGE, damageStat.displayStrings[0], getStat(damageStat));
+			weaponDamageAdjustment.addEffect(StatName.WEAPON_DAMAGE, "All Damage", getStat(StatName.ALL_DAMAGE));
+			weaponDamageAdjustment.addEffect(StatName.WEAPON_DAMAGE, "Weapon Damage Bonus", weapon.damageMod);
+			if (type == Weapon.WeaponType.MELEE) {
+				weaponDamageAdjustment.addEffect(StatName.WEAPON_DAMAGE, "Melee Specific", getStat(StatName.MELEE_DAMAGE));
+			} else {
+				weaponDamageAdjustment.addEffect(StatName.WEAPON_DAMAGE, "Ranged Specific", getStat(StatName.RANGED_DAMAGE));
+			}
+			weaponDamageStat.addAdjustment(weaponDamageAdjustment);
 		}
-		weaponDamageStat.addAdjustment(weaponDamageAdjustment);
 		
 		weaponsOfType.put(weapon, new WeaponStats(weaponAttackStat, weaponDamageStat));
 	}
@@ -373,7 +373,7 @@ public class PathfinderCharacter {
 		return -100;
 	}
 
-	public void giveSpellcasting(int classId, String name, CastingType type, int casterLevel, String castingStat) {
+	public void giveSpellcasting(int classId, String name, CastingType type, int casterLevel, StatName castingStat) {
 		Spellcasting newSpellcasting = new Spellcasting(classId, name, type, casterLevel, castingStat, this);
 		spellcastingByClass.put(classId, newSpellcasting);
 	}
@@ -423,8 +423,8 @@ public class PathfinderCharacter {
 		return null;
 	}
 
-	public Ability getAbility(String abilityName) {
-		return (Ability)allStats.get(abilityName);
+	public Ability getAbility(StatName statName) {
+		return (Ability)allStats.get(statName);
 	}
 
 	public Integer getSpellDC(int classId, String spellName, int level) {
@@ -435,7 +435,7 @@ public class PathfinderCharacter {
 		return -1;
 	}
 
-	public void setSkillRanks(int ranks, String skillName) {
+	public void setSkillRanks(int ranks, StatName skillName) {
 		Skill skill = (Skill)getStat(skillName);
 		int totalRanks = skill.getSkillRanks();
 		int additionalRanksToSpend = ranks-totalRanks;
@@ -445,7 +445,7 @@ public class PathfinderCharacter {
 		System.out.println(name + " has " + ranks + " ranks in " + skillName);
 	}
 
-	public void setClassSkill(String skillName) {
+	public void setClassSkill(StatName skillName) {
 		Skill skill = (Skill)getStat(skillName);
 		skill.setClassSkill();
 		System.out.println(name + " has " + skillName + " as a class skill.");
@@ -539,11 +539,11 @@ public class PathfinderCharacter {
 	
 	public void addClass(CharacterClass characterClass) {
 		classes.add(characterClass);
-		addToStat("Level", characterClass.getLevel());
-		addToStat("BAB", characterClass.getBab());
-		addToStat("Fortitude", characterClass.getFort());
-		addToStat("Reflex", characterClass.getRef());
-		addToStat("Will", characterClass.getWill());
+		addToStat(StatName.LEVEL, characterClass.getLevel());
+		addToStat(StatName.BAB, characterClass.getBab());
+		addToStat(StatName.FORTITUDE, characterClass.getFort());
+		addToStat(StatName.REFLEX, characterClass.getRef());
+		addToStat(StatName.WILL, characterClass.getWill());
 		addHitDice(characterClass.getLevel(), characterClass.getHitDice());
 		addTotalSkillRanks(characterClass.getLevel(), characterClass.getBaseSkillsPerLevel());
 		if (characterClass.hasSpellcasting()) {
@@ -556,7 +556,7 @@ public class PathfinderCharacter {
 		}
 	}
 	
-	private void addToStat(String statName, int amount) {
+	private void addToStat(StatName statName, int amount) {
 		int statBase = getBaseStatValue(statName);
 		statBase += amount;
 		setStatBase(statName, statBase);
@@ -764,42 +764,42 @@ public class PathfinderCharacter {
 	public List<Stat> getSkills() {
 		ArrayList<Stat> skills = new ArrayList<>();
 		
-		skills.add(getStat("Acrobatics"));
-		skills.add(getStat("Appraise"));
-		skills.add(getStat("Bluff"));
-		skills.add(getStat("Climb"));
-		skills.add(getStat("Craft A"));
-		skills.add(getStat("Craft B"));
-		skills.add(getStat("Diplomacy"));
-		skills.add(getStat("Disable Device"));
-		skills.add(getStat("Disguise"));
-		skills.add(getStat("Escape Artist"));
-		skills.add(getStat("Fly"));
-		skills.add(getStat("Handle Animal"));
-		skills.add(getStat("Heal"));
-		skills.add(getStat("Intimidate"));
-		skills.add(getStat("Knowledge (Arcana)"));
-		skills.add(getStat("Knowledge (Dungeoneering)"));
-		skills.add(getStat("Knowledge (Engineering)"));
-		skills.add(getStat("Knowledge (Geography)"));
-		skills.add(getStat("Knowledge (History)"));
-		skills.add(getStat("Knowledge (Local)"));
-		skills.add(getStat("Knowledge (Nature)"));
-		skills.add(getStat("Knowledge (Nobility)"));
-		skills.add(getStat("Knowledge (Planes)"));
-		skills.add(getStat("Knowledge (Religion)"));
-		skills.add(getStat("Linguistics"));
-		skills.add(getStat("Perception"));
-		skills.add(getStat("Perform"));
-		skills.add(getStat("Profession"));
-		skills.add(getStat("Ride"));
-		skills.add(getStat("Sense Motive"));
-		skills.add(getStat("Sleight of Hand"));
-		skills.add(getStat("Spellcraft"));
-		skills.add(getStat("Stealth"));
-		skills.add(getStat("Survival"));
-		skills.add(getStat("Swim"));
-		skills.add(getStat("UMD"));
+		skills.add(getStat(StatName.ACROBATICS));
+		skills.add(getStat(StatName.APPRAISE));
+		skills.add(getStat(StatName.BLUFF));
+		skills.add(getStat(StatName.CLIMB));
+		skills.add(getStat(StatName.CRAFT_A));
+		skills.add(getStat(StatName.CRAFT_B));
+		skills.add(getStat(StatName.DIPLOMACY));
+		skills.add(getStat(StatName.DISABLE_DEVICE));
+		skills.add(getStat(StatName.DISGUISE));
+		skills.add(getStat(StatName.ESCAPE_ARTIST));
+		skills.add(getStat(StatName.FLY));
+		skills.add(getStat(StatName.HANDLE_ANIMAL));
+		skills.add(getStat(StatName.HEAL));
+		skills.add(getStat(StatName.INTIMIDATE));
+		skills.add(getStat(StatName.KNOWLEDGE_ARCANA));
+		skills.add(getStat(StatName.KNOWLEDGE_DUNGEONEERING));
+		skills.add(getStat(StatName.KNOWLEDGE_ENGINEERING));
+		skills.add(getStat(StatName.KNOWLEDGE_GEOGRAPHY));
+		skills.add(getStat(StatName.KNOWLEDGE_HISTORY));
+		skills.add(getStat(StatName.KNOWLEDGE_LOCAL));
+		skills.add(getStat(StatName.KNOWLEDGE_NATURE));
+		skills.add(getStat(StatName.KNOWLEDGE_NOBILITY));
+		skills.add(getStat(StatName.KNOWLEDGE_PLANES));
+		skills.add(getStat(StatName.KNOWLEDGE_RELIGION));
+		skills.add(getStat(StatName.LINGUISTICS));
+		skills.add(getStat(StatName.PERCEPTION));
+		skills.add(getStat(StatName.PERFORM));
+		skills.add(getStat(StatName.PROFESSION));
+		skills.add(getStat(StatName.RIDE));
+		skills.add(getStat(StatName.SENSE_MOTIVE));
+		skills.add(getStat(StatName.SLEIGHT_OF_HAND));
+		skills.add(getStat(StatName.SPELLCRAFT));
+		skills.add(getStat(StatName.STEALTH));
+		skills.add(getStat(StatName.SURVIVAL));
+		skills.add(getStat(StatName.SWIM));
+		skills.add(getStat(StatName.UMD));
 		
 		return skills;
 	}

@@ -14,6 +14,7 @@ import com.xavier.basicPathfinderServer.characterOwned.Feat;
 import com.xavier.basicPathfinderServer.characterOwned.RacialTrait;
 import com.xavier.basicPathfinderServer.numericals.Adjustment;
 import com.xavier.basicPathfinderServer.numericals.AdjustmentStringConverter;
+import com.xavier.basicPathfinderServer.numericals.StatName;
 
 class ComprehensiveCharacterJsonTest {
 	
@@ -23,9 +24,9 @@ class ComprehensiveCharacterJsonTest {
 	@BeforeAll
 	static void setup() {
 		johnDoe = new PathfinderCharacter("123", "John Doe", "abc.xyz");
-		johnDoe.setAbility("Strength", 14);
-		johnDoe.setAbility("Dexterity", 12);
-		johnDoe.setAbility("Intelligence", 14);
+		johnDoe.setAbility(StatName.STRENGTH, 14);
+		johnDoe.setAbility(StatName.DEXTERITY, 12);
+		johnDoe.setAbility(StatName.INTELLIGENCE, 14);
 		johnDoe.setAlignment("LN");
 		johnDoe.setPlayer("Jane Doe");
 		johnDoe.setRace("Human");

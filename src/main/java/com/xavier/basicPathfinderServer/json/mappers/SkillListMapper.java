@@ -10,7 +10,7 @@ public class SkillListMapper {
 	public static List<SkillJson> map(List<Stat> skills) {
 		List<SkillJson> json = new LinkedList<>();
 		for (Stat skill : skills) {
-			json.add(new SkillJson(skill.getName(), skill.getValue(), skill.hasModifiers("All Skills", "Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma")));
+			json.add(new SkillJson(skill.getName().displayStrings[0], skill.getValue(), skill.hasModifiers("All Skills", "Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma")));
 		}
 		
 		return json;

@@ -2,7 +2,7 @@ package com.xavier.basicPathfinderServer.numericals;
 
 public class Ability extends Stat {
 
-	public Ability(String name) {
+	public Ability(StatName name) {
 		super(name, 10);
 	}
 	

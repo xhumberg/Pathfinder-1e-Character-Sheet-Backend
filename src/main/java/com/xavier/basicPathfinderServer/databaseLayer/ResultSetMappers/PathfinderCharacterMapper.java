@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
+import com.xavier.basicPathfinderServer.numericals.StatName;
 
 public class PathfinderCharacterMapper implements ResultSetMapper<Object> {
 
@@ -38,12 +39,12 @@ public class PathfinderCharacterMapper implements ResultSetMapper<Object> {
 				character.setWeight(weight);
 				character.setHeight(height);
 				character.setAlignment(alignment);
-				character.setAbility("Strength", str);
-				character.setAbility("Dexterity", dex);
-				character.setAbility("Constitution", con);
-				character.setAbility("Intelligence", intel);
-				character.setAbility("Wisdom", wis);
-				character.setAbility("Charisma", cha);
+				character.setAbility(StatName.STRENGTH, str);
+				character.setAbility(StatName.DEXTERITY, dex);
+				character.setAbility(StatName.CONSTITUTION, con);
+				character.setAbility(StatName.INTELLIGENCE, intel);
+				character.setAbility(StatName.WISDOM, wis);
+				character.setAbility(StatName.CHARISMA, cha);
 				return character;
 			}
 		} catch (SQLException e) {

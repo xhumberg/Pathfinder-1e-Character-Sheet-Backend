@@ -32,6 +32,7 @@ import com.xavier.basicPathfinderServer.databaseLayer.ResultSetMappers.interimOb
 import com.xavier.basicPathfinderServer.databaseLayer.ResultSetMappers.interimObjects.SpellNameLevelAndClassInterim;
 import com.xavier.basicPathfinderServer.databaseLayer.ResultSetMappers.interimObjects.WeaponInterim;
 import com.xavier.basicPathfinderServer.numericals.Adjustment;
+import com.xavier.basicPathfinderServer.numericals.StatName;
 import com.xavier.basicPathfinderServer.numericals.TrackedResource;
 
 public class CharacterFromDatabaseLoader {
@@ -75,12 +76,12 @@ public class CharacterFromDatabaseLoader {
 			
 			List<String> classSkills = (List<String>)db.executeSelectQuery(new ClassSkillMapper(), GET_CLASS_SKILLS, id);
 			for (String classSkill : classSkills) {
-				character.setClassSkill(classSkill);
+				character.setClassSkill(StatName.decode(classSkill));
 			}
 			
 			Map<String, Integer> skillRanks = (Map<String, Integer>)db.executeSelectQuery(new SkillRanksMapper(), GET_SKILL_RANKS, id);
 			for (String skill : skillRanks.keySet()) {
-				character.setSkillRanks(skillRanks.get(skill), skill);
+				character.setSkillRanks(skillRanks.get(skill), StatName.decode(skill));
 			}
 			
 			List<Spell> knownSpells = (List<Spell>)db.executeSelectQuery(new KnownSpellMapper(), GET_KNOWN_SPELLS, id);
@@ -119,7 +120,7 @@ public class CharacterFromDatabaseLoader {
 			
 			List<WeaponInterim> weapons = (List<WeaponInterim>)db.executeSelectQuery(new WeaponInterimMapper(), GET_WEAPONS, id);
 			for (WeaponInterim interim : weapons) {
-				character.giveWeapon(interim.weapon, interim.attackStat, interim.damageStat, WeaponType.MELEE);
+				character.giveWeapon(interim.weapon, StatName.decode(interim.attackStat), StatName.decode(interim.damageStat), WeaponType.MELEE);
 			}
 			
 			CharacterWealthInterim characterWealth = (CharacterWealthInterim)db.executeSelectQuery(new CharacterWealthInterimMapper(), GET_CHARACTER_WEALTH, id);

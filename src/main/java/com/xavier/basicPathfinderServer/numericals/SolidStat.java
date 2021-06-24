@@ -2,7 +2,7 @@ package com.xavier.basicPathfinderServer.numericals;
 
 public class SolidStat extends Stat {
 
-	public SolidStat(String name, int baseValue) {
+	public SolidStat(StatName name, int baseValue) {
 		super(name, baseValue);
 	}
 	

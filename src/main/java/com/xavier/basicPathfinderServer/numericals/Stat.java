@@ -4,15 +4,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Stat {
-	private final String name;
+	private final StatName name;
 	protected int baseValue;
 	private Set<Adjustment> adjustments;
 	
-	public Stat(String name) {
+	public Stat(StatName name) {
 		this(name, 0);
 	}
 	
-	public Stat(String name, int baseValue) {
+	public Stat(StatName name, int baseValue) {
 		this.name = name;
 		this.baseValue = baseValue;
 		adjustments = new HashSet<Adjustment>();
@@ -68,7 +68,7 @@ public class Stat {
 		this.baseValue = value;
 	}
 	
-	public String getName() {
+	public StatName getName() {
 		return name;
 	}
 
@@ -77,8 +77,8 @@ public class Stat {
 	}
 
 	public void addStat(Stat stat) {
-		Adjustment abilityAdj = new Adjustment(-1, stat.getName(), true);
-		abilityAdj.addEffect(name, stat.getName(), stat);
+		Adjustment abilityAdj = new Adjustment(-1, stat.getName().displayStrings[0], true);
+		abilityAdj.addEffect(name, stat.getName().displayStrings[0], stat);
 		this.addAdjustment(abilityAdj);
 	}
 

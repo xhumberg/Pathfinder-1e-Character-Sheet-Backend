@@ -29,7 +29,7 @@ public class AdjustmentStringConverter {
 			if (adjustmentDefinition.length < 3) {
 				System.out.println("Improperly formatted adjustment: '" + currentAdjustmentString + "'");
 			}
-			newAdjustment.addEffect(adjustmentDefinition[0], adjustmentDefinition[1], Integer.parseInt(adjustmentDefinition[2]));
+			newAdjustment.addEffect(StatName.decode(adjustmentDefinition[0]), adjustmentDefinition[1], Integer.parseInt(adjustmentDefinition[2]));
 		}
 		return newAdjustment;
 	}

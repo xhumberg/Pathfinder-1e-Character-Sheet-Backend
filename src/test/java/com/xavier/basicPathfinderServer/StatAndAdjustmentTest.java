@@ -7,14 +7,15 @@ import org.junit.jupiter.api.Test;
 import com.xavier.basicPathfinderServer.numericals.Ability;
 import com.xavier.basicPathfinderServer.numericals.Adjustment;
 import com.xavier.basicPathfinderServer.numericals.Stat;
+import com.xavier.basicPathfinderServer.numericals.StatName;
 
 class StatAndAdjustmentTest {
 
 	@Test
 	void singleTypeTest() {
-		Stat strength = new Stat("Strength", 12);
+		Stat strength = new Stat(StatName.STRENGTH, 12);
 		Adjustment bullsStrength = new Adjustment(-1, "Bull's Strength");
-		bullsStrength.addEffect("Strength", "Enhancement", 4);
+		bullsStrength.addEffect(StatName.STRENGTH, "Enhancement", 4);
 		strength.addAdjustment(bullsStrength);
 		assertEquals(12, strength.getValue());
 		
@@ -27,11 +28,11 @@ class StatAndAdjustmentTest {
 	
 	@Test
 	void dualTypesStackTest() {
-		Stat strength = new Stat("Strength", 12);
+		Stat strength = new Stat(StatName.STRENGTH, 12);
 		Adjustment bullsStrength = new Adjustment(-1, "Bull's Strength");
-		bullsStrength.addEffect("Strength", "Enhancement", 4);
+		bullsStrength.addEffect(StatName.STRENGTH, "Enhancement", 4);
 		Adjustment alterSelf = new Adjustment(-1, "Alter Self");
-		alterSelf.addEffect("Strength", "Size", 2);
+		alterSelf.addEffect(StatName.STRENGTH, "Size", 2);
 		strength.addAdjustment(bullsStrength);
 		strength.addAdjustment(alterSelf);
 		
@@ -48,21 +49,21 @@ class StatAndAdjustmentTest {
 	
 	@Test
 	void stackingTypesStackTest() {
-		Stat AC = new Stat("AC", 12);
+		Stat AC = new Stat(StatName.AC, 12);
 		Adjustment haste = new Adjustment(-1, "Haste");
-		haste.addEffect("AC", "Dodge", 1);
+		haste.addEffect(StatName.AC, "Dodge", 1);
 		Adjustment dodgeFeat = new Adjustment(-1, "Dodge");
-		dodgeFeat.addEffect("AC", "Dodge", 1);
+		dodgeFeat.addEffect(StatName.AC, "Dodge", 1);
 		
 		Adjustment cover = new Adjustment(-1, "Cover");
-		cover.addEffect("AC", "Circumstance", 2);
+		cover.addEffect(StatName.AC, "Circumstance", 2);
 		Adjustment aided = new Adjustment(-1, "Aided");
-		aided.addEffect("AC", "Circumstance", 2);
+		aided.addEffect(StatName.AC, "Circumstance", 2);
 		
 		Adjustment shaken = new Adjustment(-1, "Shaken");
-		shaken.addEffect("AC", "Penalty", -2);
+		shaken.addEffect(StatName.AC, "Penalty", -2);
 		Adjustment slow = new Adjustment(-1, "Slow");
-		slow.addEffect("AC", "Penalty", -1);
+		slow.addEffect(StatName.AC, "Penalty", -1);
 		
 		AC.addAdjustment(haste);
 		AC.addAdjustment(dodgeFeat);
@@ -86,11 +87,11 @@ class StatAndAdjustmentTest {
 	
 	@Test
 	public void unstackableTypesDontStackTest() {
-		Stat con = new Stat("Constitution", 14);
+		Stat con = new Stat(StatName.CONSTITUTION, 14);
 		Adjustment belt = new Adjustment(-1, "Belt of Con +2");
-		belt.addEffect("Constitution", "Enhancement", 2);
+		belt.addEffect(StatName.CONSTITUTION, "Enhancement", 2);
 		Adjustment bearsEndurance = new Adjustment(-1, "Bear's Endurance");
-		bearsEndurance.addEffect("Constitution", "Enhancement", 4);
+		bearsEndurance.addEffect(StatName.CONSTITUTION, "Enhancement", 4);
 		con.addAdjustment(belt);
 		con.addAdjustment(bearsEndurance);
 		belt.toggleAdjustment();
@@ -101,11 +102,11 @@ class StatAndAdjustmentTest {
 	
 	@Test
 	public void getAllBonusTypesTest() {
-		Stat test = new Stat("Test", 0);
+		Stat test = new Stat(StatName.ACROBATICS, 0);
 		Adjustment typeA = new Adjustment(-1, "Type A");
-		typeA.addEffect("Test", "A", 1);
+		typeA.addEffect(StatName.ACROBATICS, "A", 1);
 		Adjustment typeB = new Adjustment(-1, "Type B");
-		typeA.addEffect("Test", "B", 1);
+		typeA.addEffect(StatName.ACROBATICS, "B", 1);
 		test.addAdjustment(typeA);
 		test.addAdjustment(typeB);
 
@@ -116,12 +117,12 @@ class StatAndAdjustmentTest {
 	
 	@Test
 	public void statInAStatTest() {
-		Stat outerStat = new Stat("Outer", 1);
+		Stat outerStat = new Stat(StatName.FORTITUDE, 1);
 		
-		Stat innerStat = new Stat("Inner", 2);
+		Stat innerStat = new Stat(StatName.CONSTITUTION, 2);
 		
 		Adjustment insert = new Adjustment(-1, "Insert");
-		insert.addEffect("Outer", "Enhancement", innerStat);
+		insert.addEffect(StatName.FORTITUDE, "Enhancement", innerStat);
 		outerStat.addAdjustment(insert);
 		insert.toggleAdjustment();
 		
@@ -130,25 +131,25 @@ class StatAndAdjustmentTest {
 	
 	@Test
 	public void adjustmentInStatAdjustment() {
-		Stat testAttack = new Stat("Attack");
+		Stat testAttack = new Stat(StatName.ALL_ATTACKS);
 		
-		Stat BAB = new Stat("BAB");
+		Stat BAB = new Stat(StatName.BAB);
 		Adjustment fighterLevel3 = new Adjustment(-1, "Fighter 3");
-		fighterLevel3.addEffect("BAB", "Fighter", 3);
+		fighterLevel3.addEffect(StatName.BAB, "Fighter", 3);
 		fighterLevel3.toggleAdjustment();
 		BAB.addAdjustment(fighterLevel3);
 		
 		Adjustment BABtoAttack = new Adjustment(-1, "BAB to Attack");
-		BABtoAttack.addEffect("Attack", "BAB", BAB);
+		BABtoAttack.addEffect(StatName.ALL_ATTACKS, "BAB", BAB);
 		BABtoAttack.toggleAdjustment();
 		testAttack.addAdjustment(BABtoAttack);
 		
 		assertEquals(3, testAttack.getValue());
 		
-		Stat str = new Ability("Strength");
+		Stat str = new Ability(StatName.STRENGTH);
 		str.setBaseValue(14);
 		Adjustment StrToAttack = new Adjustment(-1, "Strength to attack");
-		StrToAttack.addEffect("Attack", "Strength", str);
+		StrToAttack.addEffect(StatName.ALL_ATTACKS, "Strength", str);
 		StrToAttack.toggleAdjustment();
 		testAttack.addAdjustment(StrToAttack);
 		

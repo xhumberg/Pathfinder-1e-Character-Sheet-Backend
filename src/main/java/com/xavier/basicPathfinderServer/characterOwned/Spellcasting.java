@@ -10,6 +10,7 @@ import java.util.List;
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
 import com.xavier.basicPathfinderServer.numericals.Adjustment;
 import com.xavier.basicPathfinderServer.numericals.Stat;
+import com.xavier.basicPathfinderServer.numericals.StatName;
 
 public class Spellcasting {
 
@@ -17,14 +18,14 @@ public class Spellcasting {
 	private String name;
 	private CastingType type;
 	private int casterLevel;
-	private String castingStat;
+	private StatName castingStat;
 	private PathfinderCharacter character;
 	private HashMap<Integer, Integer> spellsPerDay;
 	private LinkedList<Spell> spellsKnown;
 	public HashMap<Integer, List<Spell>> spellsPrepped;
 	private HashMap<Integer, List<Spell>> spellsCast;
 	
-	public Spellcasting(int classId, String name, CastingType type, int casterLevel, String castingStat,
+	public Spellcasting(int classId, String name, CastingType type, int casterLevel, StatName castingStat,
 			PathfinderCharacter character) {
 		this.classId = classId;
 		this.name = name;
@@ -141,24 +142,26 @@ public class Spellcasting {
 
 	private void addSpellDCToSpell(int level, Spell spell) {
 		ensureSchoolSpecificCharacterStat(spell.school);
-		Stat spellDC = new Stat("DC");
+		Stat spellDC = new Stat(StatName.SPELL_DC);
 		if (spell.savingThrow.equals("none")) {
 			spellDC.setBaseValue(-1);
 		} else {
 			spellDC.setBaseValue(10);
 			Adjustment spellDCAdjustments = new Adjustment(-1, "DC adjustment", true);
-			spellDCAdjustments.addEffect("DC", "Casting Stat", character.getAbility(castingStat));
-			spellDCAdjustments.addEffect("DC", "Spell Level", level);
-			spellDCAdjustments.addEffect("DC", spell.school, character.getStat(spell.school));
+			spellDCAdjustments.addEffect(StatName.SPELL_DC, "Casting Stat", character.getAbility(castingStat));
+			spellDCAdjustments.addEffect(StatName.SPELL_DC, "Spell Level", level);
+			spellDCAdjustments.addEffect(StatName.SPELL_DC, spell.school, character.getStat(StatName.decode(spell.school)));
 			spellDC.addAdjustment(spellDCAdjustments);
 		}
 		spell.addSpellDC(spellDC);
 	}
 	
 	private void ensureSchoolSpecificCharacterStat(String spellSchool) {
-		Stat schoolSpecificDCChange = character.getStat(spellSchool);
+		//TODO: Make this obsolete by giving all characters these stats to begin with.
+		StatName schoolStatName = StatName.decode(spellSchool);
+		Stat schoolSpecificDCChange = character.getStat(StatName.decode(spellSchool));
 		if (schoolSpecificDCChange == null) {
-			character.addStat(spellSchool);
+			character.addStat(schoolStatName);
 		}
 	}
 	

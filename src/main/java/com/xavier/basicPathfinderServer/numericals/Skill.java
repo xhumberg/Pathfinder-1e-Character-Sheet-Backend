@@ -4,7 +4,7 @@ public class Skill extends Stat {
 
 	private boolean classSkill = false;
 	
-	public Skill(String name) {
+	public Skill(StatName name) {
 		super(name);
 	}
 

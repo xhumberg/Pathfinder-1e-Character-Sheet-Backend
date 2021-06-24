@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.xavier.basicPathfinderServer.json.AbilityJson;
 import com.xavier.basicPathfinderServer.numericals.Ability;
+import com.xavier.basicPathfinderServer.numericals.StatName;
 
 class AbilityListMapperTest {
 
@@ -16,7 +17,7 @@ class AbilityListMapperTest {
 	void test() {
 		List<Ability> abilities = new LinkedList<>();
 		
-		Ability strength = new Ability("Strength");
+		Ability strength = new Ability(StatName.STRENGTH);
 		strength.setBaseValue(14);
 		
 		abilities.add(strength);

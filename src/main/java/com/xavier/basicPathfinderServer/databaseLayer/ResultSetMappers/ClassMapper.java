@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.xavier.basicPathfinderServer.characterOwned.CastingType;
 import com.xavier.basicPathfinderServer.characterOwned.CharacterClass;
+import com.xavier.basicPathfinderServer.numericals.StatName;
 
 public class ClassMapper implements ResultSetMapper<Object> {
 
@@ -29,7 +30,7 @@ public class ClassMapper implements ResultSetMapper<Object> {
 				CharacterClass characterClass = null;
 				if (spellcasting) {
 					CastingType type = CastingType.valueOf(resultSet.getString("SpellcastingType"));
-					String ability = resultSet.getString("SpellcastingAbility");
+					StatName ability = StatName.decode(resultSet.getString("SpellcastingAbility"));
 					String spellsPerDayString = resultSet.getString("SpellsPerDay");
 					int casterLevel = resultSet.getInt("CasterLevel");
 					Map<Integer, Integer> baseSpellsPerDay = SpellsPerDayParser.parse(spellsPerDayString);

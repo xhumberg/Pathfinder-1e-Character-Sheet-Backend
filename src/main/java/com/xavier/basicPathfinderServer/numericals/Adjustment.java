@@ -12,7 +12,7 @@ import java.util.Set;
 public class Adjustment {
 	public final int id;
 	public final String name;
-	Map<String, Map<String, Stat>> valuesToAdjust;
+	Map<String, Map<StatName, Stat>> valuesToAdjust;
 	private boolean enabled;
 	public final List<String> types;
 	public final List<String> senses;
@@ -39,7 +39,7 @@ public class Adjustment {
 		return enabled;
 	}
 
-	public int getValue(String bonusType, String statName) {
+	public int getValue(String bonusType, StatName statName) {
 		if (!enabled)
 			return 0;
 		if (valuesToAdjust.get(bonusType) != null && valuesToAdjust.get(bonusType).get(statName) != null)
@@ -47,13 +47,13 @@ public class Adjustment {
 		return 0;
 	}
 
-	public void addEffect(String name, String type, int adjustmentValue) {
+	public void addEffect(StatName name, String type, int adjustmentValue) {
 		addEffect(name, type, new SolidStat(name, adjustmentValue));
 	}
 
-	public void addEffect(String name, String type, Stat stat) {
+	public void addEffect(StatName name, String type, Stat stat) {
 //		valuesToAdjust.put(name, adjustmentValue);
-		Map<String, Stat> adjustmentsOfType = valuesToAdjust.get(type);
+		Map<StatName, Stat> adjustmentsOfType = valuesToAdjust.get(type);
 		if (adjustmentsOfType == null) {
 			valuesToAdjust.put(type, new HashMap<>());
 			adjustmentsOfType = valuesToAdjust.get(type);
@@ -62,8 +62,8 @@ public class Adjustment {
 		adjustmentsOfType.put(name, stat);
 	}
 
-	public Set<String> getAdjustedStats() {
-		Set<String> stats = new HashSet<>();
+	public Set<StatName> getAdjustedStats() {
+		Set<StatName> stats = new HashSet<>();
 		for (String type : valuesToAdjust.keySet()) {
 			stats.addAll(valuesToAdjust.get(type).keySet());
 		}
