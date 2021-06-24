@@ -10,7 +10,7 @@ public class AbilityListMapper {
 	public static List<AbilityJson> map(List<Ability> abilities) {
 		List<AbilityJson> json = new LinkedList<>();
 		for (Ability ability : abilities) {
-			json.add(new AbilityJson(ability.getName(), ability.getFullValue(), ability.getValue()));
+			json.add(new AbilityJson(ability.getName(), ability.getFullValue(), ability.getValue(), ability.getBase()));
 		}
 		
 		return json;

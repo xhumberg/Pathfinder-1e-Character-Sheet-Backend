@@ -75,8 +75,8 @@ VALUES
 		,(11, 'Scroll of Touch of the Sea', 25, 'Scroll', 'Scroll of first level Touch of the Sea', '')
 		,(12, 'Headband of Vast Intelligence +6', 36000, 'Headband', 'This intricate gold headband is decorated with several small blue and deep purple gemstones.\r\nThe headband grants the wearer an enhancement bonus to Intelligence of +6. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. A headband of vast intelligence +6 has three skills associated with it. After being worn for 24 hours, the headband grants a number of skill ranks in those skills equal to the wearer’s total Hit Dice. These ranks do not stack with the ranks a creature already possesses. This skill is chosen when the headband is created. If no skill is listed, the headband is assumed to grant skill ranks in a randomly determined Knowledge skill.', 'Intelligence##Enhancement##6') 
 		,(13, 'Masterwork Bastard Sword', 335, 'Weapon', 'A bastard sword is about 4 feet in length, making it too large to use in one hand without special training; thus it is an exotic weapon. A character can use a bastard sword two-handed as a martial weapon.', '')
-		,(14, 'Full Plate', 1500, 'Armor', 'This metal suit comprises multiple pieces of interconnected and overlaying metal plates, incorporating the benefits of numerous types of lesser armor. A complete suit of full plate (or platemail, as it is often called) includes gauntlets, heavy leather boots, a visored helmet, and a thick layer of padding that is worn underneath the armor. Each suit of full plate must be individually fitted to its owner by a master armorsmith, although a captured suit can be resized to fit a new owner at a cost of 200 to 800 (2d4 100) gold pieces.', 'AC##Armor##9; Flat-Footed##Armor##9;') /*Todo, max dex, ACP, Spell Failure, and Speed reduction*/
-		,(15, '+1 Tower Shield (with shield focus)', 1180, 'Shield', 'In most situations, a tower shield provides the indicated shield bonus to your Armor Class. As a standard action, however, you can use a tower shield to grant you total cover until the beginning of your next turn. When using a tower shield in this way, you must choose one edge of your space. That edge is treated as a solid wall for attacks targeting you only. You gain total cover for attacks that pass through this edge and no cover for attacks that do not pass through this edge (see Combat). The shield does not, however, provide cover against targeted spells; a spellcaster can cast a spell on you by targeting the shield you are holding. You cannot bash with a tower shield, nor can you use your shield hand for anything else.\r\nWhen employing a tower shield in combat, you take a –2 penalty on attack rolls because of the shield’s encumbrance.', 'All Attacks##Penalty##-2; AC##Shield##6; Flat-Footed##Shield##6');
+		,(14, 'Full Plate', 1500, 'Armor', 'This metal suit comprises multiple pieces of interconnected and overlaying metal plates, incorporating the benefits of numerous types of lesser armor. A complete suit of full plate (or platemail, as it is often called) includes gauntlets, heavy leather boots, a visored helmet, and a thick layer of padding that is worn underneath the armor. Each suit of full plate must be individually fitted to its owner by a master armorsmith, although a captured suit can be resized to fit a new owner at a cost of 200 to 800 (2d4 100) gold pieces.', '') /*Todo, max dex, ACP, Spell Failure, and Speed reduction*/
+		,(15, '+1 Tower Shield (with shield focus)', 1180, 'Shield', 'In most situations, a tower shield provides the indicated shield bonus to your Armor Class. As a standard action, however, you can use a tower shield to grant you total cover until the beginning of your next turn. When using a tower shield in this way, you must choose one edge of your space. That edge is treated as a solid wall for attacks targeting you only. You gain total cover for attacks that pass through this edge and no cover for attacks that do not pass through this edge (see Combat). The shield does not, however, provide cover against targeted spells; a spellcaster can cast a spell on you by targeting the shield you are holding. You cannot bash with a tower shield, nor can you use your shield hand for anything else.\r\nWhen employing a tower shield in combat, you take a –2 penalty on attack rolls because of the shield’s encumbrance.', '');
 		
 CREATE TABLE CharacterEquipment /*Done*/
 (
@@ -146,7 +146,11 @@ VALUES
 	,(8, 'Shield Focus', 'You are skilled at deflecting blows with your shield.\r\nPrerequisites: Shield Proficiency, base attack bonus +1.\r\nBenefit: Increase the AC bonus granted by any shield you are using by 1. (currently applied on a per shield basis)', '')
 	,(9, 'Saving Shield', 'You deflect attacks that could mean your ally’s death.\r\nPrerequisite: Shield Proficiency.\r\nBenefits: Whenever an adjacent ally is the target of an attack, you can, as an immediate action, grant that adjacent ally a +2 shield bonus to AC. You must be wielding a light shield, heavy shield, or tower shield to use this feat.', '')
 	,(10, 'Mobile Bulwark Style', 'You are able to swing your tower shield around quickly.\r\nPrerequisite(s): Str 13, Shield Focus, Tower Shield Proficiency, base attack bonus +1.\r\nBenefit(s): While using a tower shield, add the shield’s bonus to AC (including its enhancement bonus) to your CMD against bull rush and overrun combat maneuvers. While using this style, you can use a tower shield to grant you total cover along one edge of your space as a move action. (currently not applied)', '')
-    ;
+	,(11, 'Trait: Fate''s Favored', 'The fates watch over you. Benefit: Whenever you are under the effect of a luck bonus of any kind, that bonus increases by 1. Must apply to individual luck effects', '')
+	,(12, 'Trait: Friend in Every Town', 'You have no problem making friends and learning information from them wherever you go. You gain a +1 trait bonus on all knowledge (local) and Diplomacy checks. One of these skills (your choice) is always a class skill for you', 'Knowledge (Local)##Trait##1; Diplomacy##Trait##1')
+    ,(13, 'Trait: Avowed Inspiration', 'In emulation of the empyreal lord’s intensely channeled rage, you are an inspiration on the battlefield. Once per day, when you attack a foe who injured you during the same combat, you can inspire allies who can see you as a move action. Each other ally within 30 feet who can see you gains a +2 morale bonus on her next attack roll.', '[T:1]')
+	,(14, 'Drawback: Haunted', 'Something from your past—or a dark secret you presently hold—makes it difficult for you to ever be at peace, and your chronic worry that you might fall to evil influence has become a self-fulfilling prophecy. You take a –2 penalty on saves against spells with the evil descriptor.', '[Special Defense: -2 penalty on saves against spells with the evil descriptor]')
+	;
 	
 CREATE TABLE CharacterFeats /*Done*/
 (
@@ -172,6 +176,11 @@ VALUES
 	,('eVbBMI8yjs', 8)
 	,('eVbBMI8yjs', 9)
 	,('eVbBMI8yjs', 10)
+	,('eVbBMI8yjs', 11)
+	,('eVbBMI8yjs', 12)
+	,('eVbBMI8yjs', 13)
+	,('eVbBMI8yjs', 14)
+	
 	;
 
 CREATE TABLE AvailableClassFeatures /*Done*/
@@ -328,6 +337,7 @@ VALUES
 	,(18, 'Blessings', 'Remaining uses of Blessings', 5, 5)
 	,(19, 'Fervor', 'Remaining uses of Fervor', 4, 4)
 	,(20, 'Rage', 'Remaining rounds of rage', 6, 6)
+	,(21, 'Avowed Inspiration', 'Give +2 to allies within 30 feet after hitting an enemy that attacked you in the last turn. Once per day.', 1, 1)
 	;
 	
 /*This is for resources a character may have that are not given by class features or items, such as those given by specific feats (Like Harrowed) or bonuses from specific spells (like Lucky Number) as those things only rarely have tracked resources*/
@@ -343,6 +353,7 @@ VALUES
 	,('Du0nzEj1wJ', 12)
 	,('Du0nzEj1wJ', 15)
 	,('Du0nzEj1wJ', 16)
+	,('eVbBMI8yjs', 21)
 	;
 	
 CREATE TABLE AvailableSpells /*Done*/
@@ -509,6 +520,7 @@ VALUES
 	,('eVbBMI8yjs', 480, 5)
 	,('eVbBMI8yjs', 54, 5)
 	,('eVbBMI8yjs', 1914, 5)
+	,('eVbBMI8yjs', 792, 5)
 	;
 	
 CREATE TABLE CharacterWealth /*Done*/
@@ -556,6 +568,9 @@ VALUES
 	,(19, 'Shield of Faith 2', 'All AC##Deflection##2')
 	,(20, 'Bull''s Strength', 'Strength##Enhancement##4')
 	,(21, 'Ironskin 4', 'AC##Enhancement Bonus to Natural Armor##4; Flat-Footed##Enhancement Bonus To Natural Armor##4')
+	,(22, 'Manu: Armor Equipped', 'AC##Armor##9; Flat-Footed##Armor##9')
+	,(23, 'Manu: Shield Equipped', 'All Attacks##Penalty##-2; AC##Shield##6; Flat-Footed##Shield##6')
+	,(24, 'Instant Armor CL <= 5', 'AC##Armor##6; Flat-Footed##Armor##6')
 	;
 	
 CREATE TABLE EnabledAdjustments /*Done*/
@@ -605,6 +620,9 @@ VALUES
 	,('eVbBMI8yjs', 19)
 	,('eVbBMI8yjs', 20)
 	,('eVbBMI8yjs', 21)
+	,('eVbBMI8yjs', 22)
+	,('eVbBMI8yjs', 23)
+	,('eVbBMI8yjs', 24)
 	;
 	
 CREATE TABLE SkillRanks /*Done*/
