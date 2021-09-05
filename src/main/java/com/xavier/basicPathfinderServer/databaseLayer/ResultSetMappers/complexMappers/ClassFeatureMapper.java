@@ -29,6 +29,9 @@ public class ClassFeatureMapper implements ResultSetMapper<Object> {
 				String name = resultSet.getString("FeatureName");
 				String description = resultSet.getString("FeatureDescription");
 				Adjustment featureEffect = AdjustmentStringConverter.convert(character, -1, name, resultSet.getString("FeatureEffect"), false);
+				if (featureEffect != null) {
+					featureEffect.toggleAdjustment();
+				}
 				TrackedResource trackedResource = null;
 				String trackedResourceName = resultSet.getString("ResourceName");
 				if (trackedResourceName != null) {

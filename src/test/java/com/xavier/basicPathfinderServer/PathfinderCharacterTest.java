@@ -416,6 +416,20 @@ class PathfinderCharacterTest {
 		assertEquals(10, swordStats.damageStat.getValue());
 	}
 	
+	@Test
+	public void modifyingInitiativeTest() {
+		PathfinderCharacter inquisitor = new PathfinderCharacter("asdf", "Inquisitor", null);
+		inquisitor.setAbility(StatName.DEXTERITY, 14);
+		inquisitor.setAbility(StatName.WISDOM, 20);
+		
+		Adjustment adjustment = new Adjustment(0, "Cunning Initiative");
+		adjustment.addEffect(StatName.INITIATIVE, "Wisdom", inquisitor.getStat(StatName.WISDOM));
+		inquisitor.addAdjustment(adjustment);
+		adjustment.toggleAdjustment();
+		
+		assertEquals(7, inquisitor.getStatValue(StatName.INITIATIVE));
+	}
+	
 	private Adjustment buildAndAddAdjustment(PathfinderCharacter character, String adjName, boolean enabled, String... effectStrings) {
 		Adjustment adj = new Adjustment(-1, adjName, enabled);
 		for (String effectString : effectStrings) {
