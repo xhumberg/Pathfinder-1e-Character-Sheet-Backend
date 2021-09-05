@@ -12,7 +12,7 @@ import com.xavier.basicPathfinderServer.databaseLayer.ResultSetMappers.ResultSet
 
 public class DatabaseAccess<T> {
 	
-	Connection databaseConnection;
+	Connection databaseConnection; //TODO: Make this static and have it stay open for a certain amount of time after last call (i.e. change close to close later and have it schedule a close using a CountDownTimer???)
 	
 	public DatabaseAccess() {
 		try {
@@ -67,6 +67,10 @@ public class DatabaseAccess<T> {
 				statement.setString(i+1, (String)queryParams[i]);
 			} else if (queryParams[i] instanceof Integer) {
 				statement.setInt(i+1, (Integer)queryParams[i]);
+			} else if (queryParams[i] instanceof Boolean) {
+				statement.setBoolean(i+1, (Boolean)queryParams[i]);
+			} else if (queryParams[i] == null) {
+				statement.setString(i+1, null);
 			} else {
 				System.out.println("ERROR: statement tried to set unsupported type " + queryParams[i].getClass());
 			}
@@ -89,5 +93,11 @@ public class DatabaseAccess<T> {
 				databaseConnection.close();
 			}
 		} catch (Exception e) {}
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

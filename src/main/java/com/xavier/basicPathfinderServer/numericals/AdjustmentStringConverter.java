@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.xavier.basicPathfinderServer.PathfinderCharacter;
+
 public class AdjustmentStringConverter {
-	public static Adjustment convert(int id, String name, String adjustmentString, boolean allowEmpty) {
+	public static Adjustment convert(PathfinderCharacter character, int id, String name, String adjustmentString, boolean allowEmpty) {
 		Adjustment newAdjustment = new Adjustment(id, name);
 		adjustmentString = adjustmentString.replaceAll("\\[T:.*?\\]", ""); //Only used in creating new resources.
 		adjustmentString = getTypesIfPresent(adjustmentString, newAdjustment);
@@ -29,9 +31,19 @@ public class AdjustmentStringConverter {
 			if (adjustmentDefinition.length < 3) {
 				System.out.println("Improperly formatted adjustment: '" + currentAdjustmentString + "'");
 			}
-			newAdjustment.addEffect(StatName.decode(adjustmentDefinition[0]), adjustmentDefinition[1], Integer.parseInt(adjustmentDefinition[2]));
+			StatName statName = StatName.decode(adjustmentDefinition[0]);
+			newAdjustment.addEffect(statName, adjustmentDefinition[1], getStatFromDefinition(character, statName, adjustmentDefinition[2]));
 		}
 		return newAdjustment;
+	}
+
+	private static Stat getStatFromDefinition(PathfinderCharacter character, StatName statName, String adjustmentDefinition) {
+		if (adjustmentDefinition.contains("{")) {
+			//Currently only supports JUST a stat.
+			String innerStatName = adjustmentDefinition.replace("{", "").replace("}", "");
+			return character.getStat(StatName.decode(innerStatName));
+		}
+		return new SolidStat(statName, Integer.parseInt(adjustmentDefinition));
 	}
 
 	private static String getTypesIfPresent(String adjustmentString, Adjustment newAdjustment) {

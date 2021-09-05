@@ -740,7 +740,7 @@ CREATE TABLE CharacterHP (
 	CharacterID varchar(10) UNIQUE,
 	FavoredClassBonusHP int,
 	DamageTaken int,
-	NonLethalDamateTaken int, /*TODO: add to code*/
+	NonLethalDamageTaken int, /*TODO: add to code*/
 	TempHP int /*TODO: add to code*/
 );
 
@@ -872,6 +872,8 @@ where CharacterID = 0;
 select StandardAdjustments.AdjustmentID, AdjustmentName, AdjustmentEffect from EnabledAdjustments
 inner join StandardAdjustments on StandardAdjustments.AdjustmentID = EnabledAdjustments.AdjustmentID
 where EnabledAdjustments.CharacterID = 0
+
+select * from AvailableSpells where LOWER(spellName) LIKE '%acid%'
 
 ------------
 
