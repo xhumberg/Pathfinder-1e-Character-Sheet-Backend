@@ -100,6 +100,7 @@ public class PathfinderCharacter {
 		abilities.add(new Ability(StatName.WISDOM));
 		abilities.add(new Ability(StatName.CHARISMA));
 		addAbilitiesToStats();
+		
 	}
 	
 	private void addAbilitiesToStats() {
@@ -115,6 +116,9 @@ public class PathfinderCharacter {
 		initSkills();
 		initNewStat(StatName.LEVEL);
 		initStatWithStats(StatName.INITIATIVE, getAbility(StatName.DEXTERITY));
+		
+		Stat strengthAndAHalf = new Stat(StatName.STRENGTH_AND_A_HALF);
+		strengthAndAHalf.addStatWithMultiplier(StatName.STRENGTH_AND_A_HALF, getStat(StatName.STRENGTH), 1.5);
 	}
 
 	private void initAttackMods() {

@@ -9,6 +9,9 @@ public enum StatName {
 	WISDOM("Wisdom", "Wis"),
 	CHARISMA("Charisma", "Cha"),
 	
+	//Specific Modifications of an Ability
+	STRENGTH_AND_A_HALF("Strength and a half"),
+	
 	//Skills
 	ACROBATICS("Acrobatics"),
 	APPRAISE("Appraise"),

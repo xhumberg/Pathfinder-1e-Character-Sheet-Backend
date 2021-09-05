@@ -100,4 +100,10 @@ public class Stat {
 		return false;
 	}
 
+	public void addStatWithMultiplier(StatName statName, Stat stat, double multiplier) {
+		Adjustment abilityAdj = new Adjustment(-1, stat.getName().displayStrings[0], true);
+		Stat multipliedStat = new MultipliedStat(statName, stat, multiplier);
+		abilityAdj.addEffect(name, stat.getName().displayStrings[0] + "*" + multiplier, multipliedStat);
+	}
+
 }
