@@ -21,6 +21,7 @@ import com.xavier.basicPathfinderServer.json.WeaponStats;
 import com.xavier.basicPathfinderServer.numericals.Ability;
 import com.xavier.basicPathfinderServer.numericals.Adjustment;
 import com.xavier.basicPathfinderServer.numericals.HP;
+import com.xavier.basicPathfinderServer.numericals.MultipliedStat;
 import com.xavier.basicPathfinderServer.numericals.Skill;
 import com.xavier.basicPathfinderServer.numericals.SkillRanks;
 import com.xavier.basicPathfinderServer.numericals.Stat;
@@ -117,8 +118,8 @@ public class PathfinderCharacter {
 		initNewStat(StatName.LEVEL);
 		initStatWithStats(StatName.INITIATIVE, getAbility(StatName.DEXTERITY));
 		
-		Stat strengthAndAHalf = new Stat(StatName.STRENGTH_AND_A_HALF);
-		strengthAndAHalf.addStatWithMultiplier(StatName.STRENGTH_AND_A_HALF, getStat(StatName.STRENGTH), 1.5);
+		MultipliedStat strengthAndAHalf = new MultipliedStat(StatName.STRENGTH_AND_A_HALF, getStat(StatName.STRENGTH), 1.5);
+		allStats.put(StatName.STRENGTH_AND_A_HALF, strengthAndAHalf);
 	}
 
 	private void initAttackMods() {

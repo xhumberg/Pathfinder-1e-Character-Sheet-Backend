@@ -42,8 +42,13 @@ public class Adjustment {
 	public int getValue(String bonusType, StatName statName) {
 		if (!enabled)
 			return 0;
-		if (valuesToAdjust.get(bonusType) != null && valuesToAdjust.get(bonusType).get(statName) != null)
-			return valuesToAdjust.get(bonusType).get(statName).getValue();
+		Stat stat = valuesToAdjust.get(bonusType).get(statName);
+		if (valuesToAdjust.get(bonusType) != null && stat != null) {
+			if (stat instanceof MultipliedStat) {
+				return ((MultipliedStat) stat).getValue();
+			}
+			return stat.getValue();
+		}
 		return 0;
 	}
 

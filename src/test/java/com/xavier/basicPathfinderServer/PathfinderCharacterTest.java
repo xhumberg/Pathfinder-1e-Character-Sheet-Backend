@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
@@ -428,6 +429,19 @@ class PathfinderCharacterTest {
 		adjustment.toggleAdjustment();
 		
 		assertEquals(7, inquisitor.getStatValue(StatName.INITIATIVE));
+	}
+	
+	@Test
+	public void strengthAndAHalfWeaponTest() {
+		PathfinderCharacter bigDude = new PathfinderCharacter("asdf", "Big Dude", null);
+		bigDude.setAbility(StatName.STRENGTH, 22);
+		Weapon weapon = new Weapon("Big", "d10", "P", "P", 0, 0, 0, 0, "p", "p", "p", "p", 0, "p");
+		
+		bigDude.giveWeapon(weapon, StatName.STRENGTH, StatName.STRENGTH_AND_A_HALF, WeaponType.MELEE);
+		Map<Weapon, WeaponStats> weapons = bigDude.getWeapons();
+		WeaponStats bigStats = weapons.get(weapon);
+		assertEquals(6, bigStats.attackStat.getValue());
+		assertEquals(9, bigStats.damageStat.getValue());
 	}
 	
 	private Adjustment buildAndAddAdjustment(PathfinderCharacter character, String adjName, boolean enabled, String... effectStrings) {
