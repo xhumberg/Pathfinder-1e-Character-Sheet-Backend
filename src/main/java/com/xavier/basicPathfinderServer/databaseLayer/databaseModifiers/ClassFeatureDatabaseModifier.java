@@ -17,7 +17,6 @@ public class ClassFeatureDatabaseModifier {
 		DatabaseAccess<Integer> db = new DatabaseAccess<>();
 		int FeatureID = db.executeSelectQuery(new SingleIntegerMapper(), GET_LARGEST_AVAILABLE_FEATURE_ID) + 1;
 		db.executeModifyQuery(ADD_FEATURE, FeatureID, name, description, adjustment);
-		db.close();
 		return FeatureID;
 	}
 
@@ -25,18 +24,15 @@ public class ClassFeatureDatabaseModifier {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(DELETE_ALL_INSTANCES_OF_FEATURE_FROM_CHARACTERS, id);
 		db.executeModifyQuery(DELETE_FEATURE, id);
-		db.close();
 	}
 	
 	public static void giveFeatureToCharacter(int FeatureID, String characterId, int trackedResourceId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(GIVE_CHARACTER_FEATURE, characterId, FeatureID, trackedResourceId);
-		db.close();
 	}
 	
 	public static void takeFeatureFromCharacter(int FeatureID, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(TAKE_CHARACTER_FEATURE, FeatureID, characterId);
-		db.close();
 	}
 }

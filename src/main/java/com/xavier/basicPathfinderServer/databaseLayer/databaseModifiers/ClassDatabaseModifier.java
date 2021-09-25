@@ -21,7 +21,6 @@ public class ClassDatabaseModifier {
 		DatabaseAccess<Integer> db = new DatabaseAccess<>();
 		int ClassID = db.executeSelectQuery(new SingleIntegerMapper(), GET_LARGEST_AVAILABLE_CLASS_ID) + 1;
 		db.executeModifyQuery(ADD_CLASS, ClassID, level, bab, fort, ref, will, ranksPerLevel, hitDice, className, spellcasting, spellcastingType, casterLevel, spellcastingAbility, spellsPerDay, spellsKnown);
-		db.close();
 		return ClassID;
 	}
 
@@ -29,18 +28,15 @@ public class ClassDatabaseModifier {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(DELETE_ALL_INSTANCES_OF_CLASS_FROM_CHARACTERS, id);
 		db.executeModifyQuery(DELETE_CLASS, id);
-		db.close();
 	}
 	
 	public static void giveClassToCharacter(int ClassID, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(GIVE_CHARACTER_CLASS, characterId, ClassID);
-		db.close();
 	}
 	
 	public static void takeClassFromCharacter(int ClassID, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(TAKE_CHARACTER_CLASS, ClassID, characterId);
-		db.close();
 	}
 }

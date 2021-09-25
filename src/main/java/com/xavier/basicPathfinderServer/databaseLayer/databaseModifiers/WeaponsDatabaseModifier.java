@@ -17,7 +17,6 @@ public class WeaponsDatabaseModifier {
 		DatabaseAccess<Integer> db = new DatabaseAccess<>();
 		int weaponId = db.executeSelectQuery(new SingleIntegerMapper(), GET_LARGEST_AVAILABLE_WEAPON_ID) + 1;
 		db.executeModifyQuery(ADD_WEAPON, weaponId, name, damageDice, damageType, modifiers, attackMod, damageMod, critLow, critMultiplier, description, category, proficiency, special, weight, weaponGroups);
-		db.close();
 		return weaponId;
 	}
 
@@ -25,18 +24,15 @@ public class WeaponsDatabaseModifier {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(DELETE_ALL_INSTANCES_OF_WEAPON_FROM_CHARACTERS, id);
 		db.executeModifyQuery(DELETE_WEAPON, id);
-		db.close();
 	}
 	
 	public static void giveWeaponToCharacter(int weaponId, String characterId, String attackStat, String damageStat) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(GIVE_CHARACTER_WEAPON, characterId, weaponId, attackStat, damageStat);
-		db.close();
 	}
 	
 	public static void takeWeaponFromCharacter(int weaponId, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(TAKE_CHARACTER_WEAPON, weaponId, characterId);
-		db.close();
 	}
 }

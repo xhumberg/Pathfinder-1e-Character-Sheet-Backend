@@ -4,20 +4,26 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.gson.Gson;
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
 import com.xavier.basicPathfinderServer.characterOwned.Spell;
+import com.xavier.basicPathfinderServer.controllers.jsonObjects.CastUncastSpellJson;
+import com.xavier.basicPathfinderServer.controllers.jsonObjects.ToggleAdjustmentJson;
 import com.xavier.basicPathfinderServer.databaseLayer.CharacterFromDatabaseLoader;
 import com.xavier.basicPathfinderServer.databaseLayer.DatabaseAccess;
 import com.xavier.basicPathfinderServer.databaseLayer.UserAccessDatabaseChecker;
@@ -27,12 +33,13 @@ import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.HealthDa
 import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.SpellDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.TrackedResourceDatabaseModifier;
 import com.xavier.basicPathfinderServer.google.GoogleAuthenticationResponseJson;
+import com.xavier.basicPathfinderServer.json.CharacterJson;
 import com.xavier.basicPathfinderServer.numericals.Adjustment;
 
 @RestController
 public class CharacterController {
-	Map<String, PathfinderCharacter> loadedCharacters; //TODO: Make this a cache
-	Map<String, List<String>> cachedCharacterAccess; //TODO: Make this a cache
+	Cache<String, PathfinderCharacter> loadedCharacters; //TODO: Make this a cache
+	Cache<String, List<String>> cachedCharacterAccess; //TODO: Make this a cache
 	Gson gson;
 	
 	private final String GET_CHARACTERS_FOR_USER_QUERY = "SELECT CharacterName, PathfinderCharacter.CharacterID FROM UserIDToEmail INNER JOIN UserAccess ON UserIDToEmail.UserID = UserAccess.UserID INNER JOIN PathfinderCharacter ON UserAccess.CharacterID = PathfinderCharacter.CharacterID WHERE UserIDToEmail.UserEmail = (?) OR UserAccess.UserID = -1;";
@@ -40,8 +47,8 @@ public class CharacterController {
 	@Autowired
 	public CharacterController() {
 		gson = new Gson();
-		loadedCharacters = new HashMap<>();
-		cachedCharacterAccess = new HashMap<>();
+		loadedCharacters = CacheBuilder.newBuilder().expireAfterAccess(1, TimeUnit.HOURS).build();
+		cachedCharacterAccess = CacheBuilder.newBuilder().expireAfterAccess(1, TimeUnit.HOURS).build();
 	}
 	
 	@GetMapping("/character/{id}")
@@ -63,23 +70,23 @@ public class CharacterController {
 		
 		assertLoggedInUserHasAccessToCharacter(id, authenticatedGoogleToken.getEmail());
 		
-		if(!loadedCharacters.containsKey(id)) {
+		if(loadedCharacters.getIfPresent(id) == null) {
 			loadedCharacters.put(id, CharacterFromDatabaseLoader.loadCharacter(id));
 		} 
-		return loadedCharacters.get(id);
+		return loadedCharacters.getIfPresent(id);
 	}
 	
 	public void assertLoggedInUserHasAccessToCharacter(String id, String email) {
-		List<String> availableCharacters = cachedCharacterAccess.get(email);
+		List<String> availableCharacters = cachedCharacterAccess.getIfPresent(email);
 		if (availableCharacters != null && availableCharacters.contains(id)) {
 			return;
 		}
 		
 		if (UserAccessDatabaseChecker.canEmailAccessCharacter(email, id)) {
-			if (cachedCharacterAccess.get(email) == null) {
+			if (cachedCharacterAccess.getIfPresent(email) == null) {
 				cachedCharacterAccess.put(email, new LinkedList<String>());
 			}
-			cachedCharacterAccess.get(email).add(id);
+			cachedCharacterAccess.getIfPresent(email).add(id);
 		} else {
 			throw new RuntimeException("Email " + email + " does not have access to character " + id + " but tried to access anyways.");
 		}
@@ -93,7 +100,6 @@ public class CharacterController {
 		
         DatabaseAccess<List<String>> db = new DatabaseAccess<>();
         List<String> response = db.executeSelectQuery(new AccessibleCharactersMapper(), GET_CHARACTERS_FOR_USER_QUERY, authenticatedGoogleToken.getEmail());
-        db.close();
         if (response != null) {
         	return gson.toJson(response);
         }
@@ -112,7 +118,7 @@ public class CharacterController {
 	}
 	
 	@PutMapping("/character/{id}/toggle/{adjustmentName}") 
-	public void toggleAdjustment(@PathVariable String id, @PathVariable String adjustmentName, @RequestParam(required = false) String token) {
+	public void toggleAdjustment_LEGACY(@PathVariable String id, @PathVariable String adjustmentName, @RequestParam(required = false) String token) {
 		assertStringsAreSanitized(id, adjustmentName);
 		System.out.println("Time to toggle " + adjustmentName);
 		PathfinderCharacter character = loadCharacterID(id, token);
@@ -128,17 +134,38 @@ public class CharacterController {
 		}
 	}
 	
+	@PostMapping("/character/{id}/toggle") 
+	public CharacterJson toggleAdjustment(@PathVariable String id, @RequestBody String body) {
+		ToggleAdjustmentJson json = gson.fromJson(body, ToggleAdjustmentJson.class);
+		
+		assertStringsAreSanitized(id, json.adjustmentName);
+		System.out.println("Time to toggle " + json.adjustmentName);
+		PathfinderCharacter character = loadCharacterID(id, json.googleToken);
+		if (character.isAdjustmentEnabled(json.adjustmentName)) {
+			System.out.println("Disabling " + json.adjustmentName + " for character id " + id);
+			Adjustment adjustment = character.toggleAdjustment(json.adjustmentName);
+			AdjustmentDatabaseModifier.disableAdjustment(adjustment.getId(), id);
+			
+		} else {
+			System.out.println("Enabling " + json.adjustmentName + " for character id " + id);
+			Adjustment adjustment = character.toggleAdjustment(json.adjustmentName);
+			AdjustmentDatabaseModifier.enableAdjustment(adjustment.getId(), id);
+		}
+		
+		return character.convertToJson();
+	}
+	
 	@PutMapping("/character/{id}/forceReload")
 	public void forceCharacterReload(@PathVariable String id, @RequestParam String token) {
 		assertStringsAreSanitized(id);
 		authenticateToken(token);
 		System.out.println("Forcing reload from database for character " + id);
-		loadedCharacters.remove(id);
+		loadedCharacters.invalidate(id);
 		loadCharacterID(id, token);
 	}
 	
 	@PutMapping("/character/{id}/castSpell")
-	public void castSpellforCharacter(@PathVariable String id, @RequestParam String token, @RequestParam String classId, @RequestParam String spellName, @RequestParam String level) {
+	public void castSpell_LEGACY(@PathVariable String id, @RequestParam String token, @RequestParam String classId, @RequestParam String spellName, @RequestParam String level) {
 		assertStringsAreSanitized(id, classId, spellName, level);
 		PathfinderCharacter character = loadCharacterID(id, token);
 		
@@ -154,8 +181,31 @@ public class CharacterController {
 		}
 	}
 	
+	@PostMapping("/character/{id}/castSpell")
+	public CharacterJson castSpell(@RequestBody String body, @PathVariable String id) {
+		CastUncastSpellJson json = gson.fromJson(body, CastUncastSpellJson.class);
+		
+		String spellName = json.spellName;
+		
+		assertStringsAreSanitized(id, json.classId, spellName, json.spellLevel);
+		PathfinderCharacter character = loadCharacterID(id, json.googleToken);
+		
+		int DCstart = spellName.lastIndexOf('(');
+		if (DCstart > 1) {
+			spellName = spellName.substring(0, DCstart-1);
+		}
+		
+		System.out.println("Casting spell " + spellName);
+		Spell spellThatWasCast = character.castSpell(Integer.parseInt(json.classId), spellName, Integer.parseInt(json.spellLevel));
+		if (spellThatWasCast != null) {
+			SpellDatabaseModifier.castSpell(id, spellThatWasCast.getId(), Integer.parseInt(json.spellLevel), Integer.parseInt(json.classId));
+		}
+		
+		return character.convertToJson();
+	}
+	
 	@PutMapping("/character/{id}/uncastSpell")
-	public void uncastSpellforCharacter(@PathVariable String id, @RequestParam String token, @RequestParam String classId, @RequestParam String spellName, @RequestParam String level) {
+	public void uncastSpell_LEGACY(@PathVariable String id, @RequestParam String token, @RequestParam String classId, @RequestParam String spellName, @RequestParam String level) {
 		assertStringsAreSanitized(id, classId, spellName, level);
 		PathfinderCharacter character = loadCharacterID(id, token);
 		int DCstart = spellName.lastIndexOf('(');
@@ -167,6 +217,29 @@ public class CharacterController {
 		if (spellThatWasUncast != null) {
 			SpellDatabaseModifier.uncastSpell(id, spellThatWasUncast.getId(), Integer.parseInt(level), Integer.parseInt(classId));
 		}
+	}
+	
+	@PostMapping("/character/{id}/uncastSpell")
+	public CharacterJson uncastSpell(@RequestBody String body, @PathVariable String id) {
+		CastUncastSpellJson json = gson.fromJson(body, CastUncastSpellJson.class);
+		
+		String spellName = json.spellName;
+		
+		assertStringsAreSanitized(id, json.classId, spellName, json.spellLevel);
+		PathfinderCharacter character = loadCharacterID(id, json.googleToken);
+		
+		int DCstart = spellName.lastIndexOf('(');
+		if (DCstart > 1) {
+			spellName = spellName.substring(0, DCstart-1);
+		}
+		
+		System.out.println("Casting spell " + spellName);
+		Spell spellThatWasUncast = character.uncastSpell(Integer.parseInt(json.classId), spellName, Integer.parseInt(json.spellLevel));
+		if (spellThatWasUncast != null) {
+			SpellDatabaseModifier.uncastSpell(id, spellThatWasUncast.getId(), Integer.parseInt(json.spellLevel), Integer.parseInt(json.classId));
+		}
+		
+		return character.convertToJson();
 	}
 	
 	@PutMapping("/character/{id}/heal")

@@ -16,13 +16,11 @@ public class CharacterDatabaseModifier {
 			randomString = StringTools.generateRandomCharacterId();
 		} while (((Boolean)db.executeSelectQuery(new DoesAResultExistMapper(), ASSERT_NO_CHARACTER_WITH_STRING_EXISTS, randomString))); //TODO: Add a failout state
 		db.executeModifyQuery(ADD_NEW_CHARACTER, randomString, name, player, image, alignment, race, size, gender, age, weight, height, baseStr, baseDex, baseCon, baseInt, baseWis, baseCha);
-		db.close();
 		return randomString;
 	}
 	
 	public static void deleteCharacter(String characterId) {
 		DatabaseAccess<Boolean> db = new DatabaseAccess<>();
 		db.executeModifyQuery(DELETE_CHARACTER, characterId);
-		db.close();
 	}
 }

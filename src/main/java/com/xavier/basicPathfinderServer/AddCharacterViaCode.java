@@ -148,7 +148,7 @@ public class AddCharacterViaCode {
 //		ItemDatabaseModifier.giveItemToCharacter(cloakOfResistance1, characterId, -1, 1000, true);
 //		ItemDatabaseModifier.giveItemToCharacter(beltOfGiantStrength, characterId, -1, 2000, true);
 //
-		String characterId = "kUC8d6ZgDu";
+//		String characterId = "kUC8d6ZgDu";
 //		int classId = inquisitor6;
 //		
 //		SpellDatabaseModifier.addSpellPrepped(characterId, 2, classId, 0);
@@ -174,6 +174,32 @@ public class AddCharacterViaCode {
 //		int bane = AdjustmentDatabaseModifier.addNewAdjustment("Bane", "[Special Offense: +2d6 damage on target of bane] All Attacks##Bane##2; All Damage##Bane##2");
 //		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(studiedTarget2, characterId);
 //		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(bane, characterId);
+//		int furiousFocus2 = AdjustmentDatabaseModifier.addNewAdjustment("Furious Focus 2", "All Damage##Power Attack##6");
+//		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(furiousFocus2, characterId);
+//		int shieldOfFaith3 = AdjustmentDatabaseModifier.addNewAdjustment("Shield of Faith 3", "All AC##Deflection##3");
+//		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(shieldOfFaith3, characterId);
+//		AdjustmentDatabaseModifier.removeAllowCharacterToUseAdjustment(19, characterId);
+		
+		String manu = "eVbBMI8yjs";
+//		int sixthWing6 = ClassDatabaseModifier.addNewClass(6, 4, 5, 2, 5, 2, 8, "Sixth Wing Bulwark 6", true, "PREPARED", 6, "Wisdom", "0-5 1-4 2-3", null);
+//		ClassDatabaseModifier.takeClassFromCharacter(5, manu);
+//		ClassDatabaseModifier.giveClassToCharacter(sixthWing6, manu);
+//		SpellDatabaseModifier.migrateSpellsFromClassToClass(manu, 5, sixthWing6);
+//		SpellDatabaseModifier.addSpellPrepped(manu, 1669, 7, 2);
+//		int powerAttack2 = AdjustmentDatabaseModifier.addNewAdjustment("Power Attack 2", "All Attacks##Power Attack##-2; All Damage##Power Attack##2");
+//		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(powerAttack2, manu);
+//		int boroBead2Resource = TrackedResourceDatabaseModifier.addNewTrackedResource("Boro Bead L2", "Boro Beads are only usable once per day", 1, 1);
+//		int boroBead2 = ItemDatabaseModifier.addNewItem("Boro Bead L2", 4000, "None", "This multicolored, sturdy glass bead is an aid to members of the alchemist class. Once per day on command, a boro bead enables the bearer to recharge any one extract that he had mixed and then consumed that day. The extract is then reconstituted and usable again, just as if it had not been drank. The extract must be of a particular level, depending on the bead. Different beads exist for recalling one extract per day of each level from 1st through 6th. A bead works on an infusion, but not a potion, elixir, bomb, mutagen, or non-magical alchemical material such as antitoxin.", "");
+//		ItemDatabaseModifier.giveItemToCharacter(boroBead2, manu, boroBead2Resource, 2000, false);
+//		int barkskin3 = AdjustmentDatabaseModifier.addNewAdjustment("Barkskin 3", "AC##Enhancement to Natural Armor##3; Flat-Footed##Enhancement to Natural Armor##3");
+//		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(barkskin3, manu);
+//		int BastardSword1 = WeaponsDatabaseModifier.addNewWeapon("+1 Bastard Sword", "1d10", "S", "", 1, 1, 19, 20, "A bastard sword is about 4 feet in length, making it too large to use in one hand without special training; thus, it is an exotic weapon. A character can use a bastard sword two-handed as a martial weapon.", "Melee", "Exotic", "", 6, "heavy blades");
+//		int BastardSword1item = ItemDatabaseModifier.addNewItem("+1 Bastard Sword", 2335, "Weapon", "A bastard sword is about 4 feet in length, making it too large to use in one hand without special training; thus, it is an exotic weapon. A character can use a bastard sword two-handed as a martial weapon.", "");
+//		WeaponsDatabaseModifier.giveWeaponToCharacter(BastardSword1, manu, "Strength", "Strength");
+//		WeaponsDatabaseModifier.takeWeaponFromCharacter(1, manu);
+//		ItemDatabaseModifier.giveItemToCharacter(2, manu, -1, 2000, true);
+//		ItemDatabaseModifier.takeItemFromCharacter(13, manu);
+//		HealthDatabaseModifier.setClassBonusHP(6, manu);
 	}
 
 }

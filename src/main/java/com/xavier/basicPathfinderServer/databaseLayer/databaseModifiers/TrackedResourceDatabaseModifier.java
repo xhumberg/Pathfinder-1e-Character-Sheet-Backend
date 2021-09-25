@@ -17,14 +17,12 @@ public class TrackedResourceDatabaseModifier {
 	public static void setResourcesRemaining(int resourcesRemaining, int resourceId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(SET_RESOURCES_REMAINING, resourcesRemaining, resourceId);
-		db.close();
 	}
 	
 	public static int addNewTrackedResource(String name, String description, int remaining, int max) {
 		DatabaseAccess<Integer> db = new DatabaseAccess<>();
 		int resourceID = db.executeSelectQuery(new SingleIntegerMapper(), GET_LARGEST_AVAILABLE_TRACKED_RESOURCE_ID) + 1;
 		db.executeModifyQuery(ADD_TRACKED_RESOURCE, resourceID, name, description, remaining, max);
-		db.close();
 		return resourceID;
 	}
 
@@ -32,19 +30,16 @@ public class TrackedResourceDatabaseModifier {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(DELETE_ALL_INSTANCES_OF_TRACKED_RESOURCE_FROM_CHARACTERS, id);
 		db.executeModifyQuery(DELETE_TRACKED_RESOURCE, id);
-		db.close();
 	}
 	
 	public static void giveTrackedResourceToCharacter(int resourceID, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(GIVE_CHARACTER_TRACKED_RESOURCE, characterId, resourceID);
-		db.close();
 	}
 	
 	public static void takeTrackedResourceFromCharacter(int resourceID, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(TAKE_CHARACTER_TRACKED_RESOURCE, resourceID, characterId);
-		db.close();
 	}
 	
 }

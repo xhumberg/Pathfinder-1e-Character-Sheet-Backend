@@ -19,20 +19,17 @@ public class AdjustmentDatabaseModifier {
 	public static void disableAdjustment(int adjustmentId, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(DISABLE_ADJUSTMENT_FOR_CHARACTER_QUERY, adjustmentId, characterId);
-		db.close();
 	}
 	
 	public static void enableAdjustment(int adjustmentId, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(ENABLE_ADJUSTMENT_FOR_CHARACTER_QUERY, characterId, adjustmentId);
-		db.close();
 	}
 	
 	public static int addNewAdjustment(String name, String effect) {
 		DatabaseAccess<Integer> db = new DatabaseAccess<>();
 		int adjustmentId = db.executeSelectQuery(new SingleIntegerMapper(), GET_LARGEST_STANDARD_ADJUSTMENT_ID) + 1;
 		db.executeModifyQuery(ADD_STANDARD_ADJUSTMENT, adjustmentId, name, effect);
-		db.close();
 		return adjustmentId;
 	}
 
@@ -41,18 +38,15 @@ public class AdjustmentDatabaseModifier {
 		db.executeModifyQuery(DELETE_ALL_INSTANCES_OF_ADJUSTMENT_FROM_ALLOWED, id);
 		db.executeModifyQuery(DELETE_ALL_INSTANCES_OF_ADJUSTMENT_FROM_ENABLED, id);
 		db.executeModifyQuery(DELETE_STANDARD_ADJUSTMENT, id);
-		db.close();
 	}
 	
 	public static void allowCharacterToUseAdjustment(int adjustmentId, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(ALLOW_CHARACTER_TO_USE_ADJUSTMENT, characterId, adjustmentId);
-		db.close();
 	}
 	
 	public static void removeAllowCharacterToUseAdjustment(int adjustmentId, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(DELETE_ALLOW_CHARACTER_TO_USE_ADJUSTMENT, adjustmentId, characterId);
-		db.close();
 	}
 }

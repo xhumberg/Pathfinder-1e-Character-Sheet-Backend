@@ -17,12 +17,10 @@ public class CharacterWealthDatabaseModifier {
 		} else {
 			db.executeModifyQuery(ADD_WEALTH, characterid, totalEarned, totalSpent);
 		}
-		db.close();
 	}
 	
 	protected static void test_deleteWealth(String characterid) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery("DELETE FROM CharacterWealth WHERE characterId = ?", characterid);
-		db.close();
 	}
 }

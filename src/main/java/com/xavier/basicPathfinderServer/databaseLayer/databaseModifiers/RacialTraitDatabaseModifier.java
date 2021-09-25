@@ -17,7 +17,6 @@ public class RacialTraitDatabaseModifier {
 		DatabaseAccess<Integer> db = new DatabaseAccess<>();
 		int traitId = db.executeSelectQuery(new SingleIntegerMapper(), GET_LARGEST_AVAILABLE_RACIAL_TRAIT_ID) + 1;
 		db.executeModifyQuery(ADD_RACIAL_TRAIT, traitId, name, description, adjustment);
-		db.close();
 		return traitId;
 	}
 
@@ -25,18 +24,15 @@ public class RacialTraitDatabaseModifier {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(DELETE_ALL_INSTANCES_OF_RACIAL_TRAIT_FROM_CHARACTERS, id);
 		db.executeModifyQuery(DELETE_RACIAL_TRAIT, id);
-		db.close();
 	}
 	
 	public static void giveRacialTraitToCharacter(int traitId, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(GIVE_CHARACTER_RACIAL_TRAIT, characterId, traitId);
-		db.close();
 	}
 	
 	public static void takeRacialTraitFromCharacter(int traitId, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(TAKE_CHARACTER_RACIAL_TRAIT, traitId, characterId);
-		db.close();
 	}
 }

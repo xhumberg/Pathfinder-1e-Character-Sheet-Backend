@@ -17,34 +17,29 @@ public class HealthDatabaseModifier {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		ensureCharacterHpValuesExist(db, characterId);
 		db.executeModifyQuery(SET_DAMAGE_TAKEN, damageTaken, characterId);
-		db.close();
 	}
 
 	public static void setNonlethalDamageTaken(int damageTaken, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		ensureCharacterHpValuesExist(db, characterId);
 		db.executeModifyQuery(SET_NL_DAMAGE_TAKEN, damageTaken, characterId);
-		db.close();
 	}
 
 	public static void setClassBonusHP(int bonusHp, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		ensureCharacterHpValuesExist(db, characterId);
 		db.executeModifyQuery(SET_CLASS_BONUS_HP, bonusHp, characterId);
-		db.close();
 	}
 
 	public static void setTempHp(int tempHp, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		ensureCharacterHpValuesExist(db, characterId);
 		db.executeModifyQuery(SET_TEMP_HP, tempHp, characterId);
-		db.close();
 	}
 	
 	protected static void test_deleteCharacterHp(String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(REMOVE_HP_VALUES, characterId);
-		db.close();
 	}
 
 	private static void ensureCharacterHpValuesExist(DatabaseAccess<Object> db, String characterId) {

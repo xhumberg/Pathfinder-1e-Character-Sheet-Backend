@@ -137,10 +137,8 @@ public class CharacterFromDatabaseLoader {
 			List<String> enabledAdjustments = (List<String>)db.executeSelectQuery(new EnabledAdjustmentsMapper(), GET_ENABLED_ADJUSTMENTS_QUERY, id);
 			character.toggleAdjustments(enabledAdjustments);
 			
-			db.close();
 			return character;
 		}
-		db.close();
 		return new PathfinderCharacter("-1", "Error: Couldn't load character", "https://www.aautomate.com/images/easyblog_shared/November_2018/11-12-18/human_error_stop_400.png");
 	}
 }

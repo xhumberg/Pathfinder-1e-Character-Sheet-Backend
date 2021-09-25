@@ -22,13 +22,11 @@ public class SkillsDatabaseModifier {
 		} else {
 			db.executeModifyQuery(ADD_RANKS, characterid, skillName, totalRanks);
 		}
-		db.close();
 	}
 	
 	public static void deleteRanks(String characterid, String skillName) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(DELETE_RANKS, characterid, skillName);
-		db.close();
 	}
 	
 	public static void addClassSkill(String characterid, String skillName) {
@@ -37,12 +35,10 @@ public class SkillsDatabaseModifier {
 		if (!exists) {
 			db.executeModifyQuery(ADD_CLASS_SKILL, characterid, skillName);
 		}
-		db.close();
 	}
 	
 	public static void deleteClassSkill(String characterid, String skillName) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(REMOVE_CLASS_SKILL, characterid, skillName);
-		db.close();
 	}
 }

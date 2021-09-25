@@ -70,7 +70,6 @@ public class SheetScraper {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				dbAccess.close();
 			}
 		}
 	}

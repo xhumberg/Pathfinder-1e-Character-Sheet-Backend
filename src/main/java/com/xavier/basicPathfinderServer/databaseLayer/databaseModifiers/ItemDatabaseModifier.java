@@ -19,7 +19,6 @@ public class ItemDatabaseModifier {
 		DatabaseAccess<Integer> db = new DatabaseAccess<>();
 		int itemId = db.executeSelectQuery(new SingleIntegerMapper(), GET_LARGEST_AVAILABLE_ITEM_ID) + 1;
 		db.executeModifyQuery(ADD_ITEM, itemId, name, cost, slot, description, adjustment);
-		db.close();
 		return itemId;
 	}
 
@@ -27,18 +26,15 @@ public class ItemDatabaseModifier {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(DELETE_ALL_INSTANCES_OF_ITEM_FROM_EQUIPPED, id);
 		db.executeModifyQuery(DELETE_ITEM, id);
-		db.close();
 	}
 	
 	public static void giveItemToCharacter(int itemId, String characterId, int trackedResourceId, int trueCost, boolean equipped) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(GIVE_CHARACTER_ITEM, characterId, itemId, trackedResourceId, trueCost, equipped);
-		db.close();
 	}
 	
 	public static void takeItemFromCharacter(int itemId, String characterId) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(TAKE_CHARACTER_ITEM, itemId, characterId);
-		db.close();
 	}
 }

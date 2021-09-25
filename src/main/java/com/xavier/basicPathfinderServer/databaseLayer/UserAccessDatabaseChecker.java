@@ -8,7 +8,6 @@ public class UserAccessDatabaseChecker {
 	public static boolean canEmailAccessCharacter(String email, String id) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		Boolean result = (Boolean) db.executeSelectQuery(new DoesAResultExistMapper(), CAN_EMAIL_ACCESS_CHARACTER_QUERY, email, id);
-		db.close();
 		return result;
 	}
 	
