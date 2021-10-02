@@ -1,5 +1,6 @@
 package com.xavier.basicPathfinderServer.json;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
@@ -68,6 +69,7 @@ public class CharacterJson {
 	public final List<ItemJson> items;
 	public final List<WeaponJson> weapons;
 	public final GoldJson gold;
+	public final List<String> adjustmentStats;
 	
 	public CharacterJson(PathfinderCharacter character) {
 		this.characterId = character.getCharacterId();
@@ -119,6 +121,11 @@ public class CharacterJson {
 		this.items = ItemMapper.map(character.getItems());
 		this.gold = GoldMapper.map(character);
 		this.weapons = WeaponsMapper.map(character.getWeapons(), character.getStatValue(StatName.BAB));
+		
+		this.adjustmentStats = new LinkedList<>();
+		for (StatName name : StatName.values()) {
+			adjustmentStats.add(name.displayStrings[0]);
+		}
 		
 	}
 

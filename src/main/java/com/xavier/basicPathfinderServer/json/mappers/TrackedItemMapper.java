@@ -12,7 +12,7 @@ public class TrackedItemMapper {
 		
 		for (Item item : items) {
 			if (item.hasTrackedResource()) {
-				TrackedItemJson json = new TrackedItemJson(item.getTrackedResourceId(), item.getName(), item.getDescription(), item.getTrackedResourceRemaining());
+				TrackedItemJson json = new TrackedItemJson(item.getItemId(), item.getTrackedResourceId(), item.getName(), item.getDescription(), item.getTrackedResourceRemaining(), item.getCost(), item.getTrueCost());
 				itemJsons.add(json);
 			}
 		}

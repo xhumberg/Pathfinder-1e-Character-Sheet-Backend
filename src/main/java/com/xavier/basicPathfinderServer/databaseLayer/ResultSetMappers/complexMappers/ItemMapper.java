@@ -25,11 +25,13 @@ public class ItemMapper implements ResultSetMapper<Object> {
 		List<Item> items = new ArrayList<>();
 		try {
 			while (resultSet.next()) {
+				int itemId = resultSet.getInt("ItemId");
 				String name = resultSet.getString("ItemName");
 				int cost = resultSet.getInt("ItemCost");
 				String slot = resultSet.getString("ItemSlot");
 				String description = resultSet.getString("ItemDescription");
-				Adjustment adjustment = AdjustmentStringConverter.convert(character, -1, name, resultSet.getString("Adjustments"), false);
+				String adjustmentString = resultSet.getString("Adjustments");
+				Adjustment adjustment = AdjustmentStringConverter.convert(character, -1, name, adjustmentString, false);
 				if (adjustment != null) {
 					adjustment.toggleAdjustment();
 				}
@@ -44,7 +46,7 @@ public class ItemMapper implements ResultSetMapper<Object> {
 					trackedResource = new TrackedResource(resourceId, trackedResourceName, resourceDescription, remaining, max);
 				}
 				
-				Item item = new Item(name, cost, slot, description, adjustment, trackedResource);
+				Item item = new Item(itemId, name, cost, slot, description, adjustment, adjustmentString, trackedResource);
 				int trueCost = resultSet.getInt("Cost");
 				item.setTrueCost(trueCost);
 				boolean isEquipped = resultSet.getBoolean("Equipped");

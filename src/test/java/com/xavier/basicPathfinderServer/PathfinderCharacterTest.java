@@ -315,9 +315,9 @@ class PathfinderCharacterTest {
 		
 		Adjustment headbandAdjustment = new Adjustment(-1, "Headband of Vast Intelligence +2", true);
 		headbandAdjustment.addEffect(StatName.INTELLIGENCE, "Enhancement", 2);
-		Item headbandOfInt = new Item("Headband of Vast Intelligence +2", 4000, "Headband", 
+		Item headbandOfInt = new Item(0, "Headband of Vast Intelligence +2", 4000, "Headband", 
 				"This intricate gold headband is decorated with several small blue and deep purple gemstones.\r\nThe headband grants the wearer an enhancement bonus to Intelligence of +2. Treat this as a temporary ability bonus for the first 24 hours the headband is worn. A headband of vast intelligence +2 has one skill associated with it. After being worn for 24 hours, the headband grants a number of skill ranks in that skill equal to the wearer’s total Hit Dice. These ranks do not stack with the ranks a creature already possesses. This skill is chosen when the headband is created. If no skill is listed, the headband is assumed to grant skill ranks in a randomly determined Knowledge skill.", 
-				headbandAdjustment, null);
+				headbandAdjustment, "Intelligence##Enhancement##2", null);
 		
 		prosopa.equip(headbandOfInt);
 		
@@ -326,16 +326,16 @@ class PathfinderCharacterTest {
 		
 		Adjustment beltAdjustment = new Adjustment(-1, "Belt of Overpowered Constitution", true);
 		beltAdjustment.addEffect(StatName.CONSTITUTION, "Invincible", 9999);
-		Item unequippedOverpoweredBelt = new Item("Belt of Overpowered Constitution", 999999999, "Belt",
+		Item unequippedOverpoweredBelt = new Item(1, "Belt of Overpowered Constitution", 999999999, "Belt",
 				"Nobody playtested this item and the munchkins found out how to get it.",
-				beltAdjustment, null);
+				beltAdjustment, "Constitution##Invincible##9999", null);
 		
 		prosopa.giveItem(unequippedOverpoweredBelt);
 		assertEquals(10, prosopa.getAbilityValue(StatName.CONSTITUTION));
 		assertTrue(prosopa.getItems().contains(unequippedOverpoweredBelt));
 		
 		TrackedResource persistentRodTracking = new TrackedResource(1, "Lesser Persistent Metamagic Rod", "3 times per day, you may cast a 3rd or lower level spell as if it had the Persistent Spell metamagic feat", 3, 3);
-		Item lesserPersistentRod = new Item("Persistent Metamagic Rod, Lesser", 9000, "Rod", "The wielder can cast up to three spells per day as though using the Persistent Spell feat.", null, persistentRodTracking);
+		Item lesserPersistentRod = new Item(2, "Persistent Metamagic Rod, Lesser", 9000, "Rod", "The wielder can cast up to three spells per day as though using the Persistent Spell feat.", null, null, persistentRodTracking);
 		prosopa.equip(lesserPersistentRod);
 		
 		assertTrue(prosopa.getItems().contains(lesserPersistentRod));
@@ -345,7 +345,7 @@ class PathfinderCharacterTest {
 		assertEquals(3, rods.get(0).getTrackedResourceRemaining());
 		
 		TrackedResource slightlyUsedRod = new TrackedResource(2, "Lesser Persistent Metamagic Rod", "3 times per day, you may cast a 3rd or lower level spell as if it had the Persistent Spell metamagic feat", 2, 3);
-		Item usedLesserPersistentRod = new Item("Persistent Metamagic Rod, Lesser", 9000, "Rod", "The wielder can cast up to three spells per day as though using the Persistent Spell feat.", null, slightlyUsedRod);
+		Item usedLesserPersistentRod = new Item(3, "Persistent Metamagic Rod, Lesser", 9000, "Rod", "The wielder can cast up to three spells per day as though using the Persistent Spell feat.", null, null, slightlyUsedRod);
 		prosopa.equip(usedLesserPersistentRod);
 		
 		for (int i = 0; i < 1000; i++) { //Make sure this never comes in a random order so it's consistent for the player too.
@@ -361,10 +361,10 @@ class PathfinderCharacterTest {
 		PathfinderCharacter prosopa = new PathfinderCharacter("5", "Prosopa", null);
 		
 		//First, item without a resource.
-		Item headband = new Item("Headband of Cool", 4000, "Head", "Looks cool and does stuff", null, null);
+		Item headband = new Item(1, "Headband of Cool", 4000, "Head", "Looks cool and does stuff", null, null, null);
 		TrackedResource wandOfCoolCharges = new TrackedResource(2, "Wand of Cool", "Super cool wand!", 40, 50);
-		Item wandOfCool = new Item("Wand of Cool", 99999, "Wand", "Looks cool and does stuff", null, wandOfCoolCharges);
-		Item boots = new Item("Boots", 2, "Feet", "Literally just boots", null, null);
+		Item wandOfCool = new Item(2, "Wand of Cool", 99999, "Wand", "Looks cool and does stuff", null, null, wandOfCoolCharges);
+		Item boots = new Item(3, "Boots", 2, "Feet", "Literally just boots", null, null, null);
 		
 		prosopa.giveItem(headband);
 		prosopa.giveItem(wandOfCool);

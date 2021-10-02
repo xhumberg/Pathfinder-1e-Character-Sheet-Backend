@@ -5,21 +5,25 @@ import com.xavier.basicPathfinderServer.numericals.TrackedResource;
 
 public class Item {
 
+	private int itemId;
 	private String name;
 	private int cost;
 	private int trueCost;
 	private String slot;
 	private String description;
 	private Adjustment adjustment;
+	private String adjustmentString;
 	private TrackedResource trackedResource;
 	private boolean equipped;
 	
-	public Item(String name, int cost, String slot, String description, Adjustment adjustment, TrackedResource trackedResource) {
+	public Item(int itemId, String name, int cost, String slot, String description, Adjustment adjustment, String adjustmentString, TrackedResource trackedResource) {
+		this.itemId = itemId;
 		this.name = name;
 		this.cost = cost;
 		this.slot = slot;
 		this.description = description;
 		this.adjustment = adjustment;
+		this.adjustmentString = adjustmentString;
 		this.trackedResource = trackedResource;
 		
 		equipped = false;
@@ -121,6 +125,10 @@ public class Item {
 	public boolean hasTrackedResource() {
 		return trackedResource != null;
 	}
+	
+	public int getCost() {
+		return cost;
+	}
 
 	public int getTrueCost() {
 		return trueCost;
@@ -146,6 +154,14 @@ public class Item {
 			return trackedResource.increase();
 		}
 		return -1;
+	}
+
+	public int getItemId() {
+		return itemId;
+	}
+	
+	public String getAdjustmentString() {
+		return adjustmentString;
 	}
 	
 	

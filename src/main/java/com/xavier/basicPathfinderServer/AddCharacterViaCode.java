@@ -181,25 +181,44 @@ public class AddCharacterViaCode {
 //		AdjustmentDatabaseModifier.removeAllowCharacterToUseAdjustment(19, characterId);
 		
 		String manu = "eVbBMI8yjs";
-//		int sixthWing6 = ClassDatabaseModifier.addNewClass(6, 4, 5, 2, 5, 2, 8, "Sixth Wing Bulwark 6", true, "PREPARED", 6, "Wisdom", "0-5 1-4 2-3", null);
-//		ClassDatabaseModifier.takeClassFromCharacter(5, manu);
-//		ClassDatabaseModifier.giveClassToCharacter(sixthWing6, manu);
-//		SpellDatabaseModifier.migrateSpellsFromClassToClass(manu, 5, sixthWing6);
-//		SpellDatabaseModifier.addSpellPrepped(manu, 1669, 7, 2);
-//		int powerAttack2 = AdjustmentDatabaseModifier.addNewAdjustment("Power Attack 2", "All Attacks##Power Attack##-2; All Damage##Power Attack##2");
-//		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(powerAttack2, manu);
-//		int boroBead2Resource = TrackedResourceDatabaseModifier.addNewTrackedResource("Boro Bead L2", "Boro Beads are only usable once per day", 1, 1);
-//		int boroBead2 = ItemDatabaseModifier.addNewItem("Boro Bead L2", 4000, "None", "This multicolored, sturdy glass bead is an aid to members of the alchemist class. Once per day on command, a boro bead enables the bearer to recharge any one extract that he had mixed and then consumed that day. The extract is then reconstituted and usable again, just as if it had not been drank. The extract must be of a particular level, depending on the bead. Different beads exist for recalling one extract per day of each level from 1st through 6th. A bead works on an infusion, but not a potion, elixir, bomb, mutagen, or non-magical alchemical material such as antitoxin.", "");
-//		ItemDatabaseModifier.giveItemToCharacter(boroBead2, manu, boroBead2Resource, 2000, false);
-//		int barkskin3 = AdjustmentDatabaseModifier.addNewAdjustment("Barkskin 3", "AC##Enhancement to Natural Armor##3; Flat-Footed##Enhancement to Natural Armor##3");
-//		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(barkskin3, manu);
-//		int BastardSword1 = WeaponsDatabaseModifier.addNewWeapon("+1 Bastard Sword", "1d10", "S", "", 1, 1, 19, 20, "A bastard sword is about 4 feet in length, making it too large to use in one hand without special training; thus, it is an exotic weapon. A character can use a bastard sword two-handed as a martial weapon.", "Melee", "Exotic", "", 6, "heavy blades");
-//		int BastardSword1item = ItemDatabaseModifier.addNewItem("+1 Bastard Sword", 2335, "Weapon", "A bastard sword is about 4 feet in length, making it too large to use in one hand without special training; thus, it is an exotic weapon. A character can use a bastard sword two-handed as a martial weapon.", "");
-//		WeaponsDatabaseModifier.giveWeaponToCharacter(BastardSword1, manu, "Strength", "Strength");
-//		WeaponsDatabaseModifier.takeWeaponFromCharacter(1, manu);
-//		ItemDatabaseModifier.giveItemToCharacter(2, manu, -1, 2000, true);
-//		ItemDatabaseModifier.takeItemFromCharacter(13, manu);
-//		HealthDatabaseModifier.setClassBonusHP(6, manu);
+//		int sixthWing7 = ClassDatabaseModifier.addNewClass(7, 5, 5, 2, 5, 2, 8, "Sixth Wing Bulwark 7", true, "PREPARED", 7, "Wisdom", "0-5 1-4 2-3 3-1", null);
+//		ClassDatabaseModifier.takeClassFromCharacter(7, manu);
+//		ClassDatabaseModifier.giveClassToCharacter(sixthWing7, manu);
+//		SpellDatabaseModifier.migrateSpellsFromClassToClass(manu, 7, sixthWing7);
+//		SpellDatabaseModifier.addSpellPrepped(manu, 1667, 8, 3);
+//		SpellDatabaseModifier.addSpellKnown(manu, 1667, 8);
+//		SpellDatabaseModifier.
+//		int channelVigor = AdjustmentDatabaseModifier.addNewAdjustment("Channel Vigor, Legs", "AC##Dodge##1; Touch##Dodge##1; Reflex##Dodge##1; All Attacks##Haste##1");
+//		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(channelVigor, manu);
+//		int sacredArmorAdjustment = AdjustmentDatabaseModifier.addNewAdjustment("Sacred Armor", "AC##Stacking Enhancement to AC##1; Flat-Footed##Stacking Enhancement to AC");
+//		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(sacredArmorAdjustment, manu);
+////		int boroBead2Resource = TrackedResourceDatabaseModifier.addNewTrackedResource("Boro Bead L2", "Boro Beads are only usable once per day", 1, 1);
+////		int boroBead2 = ItemDatabaseModifier.addNewItem("Boro Bead L2", 4000, "None", "This multicolored, sturdy glass bead is an aid to members of the alchemist class. Once per day on command, a boro bead enables the bearer to recharge any one extract that he had mixed and then consumed that day. The extract is then reconstituted and usable again, just as if it had not been drank. The extract must be of a particular level, depending on the bead. Different beads exist for recalling one extract per day of each level from 1st through 6th. A bead works on an infusion, but not a potion, elixir, bomb, mutagen, or non-magical alchemical material such as antitoxin.", "");
+////		ItemDatabaseModifier.giveItemToCharacter(boroBead2, manu, boroBead2Resource, 2000, false);
+////		int barkskin3 = AdjustmentDatabaseModifier.addNewAdjustment("Barkskin 3", "AC##Enhancement to Natural Armor##3; Flat-Footed##Enhancement to Natural Armor##3");
+////		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(barkskin3, manu);
+////		int BastardSword1 = WeaponsDatabaseModifier.addNewWeapon("+1 Bastard Sword", "1d10", "S", "", 1, 1, 19, 20, "A bastard sword is about 4 feet in length, making it too large to use in one hand without special training; thus, it is an exotic weapon. A character can use a bastard sword two-handed as a martial weapon.", "Melee", "Exotic", "", 6, "heavy blades");
+////		int BastardSword1item = ItemDatabaseModifier.addNewItem("+1 Bastard Sword", 2335, "Weapon", "A bastard sword is about 4 feet in length, making it too large to use in one hand without special training; thus, it is an exotic weapon. A character can use a bastard sword two-handed as a martial weapon.", "");
+////		WeaponsDatabaseModifier.giveWeaponToCharacter(BastardSword1, manu, "Strength", "Strength");
+////		WeaponsDatabaseModifier.takeWeaponFromCharacter(1, manu);
+////		ItemDatabaseModifier.giveItemToCharacter(2, manu, -1, 2000, true);
+////		ItemDatabaseModifier.takeItemFromCharacter(13, manu);
+//		HealthDatabaseModifier.setClassBonusHP(7, manu);
+//		
+//		int trackedSacredArmor = TrackedResourceDatabaseModifier.addNewTrackedResource("Sacred Armor", "Uses of Sacred Armor", 7, 7);
+//		int sacredArmor = ClassFeatureDatabaseModifier.addNewFeature("Sacred Armor", "At 7th level, the warpriest gains the ability to enhance his armor with divine power as a swift action. This power grants the armor a +1 enhancement bonus. For every 3 levels beyond 7th, this bonus increases by 1 (to a maximum of +5 at 19th level). The warpriest can use this ability a number of minutes per day equal to his warpriest level. This duration must be used in 1-minute increments, but they don’t need to be consecutive.\r\n"
+//				+ "\r\n"
+//				+ "These bonuses stack with any existing bonuses the armor might have, to a maximum of +5. The warpriest can enhance armor any of the following armor special abilities: energy resistance (normal, improved, and greater), fortification (heavy, light, or moderate), glamered, and spell resistance (13, 15, 17, and 19). Adding any of these special abilities replaces an amount of bonus equal to the special ability’s base cost. For this purpose, glamered counts as a +1 bonus, energy resistance counts as +2, improved energy resistance counts as +4, and greater energy resistance counts as +5. Duplicate abilities do not stack. The armor must have at least a +1 enhancement bonus before any other special abilities can be added.\r\n"
+//				+ "\r\n"
+//				+ "The enhancement bonus and armor special abilities are determined the first time the ability is used each day and cannot be changed until the next day. These bonuses apply only while the warpriest is wearing the armor, and end immediately if the armor is removed or leaves the warpriest’s possession. This ability can be ended as a free action at the start of the warpriest’s turn. This ability cannot be applied to a shield.\r\n"
+//				+ "\r\n"
+//				+ "When the warpriest uses this ability, he can also use his sacred weapon ability as a free action by expending one use of his fervor.", null);
+//		ClassFeatureDatabaseModifier.giveFeatureToCharacter(sacredArmor, manu, trackedSacredArmor);
+		SkillsDatabaseModifier.setRanks(manu, "Profession", 7);
+		SkillsDatabaseModifier.setRanks(manu, "Knowledge (Local)", 7);
+		SkillsDatabaseModifier.setRanks(manu, "Sense Motive", 7);
+		SkillsDatabaseModifier.setRanks(manu, "Swim", 4);
+		
 	}
 
 }

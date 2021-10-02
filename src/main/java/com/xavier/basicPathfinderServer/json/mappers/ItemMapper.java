@@ -12,7 +12,7 @@ public class ItemMapper {
 		
 		for (Item item : items) {
 			if (!item.hasTrackedResource()) {
-				ItemJson itemJson = new ItemJson(item.getName(), item.getDescription().replace("\\r\\n", "")); //TODO: make returns actually put in a line break
+				ItemJson itemJson = new ItemJson(item.getItemId(), item.getName(), item.getDescription().replace("\\r\\n", ""), item.getCost(), item.getTrueCost(), item.getAdjustmentString()); //TODO: make returns actually put in a line break
 				itemJsons.add(itemJson);
 			}
 		}
