@@ -80,10 +80,18 @@ public enum StatName {
 	FLAT_FOOTED("Flat-Footed"),
 	TOUCH("Touch", "Touch AC"),
 	
+	//Special Attack Modifiers
+	PENALTY_TO_ALL_BUT_1ST_ATTACK("Penalty to all but 1st Attack"), 
+	ADDITIONAL_ATTACKS_AT_FULL_BAB("Additional Attacks at Full BAB"), 
+	ADDITIONAL_FIRST_ITERATIVES("Additional First Iterative Attacks"), 
+	ADDITIONAL_SECOND_ITERATIVES("Additional Second Iterative Attacks"), 
+	ADDITIONAL_THIRD_ITERATIVES("Additional Third Iterative Attacks"),
+	
 	//Stats not added to character map
 	SPELL_DC("Spell DC", "DC"),
 	WEAPON_ATTACK("Weapon Attack"),
-	WEAPON_DAMAGE("Weapon Damage");
+	WEAPON_DAMAGE("Weapon Damage"), 
+	;
 	
 	public String[] displayStrings;
 	

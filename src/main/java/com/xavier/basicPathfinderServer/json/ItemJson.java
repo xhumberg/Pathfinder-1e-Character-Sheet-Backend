@@ -1,5 +1,7 @@
 package com.xavier.basicPathfinderServer.json;
 
+import com.google.gson.Gson;
+
 public class ItemJson {
 	private final int itemId;
 	private final String name;
@@ -39,5 +41,11 @@ public class ItemJson {
 	
 	public String getAdjustmentString() {
 		return adjustmentString;
+	}
+	
+	@Override
+	public String toString() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
 	}
 }

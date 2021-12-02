@@ -120,7 +120,7 @@ public class CharacterJson {
 		this.trackedItems = TrackedItemMapper.map(character.getItems());
 		this.items = ItemMapper.map(character.getItems());
 		this.gold = GoldMapper.map(character);
-		this.weapons = WeaponsMapper.map(character.getWeapons(), character.getStatValue(StatName.BAB));
+		this.weapons = WeaponsMapper.map(character);
 		
 		this.adjustmentStats = new LinkedList<>();
 		for (StatName name : StatName.values()) {

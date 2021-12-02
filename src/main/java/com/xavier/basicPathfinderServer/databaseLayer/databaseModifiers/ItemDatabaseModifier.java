@@ -1,7 +1,13 @@
 package com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers;
 
+import java.util.List;
+
+import com.xavier.basicPathfinderServer.PathfinderCharacter;
+import com.xavier.basicPathfinderServer.characterOwned.Item;
 import com.xavier.basicPathfinderServer.databaseLayer.DatabaseAccess;
+import com.xavier.basicPathfinderServer.databaseLayer.ResultSetMappers.complexMappers.ItemMapper;
 import com.xavier.basicPathfinderServer.databaseLayer.ResultSetMappers.simpleMappers.SingleIntegerMapper;
+import com.xavier.basicPathfinderServer.json.ItemJson;
 
 public class ItemDatabaseModifier {
 	
@@ -9,6 +15,8 @@ public class ItemDatabaseModifier {
 	private final static String ADD_ITEM = "INSERT INTO AvailableItems VALUES (?, ?, ?, ?, ?, ?)";
 	private final static String DELETE_ITEM = "DELETE FROM AvailableItems WHERE ItemId = ?";
 	private final static String UPDATE_ITEM = "UPDATE AvailableItems SET itemName = ?, itemCost = ?, itemDescription = ?, adjustments = ? WHERE itemid = ?";
+	
+	private final static String GET_ALL_ITEMS_IN_DATABASE = "select * from AvailableItems order by itemname";
 	
 	private final static String GIVE_CHARACTER_ITEM = "INSERT INTO CharacterEquipment values (?, ?, ?, ?, ?)";
 	private final static String TAKE_CHARACTER_ITEM = "DELETE FROM CharacterEquipment WHERE ItemID = ? AND CharacterID = ?";
@@ -48,5 +56,12 @@ public class ItemDatabaseModifier {
 	public static void updateCostOfItem(int id, String characterId, int paid) {
 		DatabaseAccess<Object> db = new DatabaseAccess<>();
 		db.executeModifyQuery(UPDATE_COST_OF_ITEM, paid, characterId, id);
+	}
+
+	public static List<ItemJson> getListOfAllItemsInDatabase() {
+		DatabaseAccess<Object> db = new DatabaseAccess<>();
+		@SuppressWarnings("unchecked")
+		List<Item> items = (List<Item>) db.executeSelectQuery(new ItemMapper(), GET_ALL_ITEMS_IN_DATABASE);
+		return com.xavier.basicPathfinderServer.json.mappers.ItemMapper.map(items);
 	}
 }

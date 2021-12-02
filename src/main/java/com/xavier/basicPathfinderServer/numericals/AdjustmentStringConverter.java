@@ -38,6 +38,9 @@ public class AdjustmentStringConverter {
 	}
 
 	private static Stat getStatFromDefinition(PathfinderCharacter character, StatName statName, String adjustmentDefinition) {
+		if (character == null) {
+			return new SolidStat(statName, 0);
+		}
 		if (adjustmentDefinition.contains("{")) {
 			//Currently only supports JUST a stat.
 			String innerStatName = adjustmentDefinition.replace("{", "").replace("}", "");

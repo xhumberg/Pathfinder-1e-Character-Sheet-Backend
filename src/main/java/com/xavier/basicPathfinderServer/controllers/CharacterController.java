@@ -1,7 +1,6 @@
 package com.xavier.basicPathfinderServer.controllers;
 
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -23,6 +22,7 @@ import com.google.gson.Gson;
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
 import com.xavier.basicPathfinderServer.characterOwned.Spell;
 import com.xavier.basicPathfinderServer.controllers.jsonObjects.CastUncastSpellJson;
+import com.xavier.basicPathfinderServer.controllers.jsonObjects.SkillRankUpdateJson;
 import com.xavier.basicPathfinderServer.controllers.jsonObjects.ToggleAdjustmentJson;
 import com.xavier.basicPathfinderServer.databaseLayer.CharacterFromDatabaseLoader;
 import com.xavier.basicPathfinderServer.databaseLayer.DatabaseAccess;
@@ -30,11 +30,13 @@ import com.xavier.basicPathfinderServer.databaseLayer.UserAccessDatabaseChecker;
 import com.xavier.basicPathfinderServer.databaseLayer.ResultSetMappers.complexMappers.AccessibleCharactersMapper;
 import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.AdjustmentDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.HealthDatabaseModifier;
+import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.SkillsDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.SpellDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.TrackedResourceDatabaseModifier;
 import com.xavier.basicPathfinderServer.google.GoogleAuthenticationResponseJson;
 import com.xavier.basicPathfinderServer.json.CharacterJson;
 import com.xavier.basicPathfinderServer.numericals.Adjustment;
+import com.xavier.basicPathfinderServer.numericals.StatName;
 
 @RestController
 public class CharacterController {
@@ -238,6 +240,19 @@ public class CharacterController {
 		if (spellThatWasUncast != null) {
 			SpellDatabaseModifier.uncastSpell(id, spellThatWasUncast.getId(), Integer.parseInt(json.spellLevel), Integer.parseInt(json.classId));
 		}
+		
+		return character.convertToJson();
+	}
+	
+	@PostMapping("/character/{id}/setSkillRanks")
+	public CharacterJson setSkillRanks(@RequestBody String body, @PathVariable String id) {
+		SkillRankUpdateJson json = gson.fromJson(body, SkillRankUpdateJson.class);
+		
+		int ranksInt = Integer.parseInt(json.skillRanks);
+		SkillsDatabaseModifier.setRanks(id, json.skillName, ranksInt);
+		
+		PathfinderCharacter character = loadCharacterID(id, json.googleToken);
+		character.setSkillRanks(ranksInt, StatName.decode(json.skillName));
 		
 		return character.convertToJson();
 	}

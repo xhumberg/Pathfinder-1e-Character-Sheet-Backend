@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.postgresql.util.PSQLException;
+
 import com.xavier.basicPathfinderServer.PathfinderCharacter;
 import com.xavier.basicPathfinderServer.characterOwned.Item;
 import com.xavier.basicPathfinderServer.databaseLayer.ResultSetMappers.ResultSetMapper;
@@ -20,6 +22,10 @@ public class ItemMapper implements ResultSetMapper<Object> {
 		this.character = character;
 	}
 	
+	public ItemMapper() {
+		this.character = null;
+	}
+
 	@Override
 	public List<Item> map(ResultSet resultSet) {
 		List<Item> items = new ArrayList<>();
@@ -36,7 +42,16 @@ public class ItemMapper implements ResultSetMapper<Object> {
 					adjustment.toggleAdjustment();
 				}
 				TrackedResource trackedResource = null;
-				String trackedResourceName = resultSet.getString("ResourceName");
+				String trackedResourceName = null;
+				int trueCost = -1;
+				boolean isEquipped = false;
+				try {
+					trackedResourceName = resultSet.getString("ResourceName");
+					trueCost = resultSet.getInt("Cost");
+					isEquipped = resultSet.getBoolean("Equipped");
+				} catch (PSQLException e) {
+					//Do nothing. Column does not exist. Must be loading all items
+				}
 				if (trackedResourceName != null) {
 					int resourceId = resultSet.getInt("TrackedResourceID");
 					System.out.println(name + " has a tracked resource.");
@@ -47,9 +62,7 @@ public class ItemMapper implements ResultSetMapper<Object> {
 				}
 				
 				Item item = new Item(itemId, name, cost, slot, description, adjustment, adjustmentString, trackedResource);
-				int trueCost = resultSet.getInt("Cost");
 				item.setTrueCost(trueCost);
-				boolean isEquipped = resultSet.getBoolean("Equipped");
 				item.setEquipped(isEquipped);
 				
 				items.add(item);

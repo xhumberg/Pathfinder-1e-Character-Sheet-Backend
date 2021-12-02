@@ -1,34 +1,29 @@
 package com.xavier.basicPathfinderServer;
 
-import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.AdjustmentDatabaseModifier;
-import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.CharacterDatabaseModifier;
-import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.CharacterWealthDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.ClassDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.ClassFeatureDatabaseModifier;
-import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.FeatDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.HealthDatabaseModifier;
-import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.ItemDatabaseModifier;
-import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.RacialTraitDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.SkillsDatabaseModifier;
 import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.SpellDatabaseModifier;
-import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.TrackedResourceDatabaseModifier;
-import com.xavier.basicPathfinderServer.databaseLayer.databaseModifiers.WeaponsDatabaseModifier;
 
 public class AddCharacterViaCode {
 
 	public static void main(String[] args) {
-//		String characterId = CharacterDatabaseModifier.addNewCharacter("Nemesis", "Michelle", "https://scontent-lax3-1.xx.fbcdn.net/v/t1.15752-9/211822471_516155882785208_1562427295516678306_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=ae9488&_nc_ohc=pqvFmfsqSPwAX-opBOv&_nc_oc=AQnO3vZV0skaC5Q_xo0mA-SOL_wSvfT5bC18us9jf-kFyy33Nx_avx6fI-egI-DFbyQ&_nc_ht=scontent-lax3-1.xx&oh=dad804556f327114a53e22529505a107&oe=6158B148", "CG", "Gnome Tiefling", "Small", "Female", "61", "32 lbs", "2' 9\"", 18, 14, 14, 10, 18, 6);
 		
-//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(0, characterId);
-//		int smallId = RacialTraitDatabaseModifier.addNewRacialTrait("Size Small", "Small creatures receive a +1 bonus to AC and Attack Rolls, but a -1 to CMB and CMD", "All AC##Size##1; All Attacks##Size##1; CMB##Size##-1; CMD##Size##-1");
-//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(smallId, characterId);
+//		String manu = "TRo3p8TvfU"; //CharacterDatabaseModifier.addNewCharacter("Manu Tuskmaw (Fallen)", "Xavier", "https://cdn.discordapp.com/attachments/530229146735869982/896258901874466816/j-krueger-elemental-affinity.png", "LE", "Half-Orc", "Medium", "Male", "32", "200 lbs", "5' 4\"", 20, 10, 14, 12, 11, 14);
+//		int rager5CLModified = 10; //ClassDatabaseModifier.addNewClass(5, 5, 4, 1, 1, 4, 10, "Steelblood Primalist 5 (mod)", true, "SPONTANEOUS", 7, "Charisma", "1-1 2-1", "1-4 2-2");
+//		int dragonDisciple3 = ClassDatabaseModifier.addNewClass(3, 2, 2, 1, 2, 2, 12, "Dragon Disciple 3", false, "", 0, "", "", "");
+//		ClassDatabaseModifier.giveClassToCharacter(rager5CLModified, manu);
+//		ClassDatabaseModifier.giveClassToCharacter(dragonDisciple3, manu);
+				
+//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(8, characterId);
 //		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(2, characterId);
-//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(3, characterId);
-//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(4, characterId);
-//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(5, characterId);
-//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(6, characterId);
-//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(7, characterId);
-//		
+//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(1, characterId);
+//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(9, characterId);
+//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(10, characterId);
+//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(11, characterId);
+//		RacialTraitDatabaseModifier.giveRacialTraitToCharacter(12, characterId);
+		
 //		int weaponId = WeaponsDatabaseModifier.addNewWeapon("+2 Small Switchscythe", "1d6", "P or S", "", 2, 2, 20, 4, "This scythe has a spring-loaded blade that folds down into the weapon’s handle.\r\n"
 //				+ "\r\n"
 //				+ "Opening the scythe blade is a swift action, and closing it again is a standard action. You can use Bluff or Sleight of Hand to treat a closed switchscythe as a hidden weapon; the apparatus can be disguised with 1 minute of work, which grants a +5 bonus on such checks. This disguise is ruined when the weapon is opened and must be reapplied to hide the weapon again.\r\n"
@@ -180,13 +175,60 @@ public class AddCharacterViaCode {
 //		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(shieldOfFaith3, characterId);
 //		AdjustmentDatabaseModifier.removeAllowCharacterToUseAdjustment(19, characterId);
 		
-		String manu = "eVbBMI8yjs";
+		
+
+//		String nemesis = "kUC8d6ZgDu";
+//		int inquisitor8 = ClassDatabaseModifier.addNewClass(8, 6, 6, 2, 6, 6, 8, "Inquisitor 8", true, "SPONTANEOUS", 8, "Wisdom", "0-6 1-4 2-4 3-2", "0-6 1-5 2-4 3-3");
+//		ClassDatabaseModifier.takeClassFromCharacter(9, nemesis);
+//		ClassDatabaseModifier.giveClassToCharacter(inquisitor8, nemesis);
+//		SpellDatabaseModifier.migrateSpellsFromClassToClass(nemesis, 9, inquisitor8);
+//		HealthDatabaseModifier.setClassBonusHP(8, nemesis);
+//		int Trapfinding = ClassFeatureDatabaseModifier.addNewFeature("Trapfinding", "Trapfinding", "");
+//		ClassFeatureDatabaseModifier.giveFeatureToCharacter(Trapfinding, nemesis, -1);
+//		SkillsDatabaseModifier.setRanks(nemesis, "Knowledge (Dungeoneering)", 8);
+//		SkillsDatabaseModifier.setRanks(nemesis, "Knowledge (Local)", 8);
+//		SkillsDatabaseModifier.setRanks(nemesis, "Knowledge (Nature)", 8);
+//		SkillsDatabaseModifier.setRanks(nemesis, "Knowledge (Planes)", 8);
+//		SkillsDatabaseModifier.setRanks(nemesis, "Knowledge (Religion)", 8);
+//		SkillsDatabaseModifier.setRanks(nemesis, "Perception", 8);
+		
+//		int inquisitor7 = 9; //ClassDatabaseModifier.addNewClass(7, 5, 5, 2, 5, 6, 8, "Inquisitor 8", true, "SPONTANEOUS", 7, "Wisdom", "0-6 1-4 2-3 3-1", "0-6 1-5 2-4 3-2");
+//		CharacterWealthDatabaseModifier.setWealth(nemesis, 24000, 0);
+//		int dirtyFighting = FeatDatabaseModifier.addNewFeat("Dirty Fighting", "You can take advantage of a distracted foe.\r\n"
+//				+ "\r\n"
+//				+ "Benefit(s): When you attempt a combat maneuver check against a foe you are flanking, you can forgo the +2 bonus on your attack roll for flanking to instead have the combat maneuver not provoke an attack of opportunity. If you have a feat or ability that allows you to attempt the combat maneuver without provoking an attack of opportunity, you can instead increase the bonus on your attack roll for flanking to +4 for the combat maneuver check.\r\n"
+//				+ "\r\n"
+//				+ "Special: This feat counts as having Dex 13, Int 13, Combat Expertise, and Improved Unarmed Strike for the purposes of meeting the prerequisites of the various improved combat maneuver feats, as well as feats that require those improved combat maneuver feats as prerequisites.", "");
+//		FeatDatabaseModifier.giveFeatToCharacter(dirtyFighting, nemesis);
+		
+//		ClassDatabaseModifier.takeClassFromCharacter(6, nemesis);
+//		ClassDatabaseModifier.giveClassToCharacter(inquisitor7, nemesis);
+//		SpellDatabaseModifier.migrateSpellsFromClassToClass(nemesis, 6, inquisitor7);
+//		SpellDatabaseModifier.addSpellKnown(nemesis, 262, inquisitor7);
+//		SpellDatabaseModifier.addSpellKnown(nemesis, 158, inquisitor7);
+//		SpellDatabaseModifier.addSpellPrepped(nemesis, 262, inquisitor7, 3);
+//		SpellDatabaseModifier.addSpellPrepped(nemesis, 158, inquisitor7, 3);
+//		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(0, nemesis);
+//		HealthDatabaseModifier.setClassBonusHP(7, nemesis);
+//		int sneak3d6 = ClassFeatureDatabaseModifier.addNewFeature("Sneak Attack +3d6", "Sneak attack 3d6", "[Special Offense: +3d6 Sneak Attack]");
+//		ClassFeatureDatabaseModifier.giveFeatureToCharacter(sneak3d6, nemesis, -1);
+//		ClassFeatureDatabaseModifier.takeFeatureFromCharacter(31, nemesis);
+//		SkillsDatabaseModifier.setRanks(nemesis, "Knowledge (Dungeoneering)", 7);
+//		SkillsDatabaseModifier.setRanks(nemesis, "Knowledge (Local)", 7);
+//		SkillsDatabaseModifier.setRanks(nemesis, "Knowledge (Nature)", 7);
+//		SkillsDatabaseModifier.setRanks(nemesis, "Knowledge (Planes)", 7);
+//		SkillsDatabaseModifier.setRanks(nemesis, "Knowledge (Religion)", 7);
+//		SkillsDatabaseModifier.setRanks(nemesis, "Perception", 7);
+		
+//		String manu = "eVbBMI8yjs";
+//		int gubsGrace = AdjustmentDatabaseModifier.addNewAdjustment("Gub's Grace", "Strength##Enhancement##6");
+//		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(gubsGrace, manu);
 //		int sixthWing7 = ClassDatabaseModifier.addNewClass(7, 5, 5, 2, 5, 2, 8, "Sixth Wing Bulwark 7", true, "PREPARED", 7, "Wisdom", "0-5 1-4 2-3 3-1", null);
 //		ClassDatabaseModifier.takeClassFromCharacter(7, manu);
 //		ClassDatabaseModifier.giveClassToCharacter(sixthWing7, manu);
 //		SpellDatabaseModifier.migrateSpellsFromClassToClass(manu, 7, sixthWing7);
-//		SpellDatabaseModifier.addSpellPrepped(manu, 1667, 8, 3);
-//		SpellDatabaseModifier.addSpellKnown(manu, 1667, 8);
+//		SpellDatabaseModifier.addSpellPrepped(manu, 1253, 8, 3);
+//		SpellDatabaseModifier.addSpellKnown(manu, 1253, 8);
 //		SpellDatabaseModifier.
 //		int channelVigor = AdjustmentDatabaseModifier.addNewAdjustment("Channel Vigor, Legs", "AC##Dodge##1; Touch##Dodge##1; Reflex##Dodge##1; All Attacks##Haste##1");
 //		AdjustmentDatabaseModifier.allowCharacterToUseAdjustment(channelVigor, manu);
@@ -214,10 +256,10 @@ public class AddCharacterViaCode {
 //				+ "\r\n"
 //				+ "When the warpriest uses this ability, he can also use his sacred weapon ability as a free action by expending one use of his fervor.", null);
 //		ClassFeatureDatabaseModifier.giveFeatureToCharacter(sacredArmor, manu, trackedSacredArmor);
-		SkillsDatabaseModifier.setRanks(manu, "Profession", 7);
-		SkillsDatabaseModifier.setRanks(manu, "Knowledge (Local)", 7);
-		SkillsDatabaseModifier.setRanks(manu, "Sense Motive", 7);
-		SkillsDatabaseModifier.setRanks(manu, "Swim", 4);
+//		SkillsDatabaseModifier.setRanks(manu, "Profession", 7);
+//		SkillsDatabaseModifier.setRanks(manu, "Knowledge (Local)", 7);
+//		SkillsDatabaseModifier.setRanks(manu, "Sense Motive", 7);
+//		SkillsDatabaseModifier.setRanks(manu, "Swim", 4);
 		
 	}
 

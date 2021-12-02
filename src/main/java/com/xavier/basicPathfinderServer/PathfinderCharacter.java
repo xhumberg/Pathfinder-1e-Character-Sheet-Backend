@@ -130,6 +130,13 @@ public class PathfinderCharacter {
 		initNewStat(StatName.ALL_DAMAGE);
 		initNewStat(StatName.MELEE_DAMAGE);
 		initNewStat(StatName.RANGED_DAMAGE);
+		
+		initNewStat(StatName.ADDITIONAL_ATTACKS_AT_FULL_BAB);
+		initNewStat(StatName.ADDITIONAL_FIRST_ITERATIVES);
+		initNewStat(StatName.ADDITIONAL_SECOND_ITERATIVES);
+		initNewStat(StatName.ADDITIONAL_THIRD_ITERATIVES);
+		
+		initNewStat(StatName.PENALTY_TO_ALL_BUT_1ST_ATTACK);
 	}
 
 	private void initSaves() {
